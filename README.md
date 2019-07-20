@@ -1,4 +1,5 @@
 # Campus Works Portal
+
 Portal for campus works, upcoming E-Cell project.
 
 Under construction. To contribute please reach out to one of the team members first.
@@ -7,6 +8,7 @@ Uses React and Django. SPA.
 
 
 ## Testing locally
+
 Prerequisites: `Python` and `Node (with npm and nvm)` installed
 
 [Using node v10.15.0 (npm v6.4.1)]
@@ -15,27 +17,35 @@ Assumption: You're using proper package management with virtual environments whe
 
 1. Fork and clone the repository. For solely local testing, just cloning will do.
 2. `cd` into the cloned repo and install python dependencies, and setup migrations
-```
-pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py migrate
-```
+
+    ```python3
+    pip install -r requirements.txt
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
 3. Install npm dependencies
-```
-cd tfront
-npm install
-```
+
+    ```bash
+    cd tfront
+    npm install
+    ```
+
 4. Open two terminals at repository root for running the server.
 5. On the first, run
-```
-python manage.py runserver
-```
-to start the backend server. Direct API calls can be made to `localhost:8000`
+
+    ```bash
+    python manage.py runserver
+    ```
+
+    to start the backend server. Direct API calls can be made to `localhost:8000`
 6. On the second terminal run
-```
-cd tfront
-npm run start
-```
+
+    ```bash
+    cd tfront
+    npm run start
+    ```
+
 Navigate to `localhost:3000` to run the app.
 
 
