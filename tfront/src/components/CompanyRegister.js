@@ -2,7 +2,48 @@ import React from 'react'
 import pattern from './img/bg.png'
 import './App.css';
 
+class CenteredText extends React.Component {
+    render() {
+        return (
+            <div className="container-fluid my-5 text-center">
+                <div className="row">
+                    <div className="col">
+                        <h1>{ this.props.text }</h1>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
 export default class CompanyRegister extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { issuccess: false, issubmit: false }
+    }
+
+    submit = e => {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        const xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action);
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+            console.log(xhr.status)
+
+          if (xhr.status === 200) {
+            form.reset();
+            this.setState({ issuccess: true, issubmit: true });
+          } else {
+            this.setState({ issubmit: true });
+          }
+        };
+        xhr.send(data);        
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -26,8 +67,10 @@ export default class CompanyRegister extends React.Component {
                     </div>
                 </div>
 
+                { this.state.issubmit == true ? this.state.issuccess == true ? <CenteredText text="Registration Done!"/> : <CenteredText text="Registration Failed. Retry"/> :
+
                 <div className="container my-5">
-                    <form>
+                    <form onSubmit={this.submit} action="https://formspree.io/xbjlbnaz" method="POST">
 
                         <div className="form-group row">
                             <label for="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
@@ -80,6 +123,8 @@ export default class CompanyRegister extends React.Component {
                         <button type="submit" className="btn btn-dark">Submit</button>
                     </form>
                 </div>
+
+                }
 
                 <div className="container-fluid pink-purple-gradient-text">
                     <div className="row">
