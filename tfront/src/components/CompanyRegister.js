@@ -21,7 +21,7 @@ export default class CompanyRegister extends React.Component {
                 <div className="container my-5 text-center">
                     <div className="row">
                         <div className="col">
-                            This is the official registration portal for the Campus Works initiative by E-Cell, IIIT Hyderabad. The portal is currently under construction. We look forward to helping you recruit IIIT's finest.
+                            This is the official registration portal for the Campus Works initiative by E-Cell, IIIT Hyderabad. The portal is currently under construction. We look forward to helping you recruit the best IIIT has to offer.
                         </div>
                     </div>
                 </div>
