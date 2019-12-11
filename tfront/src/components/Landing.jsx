@@ -1,35 +1,36 @@
 import React, { Component} from 'react';
-import {Navbar, NavDropdown, Nav} from 'react-bootstrap'
-class Landing extends Component{
+import {Navbar, Nav} from 'react-bootstrap';
+import './Landing.css'
 
-    constructor(){
-        this.super(this.props);
-    }
+class Landing extends Component{
     render(){
         return(
+            <body>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                <Navbar.Brand href="#home">Campus Works</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
-                    <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                    </NavDropdown>
-                    </Nav>
-                    <Nav>
-                    <Nav.Link href="#deets">More deets</Nav.Link>
-                    <Nav.Link eventKey={2} href="#memes">
-                        Dank memes
-                    </Nav.Link>
+                        <Nav.Link href="#features">Sign in</Nav.Link>
+                        <Nav.Link href="/register">Register</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            <div id="intro" class="view">
+                <div class="mask rgba-black-strong">
+                    <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+                        <div class="row d-flex justify-content-center text-center">
+                            <div class="col-md-10">
+                                <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Campus Works</h2>
+                                <hr class="hr-light"/>
+                                <h4 class="white-text my-4">Internships made easy!</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </body>
         )
     }
 }
