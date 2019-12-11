@@ -1,36 +1,25 @@
 import React, { Component} from 'react';
-import {Navbar, Nav} from 'react-bootstrap';
 import './Landing.css'
-
+import {Button, ButtonToolbar} from 'react-bootstrap';
 class Landing extends Component{
     render(){
         return(
-            <body>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">Campus Works</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="#features">Sign in</Nav.Link>
-                        <Nav.Link href="/register">Register</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-            <div id="intro" class="view">
-                <div class="mask rgba-black-strong">
-                    <div class="container-fluid d-flex align-items-center justify-content-center h-100">
-                        <div class="row d-flex justify-content-center text-center">
-                            <div class="col-md-10">
-                                <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Campus Works</h2>
-                                <hr class="hr-light"/>
-                                <h4 class="white-text my-4">Internships made easy!</h4>
+            <div id="intro" className="vh-100">
+                <div className="mask d-flex justify-content-center align-items-center">
+                    <div className="container text-center">
+                        <div className="row bg-white p-5 rounded">
+                            <div className="col-md-12">
+                                <h2 className="display-4 font-weight-bold">Campus Works</h2>
+                                <hr className="hr-light"/>
+                                <h4 className="my-4">INTERNSHIPS MADE EASY</h4>
+                                <Button variant="outline-dark" size="lg" href="/register/company">Register as Company</Button>
+                                <br className="my-4"/>
+                                <Button variant="outline-dark" size="lg" disabled>Register as Student</Button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            </body>
         )
     }
 }
