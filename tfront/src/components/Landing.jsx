@@ -2,8 +2,8 @@ import React, { Component} from 'react';
 import {Navbar, NavDropdown, Nav} from 'react-bootstrap'
 class Landing extends Component{
 
-    constructor(){
-        this.super(this.props);
+    constructor(props){
+        super(props);
     }
     render(){
         return(
