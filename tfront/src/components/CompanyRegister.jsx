@@ -52,7 +52,7 @@ export default class CompanyRegister extends React.Component {
                         <div className="row h-100">
                             <div className="col align-self-center text-center">
                                 <h1 className="my-5 text-white">
-                                    <b>Register as a Company Now!</b>
+                                    Register as a Company Now!
                                 </h1>
                             </div>
                         </div>

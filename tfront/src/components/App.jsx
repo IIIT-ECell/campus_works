@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CompanyRegister from './CompanyRegister';
+import CompanyRegister from './CompanyRegister.jsx';
 
 function App() {
 	return (
