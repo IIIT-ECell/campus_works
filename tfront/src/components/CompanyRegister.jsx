@@ -120,7 +120,16 @@ export default class CompanyRegister extends React.Component {
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-dark">Submit</button>
+                        <div className="form-group my-5">
+                            <div className="form-check">
+                                <input className="form-check-input" Type="checkbox" id="gridCheck"/>
+                                <label className="form-check-label" For="gridCheck">
+                                    I have read and understood the <a href="../assets/terms.pdf" className="font-weight-bold text-danger">terms and conditions</a> in its entirety
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" className="btn btn-dark w-100">Submit</button>
                     </form>
                 </div>
 
