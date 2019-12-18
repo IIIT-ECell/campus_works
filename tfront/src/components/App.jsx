@@ -10,15 +10,13 @@ function App() {
 	return (
 		<div>
 			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">Campus Works</Navbar.Brand>
+                <Navbar.Brand href="/">
+					<b>Campus</b> <span Style="color: #FF0077">Works</span>
+				</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                    </Nav>
-                    <Nav>
-                        <Nav.Link href="/login" >Sign in</Nav.Link>
-                        <Nav.Link href="/register/company">Register</Nav.Link>
+                    <Nav className="ml-auto text-white">
+                        <Nav.Link href="/register/company" className="text-white">Register</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
