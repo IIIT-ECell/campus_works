@@ -1,7 +1,7 @@
 {
   "name": "tfront",
   "version": "0.1.0",
-  "homepage": "https://ecell.iiit.ac.in/cworks",
+  "homepage": "https://ecell.iiit.ac.in/cworks/",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.4.1",
@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && scp -r build/ ecell@ecell.iiit.ac.in:~/cworks/"
+    "deploy": "react-scripts build && scp -r build/* ecell@ecell.iiit.ac.in:~/cworks"
   },
   "eslintConfig": {
     "extends": "react-app"

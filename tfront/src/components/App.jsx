@@ -16,14 +16,14 @@ function App() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto text-white">
-                        <Nav.Link href="/register/company" className="text-white">Register</Nav.Link>
+                        <Nav.Link href="/cworks/register/company" className="text-white">Register</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-			<Router>
+                <Router basename="/cworks">
 				<div>
 					<Switch>
-						<Route exact path='/' component={Home} />
+						<Route exact path="/" component={Home} />
 						<Route exact path="/register/company" component={CompanyRegister} />
 					</Switch>
 				</div>
