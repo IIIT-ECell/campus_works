@@ -2,10 +2,10 @@ import React, { Component} from 'react';
 import Landing from "./Landing";
 
 class Home extends Component{
-    render(){
+    render() {
         return (
             <div>
-                <Landing></Landing>
+                <Landing {...this.props}></Landing>
                 <div className="container vh-100 d-flex justify-content-center align-items-center">
                     <div className="row">
                         <div className="col-md-4">

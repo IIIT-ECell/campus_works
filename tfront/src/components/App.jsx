@@ -6,25 +6,28 @@ import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CompanyRegister from './CompanyRegister.jsx';
 
-function App() {
+
+function App(props) {
 	return (
 		<div>
 			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="/cworks/">
+                <Navbar.Brand href={props.baseUrl + "/"}>
 					<b>Campus</b> <span Style="color: #FF0077">Works</span>
 				</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto text-white">
-                        <Nav.Link href="/cworks/register/company" className="text-white">Register</Nav.Link>
+                        <Nav.Link href={ props.baseUrl + "/register/company" } className="text-white">Register</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
                 <Router basename="/cworks">
 				<div>
 					<Switch>
-						<Route exact path="/" component={Home} />
-						<Route exact path="/register/company" component={CompanyRegister} />
+                        <Route exact path="/"
+                            render={props => <Home {...props} />} />
+                            <Route exact path="/register/company"
+                                render={props => <CompanyRegister {...props} />} />
 					</Switch>
 				</div>
 			</Router>

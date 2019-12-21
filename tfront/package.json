@@ -1,7 +1,7 @@
 {
   "name": "tfront",
   "version": "0.1.0",
-  "homepage": "https://ecell.iiit.ac.in/cworks/",
+  "homepage": "/cworks/",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.4.1",

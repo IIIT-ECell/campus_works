@@ -73,7 +73,7 @@ export default class CompanyRegister extends React.Component {
                     <form onSubmit={this.submit} action="https://formspree.io/meqowqel" method="POST">
 
                         <div className="form-group row">
-                            <label for="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
+                            <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">
                                 <input className="form-control" name="name" id="name" placeholder="ABC Inc." required/>
                                 <small className="form-text text-muted">This is the Company's name</small>
@@ -81,7 +81,7 @@ export default class CompanyRegister extends React.Component {
                         </div>
 
                         <div className="form-group row">
-                            <label for="email" className="col-sm-2 col-form-label font-weight-bold">Email address</label>
+                            <label htmlFor="email" className="col-sm-2 col-form-label font-weight-bold">Email address</label>
                             <div className="col-sm-10">
                                 <input type="email" className="form-control" name="email" id="email" placeholder="joe@email.com" required/>
                                 <small className="form-text text-muted">This is used to log into the portal and create job posting, and manage them</small>
@@ -122,8 +122,8 @@ export default class CompanyRegister extends React.Component {
 
                         <div className="form-group my-5">
                             <div className="form-check">
-                                <input className="form-check-input" Type="checkbox" id="gridCheck"/>
-                                <label className="form-check-label" For="gridCheck">
+                                <input className="form-check-input" type="checkbox" id="gridCheck"/>
+                                <label className="form-check-label" htmlFor="gridCheck">
                                     I have read and understood the <a href="../assets/terms.pdf" className="font-weight-bold text-danger">terms and conditions</a> in its entirety
                                 </label>
                             </div>
