@@ -25,9 +25,9 @@ function App(props) {
 				<div>
 					<Switch>
                         <Route exact path="/"
-                            render={props => <Home {...props} />} />
+                            render={(props) => <Home {...props} />} />
                             <Route exact path="/register/company"
-                                render={props => <CompanyRegister {...props} />} />
+                                render={(props) => <CompanyRegister {...props} />} />
 					</Switch>
 				</div>
 			</Router>

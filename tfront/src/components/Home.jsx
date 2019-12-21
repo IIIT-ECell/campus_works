@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import Landing from "./Landing";
 
-class Home extends Component{
+class Home extends Component {
     render() {
         return (
             <div>

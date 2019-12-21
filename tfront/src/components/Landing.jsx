@@ -3,7 +3,7 @@ import './Landing.css'
 import {Button, ButtonToolbar} from 'react-bootstrap';
 import Hero from '../assets/hero.png'
 
-class Landing extends Component{
+class Landing extends Component {
     render() {
         return(
             <div id="intro" className="vh-100">
