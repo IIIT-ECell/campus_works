@@ -10,7 +10,7 @@ function App() {
 	return (
 		<div>
 			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="/">
+                <Navbar.Brand href="/cworks/">
 					<b>Campus</b> <span Style="color: #FF0077">Works</span>
 				</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
