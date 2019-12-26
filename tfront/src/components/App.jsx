@@ -8,6 +8,7 @@ import CompanyRegister from './CompanyRegister.jsx';
 
 
 function App(props) {
+	console.log(props);
 	return (
 		<div>
 			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -21,7 +22,7 @@ function App(props) {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-                <Router basename="/cworks">
+                <Router basename={props.baseUrl}>
 				<div>
 					<Switch>
                         <Route exact path="/"

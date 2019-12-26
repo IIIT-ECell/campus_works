@@ -2,9 +2,10 @@ import React, { Component} from 'react';
 import './Landing.css'
 import {Button, ButtonToolbar} from 'react-bootstrap';
 import Hero from '../assets/hero.png'
-
+import {Router, Link} from 'react-router-dom';
 class Landing extends Component {
     render() {
+        console.log(this.props);
         return(
             <div id="intro" className="vh-100">
                 <div className="mask d-flex justify-content-center align-items-center">
@@ -13,7 +14,8 @@ class Landing extends Component {
                             <div className="col-md-6 my-auto">
                                 <h2 className="display-4 font-weight-bold">Campus Works</h2>
                                 <h5>Connecting Students with Startups. Internships have never been easier</h5>
-                                <Button variant="btn btn-dark" size="lg" href={ this.props.baseUrl + "/register/company" }>Register as Company</Button>
+                                <Button variant="btn btn-dark" size="lg">
+                                    <Link to={"/register/company" }>Register as Company</Link></Button>
                                 <br className="my-4"/>
                             </div>
                             <div className="order-lg-first w-50 mx-auto">
