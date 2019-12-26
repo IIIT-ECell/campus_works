@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway|Barlow&display=swap');
 
 .App {
   text-align: center;
@@ -52,4 +52,24 @@ h1, h2, h3, h4, h5 {
 
 .pink-purple-gradient-text {
   background: -webkit-gradient(linear, left top, right top, from(#FF0077), to(#7900C8));
+}
+
+.nav-logo {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-text {
+  padding-left: 1rem;
+  font-family: 'Barlow', serif;
+  font-weight: lighter;
+  font-size: 1.5rem;
+}
+
+.nav-logo-gradient {
+  background: -webkit-linear-gradient(0deg, #fe0078, #7b00c7);
+  font-weight: bold;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

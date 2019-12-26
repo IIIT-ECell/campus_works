@@ -6,14 +6,18 @@ import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CompanyRegister from './CompanyRegister.jsx';
 
-
 function App(props) {
 	console.log(props);
 	return (
 		<div>
 			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href={props.baseUrl + "/"}>
-					<b>Campus</b> <span Style="color: #FF0077">Works</span>
+                <Navbar.Brand href={props.baseUrl + "/"} className="nav-logo">
+				<img
+        			src={ props.baseUrl + "/logo.png" }
+        			width="60"
+        			className="d-inline-block align-top"
+        			alt="Campus Works logo" />{' '}
+					<div class="nav-text">Campus <b><span className="nav-logo-gradient">Works</span></b></div>
 				</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
