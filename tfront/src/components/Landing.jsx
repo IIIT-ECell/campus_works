@@ -1,7 +1,6 @@
 import React, { Component} from 'react';
 import './Landing.css'
 import {Button, ButtonToolbar} from 'react-bootstrap';
-import Hero from '../assets/hero.png'
 import {Router, Link} from 'react-router-dom';
 class Landing extends Component {
     render() {
@@ -18,7 +17,7 @@ class Landing extends Component {
                                 <br className="my-4"/>
                             </div>
                             <div className="order-lg-first w-50 mx-auto">
-                                <img className="img-fluid" src={ Hero }/>
+                                <img className="img-fluid" src={process.env.PUBLIC_URL + '/assets/hero.png'}/>
                             </div>
                         </div>
                     </div>

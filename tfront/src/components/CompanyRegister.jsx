@@ -1,6 +1,7 @@
 import React from 'react'
 import pattern from './img/bg.png'
 import './App.css';
+import { Link } from 'react-router-dom';
 
 class CenteredText extends React.Component {
     render() {
@@ -124,7 +125,7 @@ export default class CompanyRegister extends React.Component {
                             <div className="form-check">
                                 <input className="form-check-input" type="checkbox" id="gridCheck"/>
                                 <label className="form-check-label" htmlFor="gridCheck">
-                                    I have read and understood the <a href="../assets/terms.pdf" className="font-weight-bold text-danger">terms and conditions</a> in its entirety
+                                    I have read and understood the <a href={process.env.PUBLIC_URL + '/assets/terms.pdf'} target="_blank" className="font-weight-bold text-danger">terms and conditions</a> in its entirety
                                 </label>
                             </div>
                         </div>
