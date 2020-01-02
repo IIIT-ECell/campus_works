@@ -4,3 +4,6 @@ local_settings.py
 
 # default for virtualenvs
 venv
+
+# for vscode users
+.vscode/
