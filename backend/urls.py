@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from backend.views import user, students, companies 
+# from backend.views import CustomUser, students, companies 
 
 appname = "backend"
 
 urlpatterns = [
-    path('', views.homepage, name="homepage"), 
+#     # path('', views.homepage, name="homepage"), 
 ]

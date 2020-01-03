@@ -20,11 +20,6 @@ class CustomUser(AbstractUser):
         (3, 'Admin'),
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
-
-    phone_validate = RegexValidator(
-        regex=r'^\d{10}$', message="Enter your 10 digit phone number without country codes and symbols")
-
-    phone_number = models.CharField(blank=False, max_length=10, validators=[phone_validate,])
     
     def __str__(self):
         return self.pk
@@ -59,6 +54,11 @@ class Student(models.Model):
         (Y5, 'Postgrads (5th year DD, PG+))'),
     )
 
+    phone_validate = RegexValidator(
+        regex=r'^\d{10}$', message="Enter your 10 digit phone number without country codes and symbols")
+
+    phone_number = models.CharField(blank=False, max_length=10, validators=[phone_validate,])
+
     student_id = models.CharField(blank=False, max_length=10)
     gender = models.CharField(blank=False,max_length=1,choices=GENDER_CHOICES)
     year_of_study = models.CharField(blank=False,max_length=1,choices=YEAR_OF_STUDY_CHOICES)
@@ -73,39 +73,50 @@ class Student(models.Model):
 class Company(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     
-    poc_name = models.CharField(blank=False, max_length=255, default="", verbose_name="person of contact")
-    name = models.CharField(blank=False, max_length=255, default="")
+    phone_validate = RegexValidator(
+        regex=r'^\d{10}$', message="Enter your 10 digit phone number without country codes and symbols")
+
+    phone_number = models.CharField(blank=False, max_length=10, validators=[phone_validate,])
+
+    poc = models.CharField(blank=False, max_length=255, default="", verbose_name="person of contact")
     about = models.TextField(blank=False, max_length=1000)
     logo = models.ImageField()
     
-class Jobs(models.Model):
+class Job(models.Model):
     job_name = models.CharField(blank=False,max_length=255)
-    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     description = models.TextField(blank=False)
-    skill = models.CharField(max_length=50)
-    job_start_date = models.DateField(blank=False)
-    job_duration = models.IntegerField(blank=False)
+    skill = models.TextField(verbose_name="skills required", max_length=50)
+    start_date = models.DateField(blank=False)
+    duration = models.IntegerField(blank=False)
+    is_flexi = models.BooleanField(verbose_name="flexible start and end date", null=False, default=False)
     stipend = models.IntegerField(blank=False)
-    language = models.CharField(max_length=50)
-    status = models.BooleanField(blank=False, default=True)
+    language = models.CharField(verbose_name="Programming languages",max_length=50)
+    is_active = models.BooleanField(blank=False, default=True)
 
-class Applications(models.Model):
-    job_id = models.ForeignKey(Jobs, on_delete=models.CASCADE)
-    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
-    date_of_application = models.DateField(blank=False)
-    status = models.BooleanField(blank=False, default=True)
+class Application(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    date_of_application = models.DateTimeField(blank=False, auto_now_add=True)
 
-@receiver(post_save, sender=CustomUser)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        if instance.user_type==1:
-            Student.objects.create(user=instance)
-        else:
-            Company.objects.create(user=instance)
+    APPLICATION_RECEIVED = 'RCVD'
+    PASSED_SCREENING = 'SCRN'
+    INTERVIEWED = 'INTD'
+    ACCEPTED = 'ACPT'
+    REJECTED = 'RJCT'
+    FLAGGED = 'FLAG'
 
-@receiver(post_save, sender=CustomUser)
-def save_user_profile(sender, instance, **kwargs):
-    if instance.user_type==1:
-        instance.student.save()
-    else:
-        instance.company.save()
+    ACCEPT_STATUS_CHOICES = [
+        (APPLICATION_RECEIVED, 'Application received'),
+        (PASSED_SCREENING, 'Passed screening'),
+        (INTERVIEWED, 'Interviewed'),
+        (ACCEPTED, 'Accepted'),
+        (REJECTED, 'Rejected'),
+        (FLAGGED, 'Flagged'),
+    ]
+
+    select_status = models.CharField('selection status', choices=ACCEPT_STATUS_CHOICES, default=APPLICATION_RECEIVED, max_length=4);
+
+    resume_validate = FileValidator(
+        max_size=50*1024*1024, content_types=('application/pdf', ))
+    resume = models.FileField(validators=[resume_validate, ])
