@@ -21,9 +21,6 @@ class CustomUser(AbstractUser):
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
     
-    def __str__(self):
-        return self.pk
-    
 
 
 class Student(models.Model):
