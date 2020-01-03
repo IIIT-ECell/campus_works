@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 '''
 Model description for Student and Company users. The users are an extension of
@@ -88,3 +90,18 @@ class Applications(models.Model):
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     date_of_application = models.DateField(blank=False)
     status = models.BooleanField(blank=False, default=True)
+
+@receiver(post_save, sender=CustomUser)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        if instance.user_type==1:
+            Student.objects.create(user=instance)
+        else:
+            Company.objects.create(user=instance)
+
+@receiver(post_save, sender=CustomUser)
+def save_user_profile(sender, instance, **kwargs):
+    if instance.user_type==1:
+        instance.student.save()
+    else:
+        instance.company.save()
