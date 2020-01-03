@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import RegexValidator
+from .validators import FileValidator
 
 '''
 Model description for Student and Company users. The users are an extension of
@@ -18,8 +20,15 @@ class CustomUser(AbstractUser):
         (3, 'Admin'),
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
-    phone_number = models.CharField(blank=False, max_length=15)
-    email = models.CharField(blank=False, max_length=100)
+
+    phone_validate = RegexValidator(
+        regex=r'^\d{10}$', message="Enter your 10 digit phone number without country codes and symbols")
+
+    phone_number = models.CharField(blank=False, max_length=10, validators=[phone_validate,])
+    
+    def __str__(self):
+        return self.pk
+    
 
 
 class Student(models.Model):
@@ -51,28 +60,23 @@ class Student(models.Model):
     )
 
     student_id = models.CharField(blank=False, max_length=10)
-    gender = models.CharField(blank=False,max_length=2,choices=GENDER_CHOICES)
+    gender = models.CharField(blank=False,max_length=1,choices=GENDER_CHOICES)
     year_of_study = models.CharField(blank=False,max_length=1,choices=YEAR_OF_STUDY_CHOICES)
-    resume = models.CharField(blank=False,max_length=100)
+    resume_validate = FileValidator(
+        max_size=50*1024*1024, content_types=('application/pdf', ))
 
-    def get_student(self):
-        """
-        This view should return the student with a particular user_id
-        """
-        user_id = self.kwargs['user_id']
-        return Student.objects.filter(user_id=user_id)
+    resume = models.FileField(validators=[resume_validate])
 
     def __str__(self):
-        return self.email
+        return self.user.name
 
 class Company(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     
-    poc_name = models.CharField(blank=False, max_length=255, default="")
+    poc_name = models.CharField(blank=False, max_length=255, default="", verbose_name="person of contact")
     name = models.CharField(blank=False, max_length=255, default="")
-    company_id = models.CharField(blank=False, max_length=255)
-    about = models.CharField(blank=False, max_length=1000)
-    logo = models.CharField(blank=True, max_length=255)
+    about = models.TextField(blank=False, max_length=1000)
+    logo = models.ImageField()
     
 class Jobs(models.Model):
     job_name = models.CharField(blank=False,max_length=255)
