@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth import login
-from backend.models import CustomUser, Student
+from backend.models import CustomUser, Student 
 import json
 # Create your views here.
 
-def register_student(request):
+@require_http_methods(['POST','GET','PUT'])
+def student(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
         try:
@@ -28,3 +30,7 @@ def register_student(request):
             applications = data['applications'],
             resume = data['resume'],
         )
+        JsonResponse({"message":"Student created successfully"},safe=False)
+    if request.method == 'PUT':
+        pass
+
