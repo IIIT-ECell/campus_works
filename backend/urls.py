@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from backend import views 
+from rest_framework.authtoken.views import obtain_auth_token
 
 appname = "backend"
 
 urlpatterns = [
-    path('student', views.student), 
+    path('student', views.StudentViews.as_view()), 
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth')
 ]

@@ -14,6 +14,12 @@ Generic workflow used: https://simpleisbetterthancomplex.com/tutorial/2018/01/18
 
 class CustomUser(AbstractUser):
 
+    '''
+    Here we are using the username as the pk which is the same as the email. So in essence email is the username.
+    No need to create a separate user when adding Students or Companies, the user will be added automatically.
+    '''
+
+
     USER_TYPE_CHOICES = (
         (1, 'Student'),
         (2, 'Company'),

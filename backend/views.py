@@ -4,15 +4,17 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth import login
 from backend.models import CustomUser, Student 
 from django.contrib.auth.hashers import make_password
-import json
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
+from rest_framework.response import Response
+import json
 
-# Create your views here.
+class StudentViews(APIView):
 
-@require_http_methods(['POST','GET','PUT'])
-@csrf_exempt
-def student(request):
-    if request.method == 'POST':
+    def get(self,request):
+        pass
+
+    def post(self,request):
         data = json.loads(request.body)
         print(data)
         try:
@@ -26,8 +28,7 @@ def student(request):
             new_user = CustomUser.objects.create_user(
                 email = email,
                 username = email,
-                password = password,
-                # password2 = password
+                password = password
             )
 
             new_student = Student.objects.create(
@@ -38,10 +39,7 @@ def student(request):
                 resume = data['resume'],
             )
             new_student.save()
-
-            return JsonResponse({"message":"Student created successfully"},safe=True)
+            return Response({"message":"User created successfully"})
         except Exception as e:
-            return HttpResponseServerError(str(e))
-    if request.method == 'PUT':
-        pass
+            return Response({"message":str(e)})
 
