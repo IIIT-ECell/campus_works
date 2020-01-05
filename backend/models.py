@@ -64,9 +64,6 @@ class Student(models.Model):
 
     resume = models.FileField(validators=[resume_validate])
 
-    def __str__(self):
-        return self.user.name
-
 class Company(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     
