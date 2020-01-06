@@ -1,26 +1,16 @@
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.decorators import user_passes_test
+from rest_framework.authtoken.models import Token
+from backend.models import *
 
-def student_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
+def student_required(key):
+    token = Token.objects.get(key=key)
+    user = CustomUser.objects.get(id=token.user_id)
+    if(user.user_type==1):
+        return True
+    return False
 
-    actual_decorator = user_passes_test(
-        lambda u: u.user_type==1,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name
-    )
-
-    if function:
-        return actual_decorator(function)
-    return actual_decorator
-
-def company_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
-
-    actual_decorator = user_passes_test(
-        lambda u: u.user_type==2,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name
-    )
-
-    if function:
-        return actual_decorator(function)
-    return actual_decorator
+def company_required(key):
+    token = Token.objects.get(key=key)
+    user = CustomUser.objects.get(id=token.user_id)
+    if(user.user_type == 2):
+        return True
+    return False

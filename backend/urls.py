@@ -22,5 +22,5 @@ appname = "backend"
 
 urlpatterns = [
     path('student', views.StudentViews.as_view()), 
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth')
+    path('authenticate', obtain_auth_token, name='api_token_auth')
 ]

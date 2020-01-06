@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import login
-from backend.models import CustomUser, Student 
+from backend.models import CustomUser, Student, Job
 from django.contrib.auth.hashers import make_password
-from django.views.decorators.csrf import csrf_exempt
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from backend.decorators import student_required, company_required
 import json
 
 class StudentViews(APIView):
@@ -22,8 +24,6 @@ class StudentViews(APIView):
             password = data['password']
             if email is None or password is None:
                 return HttpResponseServerError("No email or password given")
-            # if CustomUser.objects.get(email=email) is not None:
-            #     return HttpResponseServerError("Email already exists")
 
             new_user = CustomUser.objects.create_user(
                 email = email,
@@ -43,3 +43,20 @@ class StudentViews(APIView):
         except Exception as e:
             return Response({"message":str(e)})
 
+class PostJobs(APIView):
+
+    def post(self,request):
+        data = json.loads(request.body)
+        token = data['token']
+        if not company_required(token):
+           return Response({"message":"You cannot post jobs"}) 
+        try: 
+            new_job = Job.objects.create(
+                job_name = data['job_name'],
+                company = data['company'],
+                description = data['description']
+            )
+            new_job.save()
+            return Response({"message":"Job added successfully"})
+        except Exception as e:
+            return Response({"message":str(e)})
