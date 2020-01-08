@@ -17,7 +17,8 @@ class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
-        return Response({'token': token.key, 'id': token.user_id})
+        user = CustomUser.objects.get(id=token.user_id)
+        return Response({'token': token.key, 'id': token.user_id, 'type':user.user_type})
 
 
 class StudentViews(APIView):

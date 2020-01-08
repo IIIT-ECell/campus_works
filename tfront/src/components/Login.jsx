@@ -1,6 +1,41 @@
 import {Component} from React;
 
 class Login extends Component{
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            formData:{}
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event){
+        event.preventDefault();
+        this.formData[event.target.id] = event.target.value;
+    }
+    
+    handleSubmit(event){
+        event.preventDefault();
+        axios({
+            method:"POST",
+            url:"http://localhost:8000/authenticate",
+            data:{
+
+            },
+            headers:{
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'*',
+            }
+        }).then((response)=>{
+            console.log(response.data.key);
+            localStorage['key']=response.data.key;
+            localStorage["isLoggedIn"] = true;
+            localStorage["id"] = response.data.user_id;
+            localStorage["type"]=response.data.user_type;
+        });
+    }
 
     render(){
         return(
@@ -8,7 +43,7 @@ class Login extends Component{
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="email" id="email" placeholder="Enter email" onChange={this.handleChange} />
                         <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                         </Form.Text>
@@ -16,12 +51,12 @@ class Login extends Component{
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" id="password" placeholder="Password" onChange={this.handleChange}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicCheckbox">
                         <Form.Check type="checkbox" label="Check me out" />
                     </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" type="submit" onClick={this.handleSubmit}>Submit</Button>
                 </Form>
             </div>
         );
