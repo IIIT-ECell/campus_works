@@ -32,7 +32,7 @@ function App(props) {
 					<Switch>
                         <Route exact path="/" render={(props) => <Home {...props} />} />
 						<Route exact path="/register/company" render={(props) => <CompanyRegister {...props} />} />
-						<Route exact path="/login" render={Login}/>
+						<Route exact path="/login" component={Login}/>
 					</Switch>
 				</div>
 			</Router>

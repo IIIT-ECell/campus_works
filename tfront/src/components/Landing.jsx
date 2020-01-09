@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import './Landing.css'
-import {Button, ButtonToolbar} from 'react-bootstrap';
-import {Router, Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 class Landing extends Component {
     render() {
         console.log(this.props);
