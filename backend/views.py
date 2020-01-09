@@ -129,3 +129,14 @@ class ApplyForJob(APIView):
             return Response({"message":"Job added successfully"})
         except Exception as e:
             return Response({"message":str(e)})
+
+class ViewJobs(APIView):
+
+    def post(self, request):
+        data = json.loads(request.body)
+        key = data["token"]
+        token = Token.objects.get(key=key)
+        company = Company.objects.get(user_id=token.user_id)
+        jobs = Job.objects.filter(company_id=company.id)
+        return Response({"jobs":list(jobs)})
+

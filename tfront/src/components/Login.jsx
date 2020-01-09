@@ -6,9 +6,7 @@ class Login extends Component{
     
     constructor(props){
         super(props);
-        this.state = {
-            formData:{}
-        };
+        this.formData = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -32,7 +30,7 @@ class Login extends Component{
             }
         }).then((response)=>{
             console.log(response.data.key);
-            localStorage['key']=response.data.key;
+            localStorage['key']=response.data.token;
             localStorage["isLoggedIn"] = true;
             localStorage["id"] = response.data.user_id;
             localStorage["type"]=response.data.user_type;
