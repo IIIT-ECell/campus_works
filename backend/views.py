@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth import login
+from django.core import serializers
 from backend.models import CustomUser, Student, Company, Job
 from django.contrib.auth.hashers import make_password
 
@@ -135,8 +135,8 @@ class ViewJobs(APIView):
         key = data["token"]
         token = Token.objects.get(key=key)
         company = Company.objects.get(user_id=token.user_id)
-        jobs = Job.objects.filter(company_id=company.id)
-        return Response({"jobs":list(jobs)})
+        jobs = serializers.serialize('json',Job.objects.filter(company_id=company.id))
+        return Response(json.loads(jobs))
 
 
 class ApplyForJob(APIView):
