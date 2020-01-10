@@ -1,5 +1,4 @@
 import React from 'react';
-import {Navbar, Nav} from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
@@ -12,23 +11,7 @@ function App(props) {
 	console.log(props);
 	return (
 		<div>
-			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href={props.baseUrl + "/"} className="nav-logo">
-				<img
-        			src={ props.baseUrl + "/logo.png" }
-        			width="60"
-        			className="d-inline-block align-top"
-        			alt="Campus Works logo" />{' '}
-					<div class="nav-text">Campus <b><span className="nav-logo-gradient">Works</span></b></div>
-				</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="ml-auto text-white">
-                        <Nav.Link href={ props.baseUrl + "/register/company" } className="text-white">Register</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-                <Router basename={props.baseUrl}>
+			<Router basename={props.baseUrl}>
 				<div>
 					<Switch>
                         <Route exact path="/" render={(props) => <Home {...props} />} />
