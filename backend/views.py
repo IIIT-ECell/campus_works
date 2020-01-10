@@ -89,6 +89,15 @@ class CompanyViews(APIView):
 
 class PostJob(APIView):
 
+    def get(self,request):
+        '''View a single job'''
+        #should give all the job details for a given id
+        
+        data = json.loads(request.body)
+        id = data['id']
+        return Jobs.objects.get(id=id)
+
+
     def post(self,request):
         data = json.loads(request.body)
         try: 
@@ -108,6 +117,26 @@ class PostJob(APIView):
             return Response({"message":"Job added successfully"})
         except Exception as e:
             return Response({"message":str(e)})
+
+    # def put(self, request):
+    #     try: 
+    #         token = data['token']
+    #         if not company_required(token):
+    #             return Response({"message":"You cannot post jobs"}) 
+            # job_id = 
+            # check the person editing the job is the person who posted it
+
+
+class ViewJobs(APIView):
+    def post(self, request):
+        '''Gives you multiple jobs'''
+        # incomplete
+        data = json.loads(request.body)
+        key = data["token"]
+        token = Token.objects.get(key=key)
+        company = Company.objects.get(user_id=token.user_id)
+        jobs = Job.objects.filter(company_id=company.id)
+        return Response({"jobs":list(jobs)})
 
 
 class ApplyForJob(APIView):
@@ -130,13 +159,5 @@ class ApplyForJob(APIView):
         except Exception as e:
             return Response({"message":str(e)})
 
-class ViewJobs(APIView):
 
-    def post(self, request):
-        data = json.loads(request.body)
-        key = data["token"]
-        token = Token.objects.get(key=key)
-        company = Company.objects.get(user_id=token.user_id)
-        jobs = Job.objects.filter(company_id=company.id)
-        return Response({"jobs":list(jobs)})
 

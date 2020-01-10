@@ -22,7 +22,8 @@ class Login extends Component{
             method:"POST",
             url:"http://localhost:8000/authenticate",
             data:{
-
+                username:this.formData.email,
+                password:this.formData.password
             },
             headers:{
                 'Content-Type': 'application/json',
@@ -30,7 +31,7 @@ class Login extends Component{
             }
         }).then((response)=>{
             console.log(response.data.key);
-            localStorage['key']=response.data.token;
+            localStorage["token"] = response.data.token;
             localStorage["isLoggedIn"] = true;
             localStorage["id"] = response.data.user_id;
             localStorage["type"]=response.data.user_type;
