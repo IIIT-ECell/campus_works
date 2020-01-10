@@ -11,18 +11,20 @@ class CompanyHome extends Component{
 
     componentDidMount(){
         axios({
-            method:"GET",
-            url:"https://localhost:8000/jobs/",
+            method:"POST",
+            url:"http://localhost:8000/jobs",
             data:{
-                "token":localStorage["key"],
+                "token":localStorage.getItem("token"),
             },
             headers:{
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'*',
-            }.then((response)=>{
-                this.setState({jobs:response.data.jobs});
-            })
+            }
         })
+        .then((res)=>{
+            console.log(res);
+            this.setState({"jobs":res.data});
+            console.log(this.state);
+        });
     }
 
 
@@ -43,7 +45,7 @@ class CompanyHome extends Component{
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.jobs.map((item,key)=>{
+                    {this.state.jobs && this.state.jobs.map((item,key)=>{
                         return (<tr>
                             <td>{item.fields.job_name}</td>
                             <td>{item.fields.description}</td>

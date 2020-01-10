@@ -26,8 +26,7 @@ class Login extends Component{
                 password:this.formData.password
             },
             headers:{
-                "Access-Control-Allow-Origin":"*",
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             }
         }).then((response)=>{
             console.log(response.data.key);

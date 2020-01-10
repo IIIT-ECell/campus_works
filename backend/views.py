@@ -132,6 +132,7 @@ class ViewJobs(APIView):
         '''Gives you multiple jobs'''
         # incomplete
         data = json.loads(request.body)
+        print(data)
         key = data["token"]
         token = Token.objects.get(key=key)
         company = Company.objects.get(user_id=token.user_id)
