@@ -5,7 +5,8 @@ import './App.css';
 import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CompanyRegister from './CompanyRegister.jsx';
-import Login from './Login.jsx'
+import Login from './Login.jsx';
+import CompanyHome from './CompanyHome';
 
 function App(props) {
 	console.log(props);
@@ -33,6 +34,7 @@ function App(props) {
                         <Route exact path="/" render={(props) => <Home {...props} />} />
 						<Route exact path="/register/company" render={(props) => <CompanyRegister {...props} />} />
 						<Route exact path="/login" component={Login}/>
+						<Route exact path="/company/home" component={CompanyHome}/>
 					</Switch>
 				</div>
 			</Router>

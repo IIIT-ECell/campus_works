@@ -44,16 +44,17 @@ class CompanyHome extends Component{
                 </thead>
                 <tbody>
                     {this.state.jobs.map((item,key)=>{
-                        <tr>
-                            <td>{item.job_name}</td>
-                            <td>{item.description}</td>
-                            <td>{item.start_date}</td>
-                            <td>{item.skill}</td>
-                            <td>{item.stipend}</td>
-                        </tr>
+                        return (<tr>
+                            <td>{item.fields.job_name}</td>
+                            <td>{item.fields.description}</td>
+                            <td>{item.fields.start_date}</td>
+                            <td>{item.fields.skill}</td>
+                            <td>{item.fields.stipend}</td>
+                        </tr>)
                     })}
                 </tbody>
             </Table>
         )
     }
 }
+export default CompanyHome;

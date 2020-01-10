@@ -26,8 +26,8 @@ class Login extends Component{
                 password:this.formData.password
             },
             headers:{
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin':'*',
+                "Access-Control-Allow-Origin":"*",
+                "Content-Type": "application/json"
             }
         }).then((response)=>{
             console.log(response.data.key);
@@ -35,6 +35,8 @@ class Login extends Component{
             localStorage["isLoggedIn"] = true;
             localStorage["id"] = response.data.user_id;
             localStorage["type"]=response.data.user_type;
+            // Simulate an HTTP redirect:
+            window.location.replace("http://localhost:3000/company/home");
         });
     }
 
