@@ -20,6 +20,7 @@ function App(props) {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/company/home" component={CompanyHome} />
                         <Route exact path="/jobs/new" component={CreateJob} />
+                        <Route exact path="/jobs/edit/:id" component={CreateJob} />
                     </Switch>
                 </div>
             </Router>
