@@ -85,7 +85,7 @@ class CreateJob extends Component {
                         <div className="form-group row">
                             <label htmlFor="description" className="col-sm-2 col-form-label font-weight-bold">Description</label>
                             <div className="col-sm-10">
-                                <input className="form-control" name="description" id="description" placeholder="A cool job" onChange={this.handleChange} required />
+                                <textarea className="form-control" name="description" id="description" placeholder="A cool job" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">Please describe the job</small>
                             </div>
                         </div>
@@ -138,17 +138,6 @@ class CreateJob extends Component {
                             <div className="col-sm-10">
                                 <input className="form-control" name="language" id="language" placeholder="c/cpp/python" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">Programming languages required</small>
-                            </div>
-                        </div>
-
-                        <div className="form-group row">
-                            <label htmlFor="is_active" className="col-sm-2 col-form-label font-weight-bold">Activate</label>
-                            <div className="col-sm-10">
-                                <select className="form-control" name="is_active" id="is_active" onChange={this.handleChange} required>
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
-                                </select>
-                                <small className="form-text text-muted">Display this job in the list now?</small>
                             </div>
                         </div>
 
