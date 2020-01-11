@@ -94,36 +94,99 @@ class PostJob(APIView):
         #should give all the job details for a given id
         
         data = json.loads(request.body)
-        id = data['id']
-        return Jobs.objects.get(id=id)
+        try:
+            id = data['id']
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+
+        try:
+            job = Job.objects.get(pk=id)
+        except Job.DoesNotExist as e:
+            return Response({"success": False, "message": str(e)})
+
+        job_json = serializers.serialize("json", [job, ])
+        return Response({"success": True, "data": json.loads(job_json)[0]})
+        
 
 
     def post(self,request):
         data = json.loads(request.body)
+        
         try: 
             token = data['token']
-            if not company_required(token):
-                return Response({"message":"You cannot post jobs"}) 
-            company = Company.objects.get(user_id=data['id'])
-            new_job = Job.objects.create(
-                job_name = data['job_name'],
-                company = company,
-                start_date = data['start_date'],
-                duration = data['duration'],
-                stipend = data['stipend'],
-                description = data['description']
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+        
+        if not company_required(token):
+            return Response({"success": False, "message": "You cannot post jobs"})
+
+        try:
+            id = data['id'] # this is the id of the user
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+        
+        try:
+            company = 
+            new_job = Job(
+                company = company
             )
+            keys = data.keys()
+            print(data.keys())
+            if "job_name" in keys:
+                new_job.job_name = data["job_name"]
+            if "description" in keys:
+                new_job.description = data["description"]
+            if "skill" in keys:
+                new_job.skill = data["skill"]
+            if "start_date" in keys:
+                print(data["start_date"])
+                new_job.start_date = data["start_date"]
+            if "duration" in keys:
+                new_job.duration = data["duration"]
+            if "stipend" in keys:
+                new_job.stipend = data["stipend"]
+            if "language" in keys:
+                new_job.language = data["language"]
+            if "stipend" in keys:
+                new_job.stipend = data["stipend"]
             new_job.save()
             return Response({"message":"Job added successfully"})
         except Exception as e:
             return Response({"message":str(e)})
 
-    # def put(self, request):
-    #     try: 
-    #         token = data['token']
-    #         if not company_required(token):
-    #             return Response({"message":"You cannot post jobs"}) 
-            # job_id = 
+    def put(self, request):
+        data = json.loads(request.body)
+        try: 
+            token = data['token']
+            if not company_required(token):
+                return Response({"message":"You cannot post jobs"}) 
+            job_id = data["job_id"]
+            new_job = Job.objects.get(id=job_id)
+
+            keys = data.keys()
+            print(data.keys())
+            if "job_name" in keys:
+                new_job.job_name = data["job_name"]
+            if "description" in keys:
+                new_job.description = data["description"]
+            if "skill" in keys:
+                new_job.skill = data["skill"]
+            if "start_date" in keys:
+                print(data["start_date"])
+                new_job.start_date = data["start_date"]
+            if "duration" in keys:
+                new_job.duration = data["duration"]
+            if "stipend" in keys:
+                new_job.stipend = data["stipend"]
+            if "language" in keys:
+                new_job.language = data["language"]
+            if "stipend" in keys:
+                new_job.stipend = data["stipend"]
+            new_job.save()
+            return Response({"message":"Job added successfully"})
+        except Exception as e:
+            return Response({"message":str(e)})
+
             # check the person editing the job is the person who posted it
 
 
