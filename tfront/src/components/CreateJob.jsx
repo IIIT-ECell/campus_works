@@ -22,7 +22,7 @@ import { Redirect } from 'react-router-dom';
 class CreateJob extends Component {
     constructor(props) {
         super(props);
-        this.formData = {};
+        this.formData = {"is_flexi": "false"};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
