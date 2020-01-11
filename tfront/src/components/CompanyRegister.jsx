@@ -18,34 +18,23 @@ class CenteredText extends React.Component {
 export default class CompanyRegister extends React.Component {
     constructor(props) {
         super(props);
+        this.formData = {};
         this.state = { issuccess: false, issubmit: false }
     }
 
-    submit = e => {
-        e.preventDefault();
-        const form = e.target;
-        const data = new FormData(form);
-        const xhr = new XMLHttpRequest();
-        xhr.open(form.method, form.action);
-        xhr.setRequestHeader("Accept", "application/json");
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState !== XMLHttpRequest.DONE) return;
+    handleChange(event){
+        event.preventDefault();
+        this.formData[event.target.id] = event.target.value;
+    }
 
-            console.log(xhr.status)
-
-          if (xhr.status === 200) {
-            form.reset();
-            this.setState({ issuccess: true, issubmit: true });
-          } else {
-            this.setState({ issubmit: true });
-          }
-        };
-        xhr.send(data);        
+    hamdleSubmit(){
+        
     }
 
     render() {
         return (
-            <React.Fragment>
+            <div>
+
                 <header className="top-index h-50">
                     <div className="container-fluid h-100">
                         <div className="row h-100">
@@ -66,7 +55,6 @@ export default class CompanyRegister extends React.Component {
                     </div>
                 </div>
 
-                { this.state.issubmit == true ? this.state.issuccess == true ? <CenteredText text="Registration Done!"/> : <CenteredText text="Registration Failed. Retry"/> :
 
                 <div className="container my-5">
                     <form onSubmit={this.submit} action="https://formspree.io/meqowqel" method="POST">
@@ -131,10 +119,9 @@ export default class CompanyRegister extends React.Component {
                         <button type="submit" className="btn btn-dark w-100">Submit</button>
                     </form>
                 </div>
+            </div>
 
-                }
 
-            </React.Fragment>
-        )
+        );
     }
 }
