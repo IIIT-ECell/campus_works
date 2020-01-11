@@ -44,6 +44,7 @@ class CreateJob extends Component {
             method: "POST",
             url: "http://localhost:8000/new-job",
             data: {
+                token: this.token,
                 job_name: this.formData.job_name,
                 description: this.formData.description,
                 skill: this.formData.skill,
