@@ -24,13 +24,9 @@ class EditJob extends Component {
         this.formData = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
-        this.state = {
-            formData: {}
-        }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { id } = this.props.match.params;
         this.jobId = id;
 
@@ -48,26 +44,33 @@ class EditJob extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            //this.setState({ formData: response.data.data[0].fields });
             this.formData = response.data.data[0].fields;
-            console.log(this.formData);
+
+            for(let key in this.formData) {
+                try { document.getElementById(key).value = this.formData[key]; }
+                catch {}
+            }
         });
     }
 
     handleChange(event) {
         event.preventDefault();
         this.formData[event.target.id] = event.target.value;
+
+        console.log(this.formData);
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        alert("lasdjfliaidsj");
 
         axios({
-            method: "POST",
-            url: "http://localhost:8000/edit-job",
+            method: "PUT",
+            url: "http://localhost:8000/post-job",
             data: {
                 token: this.token,
-                id: this.jobId,
+                id: this.id,
+                job_id: this.jobId,
                 job_name: this.formData.job_name,
                 description: this.formData.description,
                 skill: this.formData.skill,
@@ -76,13 +79,12 @@ class EditJob extends Component {
                 is_flexi: this.formData.is_flexi,
                 stipend: this.formData.stipend,
                 language: this.formData.language,
-                is_active: this.formData.is_active
             },
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response)=>{
-            // TODO: Where to go now?
+            alert(response.data);
         });
     }
 
@@ -95,7 +97,7 @@ class EditJob extends Component {
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">
-                                <input className="form-control" name="job_name" id="job_name" placeholder="Example Co" value={this.formData.job_name} onChange={this.handleChange} required />
+                                <input className="form-control" name="job_name" id="job_name" placeholder="Example Co" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">This is the Company's name</small>
                             </div>
                         </div>
@@ -103,7 +105,7 @@ class EditJob extends Component {
                         <div className="form-group row">
                             <label htmlFor="description" className="col-sm-2 col-form-label font-weight-bold">Description</label>
                             <div className="col-sm-10">
-                                <textarea className="form-control" name="description" id="description" placeholder="A cool job" value={this.formData.description} onChange={this.handleChange} required />
+                                <textarea className="form-control" name="description" id="description" placeholder="A cool job" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">Please describe the job</small>
                             </div>
                         </div>
@@ -111,7 +113,7 @@ class EditJob extends Component {
                         <div className="form-group row">
                             <label htmlFor="skill" className="col-sm-2 col-form-label font-weight-bold">Skill</label>
                             <div className="col-sm-10">
-                                <input className="form-control" name="skill" id="skill" placeholder="AI/ML, Big Data, Team Management" value={this.formData.skill} onChange={this.handleChange} required />
+                                <input className="form-control" name="skill" id="skill" placeholder="AI/ML, Big Data, Team Management" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">Please list the skills required for this job</small>
                             </div>
                         </div>
@@ -120,14 +122,14 @@ class EditJob extends Component {
                             <label htmlFor="start_date" className="col-sm-2 col-form-label font-weight-bold">Job start date</label>
                             <div className="col-sm-10">
                                 <input className="form-control" name="start_date" id="start_date" type="date" onChange={this.handleChange} required />
-                                <small className="form-text text-muted">Current value: {this.formData.start_date}</small>
+                                <small className="form-text text-muted">Date from which the job starts</small>
                             </div>
                         </div>
 
                         <div className="form-group row">
                             <label htmlFor="duration" className="col-sm-2 col-form-label font-weight-bold">Job duration</label>
                             <div className="col-sm-10">
-                                <input className="form-control" name="duration" id="duration" value={this.formData.duration} placeholder="3" type="number" onChange={this.handleChange} required />
+                                <input className="form-control" name="duration" id="duration" placeholder="3" type="number" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">How long will the job last? (in months)</small>
                             </div>
                         </div>
@@ -139,14 +141,14 @@ class EditJob extends Component {
                                     <option value="false">No</option>
                                     <option value="true">Yes</option>
                                 </select>
-                                <small className="form-text text-muted">Current value: {this.formData.is_flexi}</small>
+                                <small className="form-text text-muted">Are the dates flexible?</small>
                             </div>
                         </div>
 
                         <div className="form-group row">
                             <label htmlFor="stipend" className="col-sm-2 col-form-label font-weight-bold">Stipend</label>
                             <div className="col-sm-10">
-                                <input className="form-control" name="stipend" id="stipend" placeholder="20000" type="number" value={this.formData.stipend} onChange={this.handleChange} required />
+                                <input className="form-control" name="stipend" id="stipend" placeholder="20000" type="number" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">Job stipend (per month)</small>
                             </div>
                         </div>
@@ -154,12 +156,12 @@ class EditJob extends Component {
                         <div className="form-group row">
                             <label htmlFor="language" className="col-sm-2 col-form-label font-weight-bold">Languages</label>
                             <div className="col-sm-10">
-                                <input className="form-control" name="language" id="language" placeholder="c/cpp/python" value={this.formData.language} onChange={this.handleChange} required />
+                                <input className="form-control" name="language" id="language" placeholder="c/cpp/python" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">Programming languages required</small>
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-dark w-100">Submit</button>
+                        <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
                     </form>
                 </div>
             </div>
