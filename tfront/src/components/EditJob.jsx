@@ -18,15 +18,19 @@ import Nav1 from './Nav1';
  *  is_active: bool
  */
 
-class CreateJob extends Component {
+class EditJob extends Component {
     constructor(props) {
         super(props);
         this.formData = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+
+        this.state = {
+            formData: {}
+        }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const { id } = this.props.match.params;
         this.jobId = id;
 
@@ -35,36 +39,28 @@ class CreateJob extends Component {
         this.type = localStorage.getItem("type");
 
         axios({
-            method: "POST",
-            url: "http://localhost:8000/jobs",
-            data: {
-                id: id,
-                token: token
+            method: "GET",
+            url: "http://localhost:8000/post-job",
+            params: {
+                token: this.token,
+                id: this.jobId
             }, headers: {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            alert(response.data);
-            this.formData.job_name = response.data.job_name;
-            this.formData.description = response.data.description;
-            this.formData.skill = response.data.skill;
-            this.formData.start_date = response.data.start_date;
-            this.formData.duration = response.data.duration;
-            this.formData.is_flexi = response.data.is_flexi;
-            this.formData.stipend = response.data.stipend;
-            this.formData.language = response.data.language;
-            this.formData.is_active = response.data.is_active;
+            //this.setState({ formData: response.data.data[0].fields });
+            this.formData = response.data.data[0].fields;
+            console.log(this.formData);
         });
     }
 
-    handleChange(event){
+    handleChange(event) {
         event.preventDefault();
         this.formData[event.target.id] = event.target.value;
     }
 
-    handleSubmit(event){
+    handleSubmit(event) {
         event.preventDefault();
-        // console.log(this.formData);
 
         axios({
             method: "POST",
@@ -86,7 +82,6 @@ class CreateJob extends Component {
                 'Content-Type': 'application/json'
             }
         }).then((response)=>{
-            console.log(response.data);
             // TODO: Where to go now?
         });
     }
@@ -172,5 +167,4 @@ class CreateJob extends Component {
     }
 };
 
-export default CreateJob;
-
+export default EditJob;

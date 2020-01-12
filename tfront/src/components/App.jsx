@@ -7,6 +7,7 @@ import CompanyRegister from './CompanyRegister.jsx';
 import Login from './Login.jsx';
 import CompanyHome from './CompanyHome';
 import CreateJob from './CreateJob';
+import EditJob from './EditJob';
 
 function App(props) {
     return (
@@ -19,7 +20,7 @@ function App(props) {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/company/home" component={CompanyHome} />
                         <Route exact path="/jobs/new" component={CreateJob} />
-                        <Route exact path="/jobs/edit/:id" component={CreateJob} />
+                        <Route exact path="/jobs/edit/:id" component={EditJob} />
                     </Switch>
                 </div>
             </Router>
