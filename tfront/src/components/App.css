@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway|Barlow&display=swap');
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+html, body {
+  height: 100%!important;
+  width: 100%!important;
+  font-family: 'Raleway', sans-serif!important;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Montserrat', sans-serif!important;
+  font-weight: bolder!important;
+}
+
+.top-index {
+	position: relative;
+	width: 100%;
+	height: auto;
+	min-height: 50%;
+	margin: 0px;
+	padding: 0px;
+
+  background: url("./img/bg.png");
+	background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.75)), color-stop(50%, rgba(0, 0, 0, 0.75)), to(rgba(0, 0, 0, 0.75))), url("./img/bg.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-size: cover;	
+}
+
+.pink-purple-gradient-text {
+  background: -webkit-gradient(linear, left top, right top, from(#FF0077), to(#7900C8));
+}
+
+.nav-logo {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-text {
+  padding-left: 1rem;
+  font-family: 'Barlow', serif;
+  font-weight: lighter;
+  font-size: 1.5rem;
+}
+
+.nav-logo-gradient {
+  background: -webkit-linear-gradient(0deg, #fe0078, #7b00c7);
+  font-weight: bold;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

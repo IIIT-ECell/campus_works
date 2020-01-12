@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
+from backend import views 
+from rest_framework.authtoken.views import obtain_auth_token
 
 appname = "backend"
 
 urlpatterns = [
-    path('', views.homepage, name="homepage"), 
+    path('student', views.StudentViews.as_view()), 
+    path('company', views.CompanyViews.as_view()), 
+    path('authenticate', views.CustomObtainAuthToken.as_view(), name='api_token_auth'),
+    path('post-job',views.PostJob.as_view()),
+    path('apply-for-job',views.ApplyForJob.as_view()),
+    path('jobs',views.ViewJobs.as_view())
 ]

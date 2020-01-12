@@ -1,8 +1,14 @@
 node_modules/
 __pycache__/
+local_settings.py
 
 # default for virtualenvs
 venv
 
+<<<<<<< HEAD
 # local settings
 local_settings.py
+=======
+# for vscode users
+.vscode/
+>>>>>>> af227bb71f5c5350362c6b1867505644e2c4c32e
