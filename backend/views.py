@@ -87,11 +87,12 @@ class CompanyViews(APIView):
 
 class PostJob(APIView):
 
-    def get(self,request):
+    def get(self, request):
         '''View a single job'''
         #should give all the job details for a given id
-        
-        data = json.loads(request.body)
+
+        data = request.GET
+
         try:
             id = data['id']
         except KeyError as e:
@@ -103,11 +104,11 @@ class PostJob(APIView):
             return Response({"success": False, "message": str(e)})
 
         job_json = serializers.serialize("json", [job, ])
-        return Response({"success": True, "data": json.loads(job_json)[0]})
+        return Response({"success": True, "data": json.loads(job_json)})
         
 
 
-    def post(self,request):
+    def post(self, request):
         data = json.loads(request.body)
         
         try: 
