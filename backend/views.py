@@ -10,7 +10,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
-from backend.decorators import student_required, company_required
+from backend.decorators import student_required, company_required, get_company_id, get_student_id
 import json
 
 class CustomObtainAuthToken(ObtainAuthToken):
@@ -65,7 +65,7 @@ class CompanyViews(APIView):
             email = data['email']
             password = data['password']
             if email is None or password is None:
-                return HttpResponseServerError("No email or password given")
+                return Response({"message":"No email or password given","success":"False"})
 
             new_user = CustomUser.objects.create_user(
                 email = email,
@@ -74,18 +74,16 @@ class CompanyViews(APIView):
                 first_name = data['name'],
                 user_type = 2,
             )
-
             new_company = Company.objects.create(
-                user=new_user,    
+                user_id=new_user.id,    
                 phone_number = data['phone_number'],
                 poc = data['poc'],
-                about = data['about'],
-                # resume = data['logo'],
+                about = data['about']
             )
             new_company.save()
-            return Response({"message":"Company created successfully"})
+            return Response({"message":"Company created successfully","success":True})
         except Exception as e:
-            return Response({"message":str(e)})
+            return Response({"message":str(e),"success":False})
 
 class PostJob(APIView):
 
@@ -126,9 +124,9 @@ class PostJob(APIView):
             return Response({"success": False, "message": str(e)})
         
         try:
-            company = 
+            company_id = get_company_id(token)
             new_job = Job(
-                company = company
+                company_id = company_id
             )
             keys = data.keys()
             print(data.keys())
@@ -162,7 +160,8 @@ class PostJob(APIView):
                 return Response({"message":"You cannot post jobs"}) 
             job_id = data["job_id"]
             new_job = Job.objects.get(id=job_id)
-
+            if not get_company_id(token)==new_job.company_id:
+                return Response({"message":"You are not allowed to edit this job"})
             keys = data.keys()
             print(data.keys())
             if "job_name" in keys:

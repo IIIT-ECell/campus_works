@@ -30,7 +30,7 @@ class CustomUser(AbstractUser):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
     MALE = 'M'
     FEMALE = 'F'

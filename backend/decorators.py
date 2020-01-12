@@ -14,3 +14,15 @@ def company_required(key):
     if(user.user_type == 2):
         return True
     return False
+
+def get_student_id(key):
+    token = Token.objects.get(key=key)
+    student = Student.objects.get(user_id=token.user_id)
+    print(student.id)
+    return student.id
+
+def get_company_id(key):
+    token = Token.objects.get(key=key)
+    company = Company.objects.get(user_id=token.user_id)
+    print(company.id)
+    return company.id
