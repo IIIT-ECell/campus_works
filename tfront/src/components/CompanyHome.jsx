@@ -12,10 +12,10 @@ class CompanyHome extends Component {
 
     componentDidMount() {
         axios({
-            method: "POST",
-            url: "http://localhost:8000/jobs",
-            data: {
-                "token": localStorage.getItem("token"),
+            method:"POST",
+            url:"https://ecell.iiit.ac.in:8000/jobs",
+            data:{
+                "token":localStorage.getItem("token"),
             },
             headers: {
                 'Content-Type': 'application/json',

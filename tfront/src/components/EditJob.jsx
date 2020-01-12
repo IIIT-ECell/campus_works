@@ -36,10 +36,10 @@ class EditJob extends Component {
 
         axios({
             method: "GET",
-            url: "http://localhost:8000/post-job",
-            params: {
-                token: this.token,
-                id: this.jobId
+            url: "https://ecell.iiit.ac.in:8000/get-job",
+            data: {
+                id: id,
+                token: token
             }, headers: {
                 'Content-Type': 'application/json'
             }
@@ -65,8 +65,8 @@ class EditJob extends Component {
         alert("lasdjfliaidsj");
 
         axios({
-            method: "PUT",
-            url: "http://localhost:8000/post-job",
+            method: "POST",
+            url: "https://ecell.iiit.ac.in:8000/edit-job",
             data: {
                 token: this.token,
                 id: this.id,

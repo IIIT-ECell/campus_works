@@ -27,7 +27,7 @@ class Login extends Component{
         event.preventDefault();
         axios({
             method:"POST",
-            url:"http://localhost:8000/authenticate",
+            url:"https://ecell.iiit.ac.in:8000/authenticate",
             data:{
                 username:this.formData.email,
                 password:this.formData.password
@@ -42,7 +42,7 @@ class Login extends Component{
             localStorage.setItem("id",response.data.id);
             localStorage.setItem("type",response.data.type);
             // Simulate an HTTP redirect:
-            window.location.replace("http://localhost:3000/company/home");
+            window.location.replace("https://localhost:3000/company/home");
         });
     }
 
