@@ -27,16 +27,16 @@ class CreateJob extends Component {
     }
 
     componentDidMount() {
-        const { id } = this.props.match.params
+        const { id } = this.props.match.params;
+        this.jobId = id;
 
         this.token = localStorage.getItem("token");
         this.id = localStorage.getItem("id");
         this.type = localStorage.getItem("type");
-        this.jobId = id;
 
         axios({
-            method: "GET",
-            url: "http://localhost:8000/get-job",
+            method: "POST",
+            url: "http://localhost:8000/jobs",
             data: {
                 id: id,
                 token: token
@@ -44,6 +44,7 @@ class CreateJob extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
+            alert(response.data);
             this.formData.job_name = response.data.job_name;
             this.formData.description = response.data.description;
             this.formData.skill = response.data.skill;

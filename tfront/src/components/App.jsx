@@ -9,7 +9,6 @@ import CompanyHome from './CompanyHome';
 import CreateJob from './CreateJob';
 
 function App(props) {
-    console.log(props);
     return (
         <div>
             <Router basename={props.baseUrl}>

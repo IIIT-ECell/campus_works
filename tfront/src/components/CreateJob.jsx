@@ -36,15 +36,18 @@ class CreateJob extends Component {
     handleChange(event){
         event.preventDefault();
         this.formData[event.target.id] = event.target.value;
+        console.log(this.formData);
     }
 
     handleSubmit(event){
         event.preventDefault();
+
         axios({
             method: "POST",
-            url: "http://localhost:8000/new-job",
+            url: "http://localhost:8000/post-job",
             data: {
                 token: this.token,
+                id: this.id,
                 job_name: this.formData.job_name,
                 description: this.formData.description,
                 skill: this.formData.skill,
@@ -53,19 +56,19 @@ class CreateJob extends Component {
                 is_flexi: this.formData.is_flexi,
                 stipend: this.formData.stipend,
                 language: this.formData.language,
-                is_active: this.formData.is_active
             },
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response)=>{
             console.log(response.data);
-            window.location.replace("http://localhost:3000/company/home");
+            alert(response.data.message);
+            // window.location.replace("http://localhost:3000/company/home");
         });
     }
 
     render() {
-        if((localStorage.getItem("token") && localStorage.getItem("type") == 2)) {
+        if(!(localStorage.getItem("token") && localStorage.getItem("type") == 2)) {
             return <Redirect to="/" />;
         } else {
             return(
@@ -140,7 +143,7 @@ class CreateJob extends Component {
                                 </div>
                             </div>
 
-                            <button type="submit" className="btn btn-dark w-100">Submit</button>
+                            <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
                         </form>
                     </div>
                 </div>
