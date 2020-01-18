@@ -46,7 +46,7 @@ class StudentViews(APIView):
                 phone_number = data['phone_number'],
                 student_id = data['student_id'],
                 gender = data['gender'],
-                resume = data['resume'],
+                # resume = data['resume'], THis has to become request.FILES
             )
             new_student.save()
             return Response({"message":"User created successfully"})

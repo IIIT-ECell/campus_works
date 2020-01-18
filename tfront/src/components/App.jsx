@@ -8,6 +8,8 @@ import Login from './Login.jsx';
 import CompanyHome from './CompanyHome';
 import CreateJob from './CreateJob';
 import EditJob from './EditJob';
+import StudentRegister from './StudentRegister';
+import RegisterForm from './Register';
 
 function App(props) {
     return (
@@ -16,7 +18,9 @@ function App(props) {
                 <div>
                     <Switch>
                         <Route exact path="/" render={(props) => <Home {...props} />} />
+                        <Route exact path="/register" component={RegisterForm}/>
                         <Route exact path="/register/company" render={(props) => <CompanyRegister {...props} />} />
+                        <Route exact path="/register/student" component={StudentRegister}  />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/company/home" component={CompanyHome} />
                         <Route exact path="/jobs/new" component={CreateJob} />

@@ -1,10 +1,12 @@
 import React, { Component} from 'react';
 import Landing from "./Landing";
+import Nav1 from './Nav1';
 
 class Home extends Component {
     render() {
         return (
             <div>
+                <Nav1></Nav1>
                 <Landing {...this.props}></Landing>
                 <div className="container vh-100 d-flex justify-content-center align-items-center">
                     <div className="row">
