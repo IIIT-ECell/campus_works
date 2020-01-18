@@ -5,13 +5,16 @@ from django.core import serializers
 from backend.models import CustomUser, Student, Company, Job
 from django.contrib.auth.hashers import make_password
 
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from backend.decorators import student_required, company_required, get_company_id, get_student_id
 import json
+from .serializers import StudentSerializer
 
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -22,37 +25,48 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
 
 class StudentViews(APIView):
+    parser_classes = (MultiPartParser, FormParser)
 
-    def get(self,request):
-        pass
+    def get(self, request, *args, **kwargs):
+        students = Student.objects.all()
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data)
 
-    def post(self,request):
-        data = json.loads(request.body)
-        print(data)
-        try:
-            email = data['email']
-            password = data['password']
-            if email is None or password is None:
-                return HttpResponseServerError("No email or password given")
+    # def post(self,request):
+    #     data = json.loads(request.body)
+    #     print(data)
+    #     try:
+    #         email = data['email']
+    #         password = data['password']
+    #         if email is None or password is None:
+    #             return HttpResponseServerError("No email or password given")
 
-            new_user = CustomUser.objects.create_user(
-                email = email,
-                username = email,
-                password = password
-            )
+    #         new_user = CustomUser.objects.create_user(
+    #             email = email,
+    #             username = email,
+    #             password = password
+    #         )
 
-            new_student = Student.objects.create(
-                user=new_user,    
-                phone_number = data['phone_number'],
-                student_id = data['student_id'],
-                gender = data['gender'],
-                # resume = data['resume'], THis has to become request.FILES
-            )
-            new_student.save()
-            return Response({"message":"User created successfully"})
-        except Exception as e:
-            return Response({"message":str(e)})
+    #         new_student = Student.objects.create(
+    #             user=new_user,    
+    #             phone_number = data['phone_number'],
+    #             student_id = data['student_id'],
+    #             gender = data['gender'],
+    #             # resume = data['resume'], THis has to become request.FILES
+    #         )
+    #         new_student.save()
+    #         return Response({"message":"User created successfully"})
+    #     except Exception as e:
+    #         return Response({"message":str(e)})
 
+    def post(self, request, *args, **kwargs):
+        student_serializer = StudentSerializer(data=request.data)
+        if student_serializer.is_valid():
+            student_serializer.save()
+            return Response(student_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', student_serializer.errors)
+            return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class CompanyViews(APIView):
 
     def get(self,request):

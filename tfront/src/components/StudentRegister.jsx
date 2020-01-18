@@ -25,10 +25,17 @@ class StudentRegister extends Component{
     }
     handleSubmit(event){
         event.preventDefault();
+        var form_data = new FormData();
+        var keys = Object.keys(this.formData);
+        console.log(keys);
+        for (var i in keys){
+            form_data.append(keys[i],this.formData(keys[i]));
+        }
+        // form_data.append()
         axios({
             method:"POST",
             url:"http://localhost:8000/student",
-            data:this.formData,
+            form_data,
             headers:{
                 'Content-Type':'multipart/form-data'
             }
@@ -44,28 +51,29 @@ class StudentRegister extends Component{
                 <Form>
                     <Form.Group controlId="formName">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" id="name" placeholder="Enter Name"/>
+                        <Form.Control type="text" id="name" onChange={this.handleChange} placeholder="Enter Name"/>
                     </Form.Group>
                     <Form.Group controlId="formEmail">
                         <Form.Label>Email Address</Form.Label>
-                        <Form.Control type="email" id="name" placeholder="Enter Email"/>
+                        <Form.Control type="email" id="name" onChange={this.handleChange} placeholder="Enter Email"/>
                     </Form.Group>
                     <Form.Group controlId="formPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" id="password" placeholder="Enter Password"/>
+                        <Form.Control type="password" id="password" onChange={this.handleChange} placeholder="Enter Password"/>
                     </Form.Group>
                     <Form.Group controlId="formPhoneNumber">
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control type="number" id="phone_number" placeholder="Enter Phone Number"/>
+                        <Form.Control type="number" id="phone_number" onChange={this.handleChange} placeholder="Enter Phone Number"/>
                     </Form.Group>
                     <Form.Group controlId="formRollNumber">
                         <Form.Label>Roll Number</Form.Label>
-                        <Form.Control type="number" id="student_id" placeholder="Enter Roll Number"/>
+                        <Form.Control type="number" id="student_id" onChange={this.handleChange} placeholder="Enter Roll Number"/>
                     </Form.Group>
                     <Form.Group controlId="formResume">
                         <Form.Label>Resume</Form.Label>
                         <Form.Control type="file" accept=".pdf" onChange={this.handleFile}/>
                     </Form.Group>
+                    <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
                 </Form>
                 </div>
             </div>
