@@ -14,7 +14,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from backend.decorators import student_required, company_required, get_company_id, get_student_id
 import json
-from .serializers import StudentSerializer
+from .serializers import StudentSerializer, UserSerializer
 
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -23,6 +23,13 @@ class CustomObtainAuthToken(ObtainAuthToken):
         user = CustomUser.objects.get(id=token.user_id)
         return Response({'token': token.key, 'id': token.user_id, 'type':user.user_type})
 
+
+class UserViews(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def get(self, request, *args, **kwargs):
+        user = CustomUser.objects.all()
+        serializer = UserSerializer(user, many=True)
+        return Response(serializer.data)
 
 class StudentViews(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -60,6 +67,25 @@ class StudentViews(APIView):
     #         return Response({"message":str(e)})
 
     def post(self, request, *args, **kwargs):
+        data = request.data
+        print(data['password'])
+        try:
+            email = data['email']
+            password = data['password']
+            if email is None or password is None:
+                return HttpResponseServerError("No email or password given")
+            print(email)
+            new_user = CustomUser.objects.create_user(
+                email = email,
+                username = email,
+                password = password
+            )
+            print('New user not created')
+            new_user.save()
+            print('New user created')
+            request.data['user']=new_user.id
+        except:
+            return Response({'message':'Missing data'},status=status.HTTP_400_BAD_REQUEST)
         student_serializer = StudentSerializer(data=request.data)
         if student_serializer.is_valid():
             student_serializer.save()

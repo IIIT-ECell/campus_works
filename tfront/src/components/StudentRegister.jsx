@@ -8,7 +8,7 @@ class StudentRegister extends Component{
     // refer to https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
     constructor(props){
         super(props);
-        this.formData = {};
+        this.formData = {'gender':'M','year_of_study':'1'};
         this.handleFile = this.handleFile.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,16 +29,18 @@ class StudentRegister extends Component{
         var keys = Object.keys(this.formData);
         console.log(keys);
         for (var i in keys){
-            form_data.append(keys[i],this.formData(keys[i]));
+            form_data.append(keys[i],this.formData[keys[i]]);
         }
         // form_data.append()
-        axios({
-            method:"POST",
-            url:"http://localhost:8000/student",
+        axios.post("http://localhost:8000/student",
             form_data,
-            headers:{
-                'Content-Type':'multipart/form-data'
+            {
+                headers:{
+                    'Content-Type':'multipart/form-data'
+                }  
             }
+        ).then((res)=>{
+            alert(res.data);
         })
     }
 
@@ -55,7 +57,7 @@ class StudentRegister extends Component{
                     </Form.Group>
                     <Form.Group controlId="formEmail">
                         <Form.Label>Email Address</Form.Label>
-                        <Form.Control type="email" id="name" onChange={this.handleChange} placeholder="Enter Email"/>
+                        <Form.Control type="email" id="email" onChange={this.handleChange} placeholder="Enter Email"/>
                     </Form.Group>
                     <Form.Group controlId="formPassword">
                         <Form.Label>Password</Form.Label>
@@ -68,6 +70,25 @@ class StudentRegister extends Component{
                     <Form.Group controlId="formRollNumber">
                         <Form.Label>Roll Number</Form.Label>
                         <Form.Control type="number" id="student_id" onChange={this.handleChange} placeholder="Enter Roll Number"/>
+                    </Form.Group>
+                    <Form.Group controlId="formStudy">
+                        <Form.Label>Year of Study</Form.Label>
+                        <Form.Control as="select" id="year_of_study" onChange={this.handleChange} placeholder="Enter Gender">
+                        <option value="1">First Year Undergrad</option>
+                        <option value="2">Second Year Undergrad</option>
+                        <option value="3">Third Year Undergrad</option>
+                        <option value="4">Fourth Year Undergrad</option>
+                        <option value="5">Postgrads (5th year DD, PG+)</option>
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId="formGender">
+                        <Form.Label>Gender</Form.Label>
+                        <Form.Control as="select" id="gender" onChange={this.handleChange} >
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="O">Other</option>
+                            <option value="N">Prefer not to say</option>
+                        </Form.Control>
                     </Form.Group>
                     <Form.Group controlId="formResume">
                         <Form.Label>Resume</Form.Label>
