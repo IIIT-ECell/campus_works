@@ -39,32 +39,6 @@ class StudentViews(APIView):
         serializer = StudentSerializer(students, many=True)
         return Response(serializer.data)
 
-    # def post(self,request):
-    #     data = json.loads(request.body)
-    #     print(data)
-    #     try:
-    #         email = data['email']
-    #         password = data['password']
-    #         if email is None or password is None:
-    #             return HttpResponseServerError("No email or password given")
-
-    #         new_user = CustomUser.objects.create_user(
-    #             email = email,
-    #             username = email,
-    #             password = password
-    #         )
-
-    #         new_student = Student.objects.create(
-    #             user=new_user,    
-    #             phone_number = data['phone_number'],
-    #             student_id = data['student_id'],
-    #             gender = data['gender'],
-    #             # resume = data['resume'], THis has to become request.FILES
-    #         )
-    #         new_student.save()
-    #         return Response({"message":"User created successfully"})
-    #     except Exception as e:
-    #         return Response({"message":str(e)})
 
     def post(self, request, *args, **kwargs):
         data = request.data
