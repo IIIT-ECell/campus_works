@@ -218,11 +218,11 @@ class PostJob(APIView):
 class ViewJobs(APIView):
 
     def get(self,request):
-        data = json.loads(request.body)
-        print(data)
-        key = data["token"]
-        if not company_required(key):
-            return Response({"message":"You cannot see jobs"}) 
+        # data = json.loads(request.body)
+        # print(data)
+        # key = data["token"]
+        # if not company_required(key):
+        #     return Response({"message":"You cannot see jobs"}) 
         jobs = serializers.serialize('json',Job.objects.all())
         return Response(json.loads(jobs))
 
