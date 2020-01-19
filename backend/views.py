@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
-from backend.models import CustomUser, Student, Company, Job
+from backend.models import CustomUser, Student, Company, Job, Application
 from django.contrib.auth.hashers import make_password
 
 from rest_framework import status
@@ -14,7 +14,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from backend.decorators import student_required, company_required, get_company_id, get_student_id
 import json
-from .serializers import StudentSerializer, UserSerializer, ApplicationSerializer
+from .serializers import StudentSerializer, UserSerializer, ApplicationStudentSerializer
 
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -102,13 +102,24 @@ class CompanyViews(APIView):
 
 class ApplicationViews(APIView):
     def post(self, request, *args, **kwargs):
-        application_serializer = ApplicationSerializer(data=request.data)
+        application_serializer = ApplicationStudentSerializer(data=request.data)
         if application_serializer.is_valid():
             application_serializer.save()
             return Response({'message':"Application successfully submitted","success":True})
         else:
             return Response({'message':application_serializer.error_messages,"success":False})
 
+    def put(self, request):
+        data = json.loads(request.body)
+        try: 
+            token = data['token']
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+        
+        if not company_required(token):
+            return Response({"success": False, "message": "You cannot select applications"})
+
+        Application.objects.get(pk=data['application_id'])
 
 class PostJob(APIView):
 

@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['email','first_name','password']
 
-class ApplicationSerializer(serializers.ModelSerializer):
+class ApplicationStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        fields = '__all__'
+        fields = ['job','student','date_of_application']
