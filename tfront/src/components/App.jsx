@@ -10,6 +10,7 @@ import CreateJob from './CreateJob';
 import EditJob from './EditJob';
 import StudentRegister from './StudentRegister';
 import RegisterForm from './Register';
+import StudentHome from './StudentHome';
 
 function App(props) {
     return (
@@ -23,6 +24,7 @@ function App(props) {
                         <Route exact path="/register/student" component={StudentRegister}  />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/company/home" component={CompanyHome} />
+                        <Route exact path="/student/home" component={StudentHome} />
                         <Route exact path="/jobs/new" component={CreateJob} />
                         <Route exact path="/jobs/edit/:id" component={EditJob} />
                     </Switch>

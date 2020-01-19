@@ -43,7 +43,11 @@ class Login extends Component{
             localStorage.setItem("id",response.data.id);
             localStorage.setItem("type",response.data.type);
 
-            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            // Simulate an HTTP redirect:
+            if(response.data.type==2)
+                window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            else
+                window.location.replace("https://ecell.iiit.ac.in/cworks/student/home");
         });
     }
 
