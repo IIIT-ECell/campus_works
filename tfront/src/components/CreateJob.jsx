@@ -44,7 +44,7 @@ class CreateJob extends Component {
 
         axios({
             method: "POST",
-            url: "http://localhost:8000/post-job",
+            url: "http://ecell.iiit.ac.in:8000/post-job",
             data: {
                 token: this.token,
                 id: this.id,
@@ -63,7 +63,7 @@ class CreateJob extends Component {
         }).then((response)=>{
             console.log(response.data);
             alert(response.data.message);
-            // window.location.replace("http://localhost:3000/company/home");
+            // window.location.replace("http://ecell.iiit.ac.in:3000/company/home");
         });
     }
 

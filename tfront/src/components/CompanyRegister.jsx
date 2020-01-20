@@ -36,7 +36,7 @@ export default class CompanyRegister extends React.Component {
         event.preventDefault();
         axios({
             method:"POST",
-            url:"http://localhost:8000/company",
+            url:"http://ecell.iiit.ac.in:8000/company",
             data:this.formData,
             headers:{
                 'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default class CompanyRegister extends React.Component {
         }).then((response)=>{
             alert(response.data["message"]);
             if(response.data["success"]=="True"){
-                window.location.replace("http://localhost:3000/login");
+                window.location.replace("http://ecell.iiit.ac.in:3000/login");
             }
         })
     }

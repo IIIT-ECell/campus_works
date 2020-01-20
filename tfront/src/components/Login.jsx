@@ -26,14 +26,15 @@ class Login extends Component{
     handleSubmit(event){
         event.preventDefault();
         axios({
+            crossDomain: true,
             method:"POST",
-            url:"http://localhost:8000/authenticate",
+            url:"http://ecell.iiit.ac.in:8000/authenticate",
             data:{
                 username:this.formData.email,
                 password:this.formData.password
             },
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }
         }).then((response)=>{
             console.log(response.data);
@@ -42,7 +43,7 @@ class Login extends Component{
             localStorage.setItem("id",response.data.id);
             localStorage.setItem("type",response.data.type);
             // Simulate an HTTP redirect:
-            window.location.replace("http://localhost:3000/company/home");
+            window.location.replace("http://ecell.iiit.ac.in:3000/company/home");
         });
     }
 

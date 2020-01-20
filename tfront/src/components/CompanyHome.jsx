@@ -13,7 +13,7 @@ class CompanyHome extends Component {
     componentDidMount() {
         axios({
             method: "POST",
-            url: "http://localhost:8000/jobs",
+            url: "http://ecell.iiit.ac.in:8000/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },
