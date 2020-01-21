@@ -36,7 +36,7 @@ class EditJob extends Component {
 
         axios({
             method: "GET",
-            url: "http://ecell.iiit.ac.in:8000/post-job",
+            url: "https://campusworks.pythonanywhere.com/post-job",
             params: {
                 token: this.token,
                 id: this.jobId
@@ -66,7 +66,7 @@ class EditJob extends Component {
 
         axios({
             method: "PUT",
-            url: "http://ecell.iiit.ac.in:8000/post-job",
+            url: "https://campusworks.pythonanywhere.com/post-job",
             data: {
                 token: this.token,
                 id: this.id,

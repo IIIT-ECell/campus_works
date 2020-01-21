@@ -36,7 +36,7 @@ export default class CompanyRegister extends React.Component {
         event.preventDefault();
         axios({
             method:"POST",
-            url:"http://ecell.iiit.ac.in:8000/company",
+            url:"https://campusworks.pythonanywhere.com/company",
             data:this.formData,
             headers:{
                 'Content-Type': 'application/json',

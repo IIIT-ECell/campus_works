@@ -44,7 +44,7 @@ class CreateJob extends Component {
 
         axios({
             method: "POST",
-            url: "http://ecell.iiit.ac.in:8000/post-job",
+            url: "https://campusworks.pythonanywhere.com/post-job",
             data: {
                 token: this.token,
                 id: this.id,

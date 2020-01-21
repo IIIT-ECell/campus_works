@@ -28,7 +28,7 @@ class Login extends Component{
         axios({
             crossDomain: true,
             method:"POST",
-            url:"http://ecell.iiit.ac.in:8000/authenticate",
+            url:"https://campusworks.pythonanywhere.com/authenticate",
             data:{
                 username:this.formData.email,
                 password:this.formData.password
