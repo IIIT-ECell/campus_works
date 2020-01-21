@@ -63,7 +63,7 @@ class CreateJob extends Component {
         }).then((response)=>{
             console.log(response.data);
             alert(response.data.message);
-            // window.location.replace("http://ecell.iiit.ac.in:3000/company/home");
+            window.location.replace("http://ecell.iiit.ac.in/cworks/company/home");
         });
     }
 
