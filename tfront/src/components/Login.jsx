@@ -42,8 +42,8 @@ class Login extends Component{
             localStorage.setItem("isLoggedIn",true);
             localStorage.setItem("id",response.data.id);
             localStorage.setItem("type",response.data.type);
-            // Simulate an HTTP redirect:
-            window.location.replace("http://ecell.iiit.ac.in:3000/company/home");
+
+            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
         });
     }
 
