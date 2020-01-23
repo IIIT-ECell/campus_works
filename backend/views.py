@@ -2,16 +2,19 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
-from backend.models import CustomUser, Student, Company, Job
+from backend.models import CustomUser, Student, Company, Job, Application
 from django.contrib.auth.hashers import make_password
 
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from backend.decorators import student_required, company_required, get_company_id, get_student_id
 import json
+from .serializers import StudentSerializer, UserSerializer, ApplicationStudentSerializer
 
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -21,37 +24,49 @@ class CustomObtainAuthToken(ObtainAuthToken):
         return Response({'token': token.key, 'id': token.user_id, 'type':user.user_type})
 
 
+class UserViews(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def get(self, request, *args, **kwargs):
+        user = CustomUser.objects.all()
+        serializer = UserSerializer(user, many=True)
+        return Response(serializer.data)
+
 class StudentViews(APIView):
+    parser_classes = (MultiPartParser, FormParser)
 
-    def get(self,request):
-        pass
+    def get(self, request, *args, **kwargs):
+        students = Student.objects.all()
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data)
 
-    def post(self,request):
-        data = json.loads(request.body)
-        print(data)
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        print(data['password'])
         try:
             email = data['email']
             password = data['password']
             if email is None or password is None:
                 return HttpResponseServerError("No email or password given")
-
+            print(email)
             new_user = CustomUser.objects.create_user(
                 email = email,
                 username = email,
                 password = password
             )
-
-            new_student = Student.objects.create(
-                user=new_user,    
-                phone_number = data['phone_number'],
-                student_id = data['student_id'],
-                gender = data['gender'],
-                resume = data['resume'],
-            )
-            new_student.save()
-            return Response({"message":"User created successfully"})
-        except Exception as e:
-            return Response({"message":str(e)})
+            print('New user not created')
+            new_user.save()
+            print('New user created')
+            request.data['user']=new_user.id
+        except:
+            return Response({'message':'Missing data',"success":False})
+        student_serializer = StudentSerializer(data=request.data)
+        if student_serializer.is_valid():
+            student_serializer.save()
+            return Response({"message":"Student created successfully","success":True})
+        else:
+            print('error', student_serializer.errors)
+            return Response({"message":student_serializer.errors,"success":False})
 
 class CompanyViews(APIView):
 
@@ -84,6 +99,27 @@ class CompanyViews(APIView):
             return Response({"message":"Company created successfully","success":True})
         except Exception as e:
             return Response({"message":str(e),"success":False})
+
+class ApplicationViews(APIView):
+    def post(self, request, *args, **kwargs):
+        application_serializer = ApplicationStudentSerializer(data=request.data)
+        if application_serializer.is_valid():
+            application_serializer.save()
+            return Response({'message':"Application successfully submitted","success":True})
+        else:
+            return Response({'message':application_serializer.error_messages,"success":False})
+
+    def put(self, request):
+        data = json.loads(request.body)
+        try: 
+            token = data['token']
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+        
+        if not company_required(token):
+            return Response({"success": False, "message": "You cannot select applications"})
+
+        Application.objects.get(pk=data['application_id'])
 
 class PostJob(APIView):
 
@@ -191,6 +227,17 @@ class PostJob(APIView):
 
 
 class ViewJobs(APIView):
+
+    def get(self,request):
+        # data = json.loads(request.body)
+        # print(data)
+        # key = data["token"]
+        # if not company_required(key):
+        #     return Response({"message":"You cannot see jobs"}) 
+        jobs = serializers.serialize('json',Job.objects.all())
+        return Response(json.loads(jobs))
+
+
     def post(self, request):
         '''Gives you multiple jobs'''
         # incomplete

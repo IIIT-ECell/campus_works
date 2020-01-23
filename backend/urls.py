@@ -21,6 +21,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 appname = "backend"
 
 urlpatterns = [
+    path('user',views.UserViews.as_view()),
     path('student', views.StudentViews.as_view()), 
     path('company', views.CompanyViews.as_view()), 
     path('authenticate', views.CustomObtainAuthToken.as_view(), name='api_token_auth'),

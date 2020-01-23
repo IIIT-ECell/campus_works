@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Nav1 from './Nav1';
+import NavCompany from './NavCompany';
 
 /*
  * From Job model:
@@ -91,7 +91,7 @@ class EditJob extends Component {
     render() {
         return(
             <div>
-                <Nav1 />
+                <NavCompany></NavCompany>
                 <div className="container py-5">
                     <form className="my-auto bg-dark text-white rounded p-5">
                         <div className="form-group row">
