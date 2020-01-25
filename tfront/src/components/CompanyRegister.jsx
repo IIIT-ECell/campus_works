@@ -135,7 +135,7 @@ export default class CompanyRegister extends React.Component {
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
+                        <button type="submit" className="btn btn-dark w-100" onSubmit={this.handleSubmit}>Submit</button>
                     </form>
                 </div>
             </div>

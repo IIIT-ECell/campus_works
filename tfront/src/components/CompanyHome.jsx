@@ -34,6 +34,7 @@ class CompanyHome extends Component {
         return (
             <div>
             <NavCompany></NavCompany>
+            <Link to="/jobs/new"><Button>+ Add Job</Button></Link>
             <Table>
                 <thead>
                     <tr>

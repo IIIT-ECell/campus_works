@@ -19,7 +19,7 @@ class NavCompany extends Component{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto text-white">
-                        <Nav.Link><Link to={"/company/home"} className="text-white">Register</Link></Nav.Link>
+                        <Nav.Link><Link to={"/company/home"} className="text-white">Home</Link></Nav.Link>
                         <Nav.Link><Link to={"/login"} className="text-white">Logout</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
