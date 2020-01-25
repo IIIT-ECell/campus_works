@@ -62,7 +62,7 @@ class Login extends Component{
             <Nav1></Nav1>
             <div className="container vh-100 d-flex text-center align-self-center justify-content-center">
                 <div className="row">
-                    <Form className="my-auto bg-dark text-white rounded p-5">
+                    <Form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" id="email" placeholder="Enter email" onChange={this.handleChange} />
