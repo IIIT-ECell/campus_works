@@ -56,6 +56,7 @@ class CreateJob extends Component {
                 is_flexi: this.formData.is_flexi,
                 stipend: this.formData.stipend,
                 language: this.formData.language,
+                num_pos: this.formData.num_pos,
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -103,7 +104,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="positions" className="col-sm-2 col-form-label font-weight-bold">Positions Open</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="position" id="position" placeholder="3" type="number" onChange={this.handleChange} required />
+                                    <input className="form-control" name="num_pos" id="num_pos" placeholder="3" type="number" onChange={this.handleChange} required />
                                     <small className="form-text text-light">This number is not binding.</small>
                                 </div>                                
                             </div>
