@@ -184,6 +184,8 @@ class PostJob(APIView):
                 new_job.language = data["language"]
             if "stipend" in keys:
                 new_job.stipend = data["stipend"]
+            if "num_pos" in keys:
+                new_job.num_pos = data["num_pos"]
             new_job.save()
             return Response({"message":"Job added successfully"})
         except Exception as e:
@@ -218,8 +220,10 @@ class PostJob(APIView):
                 new_job.language = data["language"]
             if "stipend" in keys:
                 new_job.stipend = data["stipend"]
+            if "num_pos" in keys:
+                new_job.num_pos = data["num_pos"]
             new_job.save()
-            return Response({"message":"Job added successfully"})
+            return Response({"message":"Job edited successfully"})
         except Exception as e:
             return Response({"message":str(e)})
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button} from 'react-bootstrap';
+import {Table, Button, Container, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NavCompany from './NavCompany';
@@ -34,7 +34,14 @@ class CompanyHome extends Component {
         return (
             <div>
             <NavCompany></NavCompany>
-            <Table>
+            <Container className="p-4">
+                <Row>
+                    <Col md={{ span:4, offset:8}}>
+                        <Link to="/jobs/new"><Button>+ Add Job</Button></Link>
+                    </Col>
+                </Row>
+            </Container>
+            <Table responsive bordered hover striped>
                 <thead>
                     <tr>
                         <th colSpan="6">Jobs posted</th>

@@ -45,7 +45,7 @@ export default class CompanyRegister extends React.Component {
             alert(response.data["message"]);
 
             if(response.data["success"]=="True") {
-                window.location.replace("http://ecell.iiit.ac.in/cworks/login");
+                window.location.replace("https://ecell.iiit.ac.in/cworks/login");
             }
         })
     }
@@ -76,7 +76,7 @@ export default class CompanyRegister extends React.Component {
 
 
                 <div className="container my-5">
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
 
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>

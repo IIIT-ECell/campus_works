@@ -32,7 +32,7 @@ class StudentRegister extends Component{
             form_data.append(keys[i],this.formData[keys[i]]);
         }
         // form_data.append()
-        axios.post("http://localhost:8000/student",
+        axios.post("https://localhost:8000/student",
             form_data,
             {
                 headers:{
@@ -50,7 +50,7 @@ class StudentRegister extends Component{
             <Nav1></Nav1>
             <div className="vh-100 d-flex justify-content-center align-items-center">
                 <div className="my-auto">
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formName">
                         <Form.Label>Name</Form.Label>
                         <Form.Control type="text" id="name" onChange={this.handleChange} placeholder="Enter Name"/>

@@ -62,7 +62,6 @@ class EditJob extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        alert("lasdjfliaidsj");
 
         axios({
             method: "PUT",
@@ -84,7 +83,8 @@ class EditJob extends Component {
                 'Content-Type': 'application/json'
             }
         }).then((response)=>{
-            alert(response.data);
+            alert(response.data.message);
+            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
         });
     }
 
@@ -93,7 +93,7 @@ class EditJob extends Component {
             <div>
                 <NavCompany></NavCompany>
                 <div className="container py-5">
-                    <form className="my-auto bg-dark text-white rounded p-5">
+                    <form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">
@@ -116,6 +116,14 @@ class EditJob extends Component {
                                 <input className="form-control" name="skill" id="skill" placeholder="AI/ML, Big Data, Team Management" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">Please list the skills required for this job</small>
                             </div>
+                        </div>
+
+                        <div className="form-group row">
+                            <label htmlFor="positions" className="col-sm-2 col-form-label font-weight-bold">Positions Open</label>
+                            <div className="col-sm-10">
+                                <input className="form-control" name="num_pos" id="num_pos" placeholder="3" type="number" onChange={this.handleChange} required />
+                                <small className="form-text text-light">This number is not binding.</small>
+                            </div>                                
                         </div>
 
                         <div className="form-group row">
