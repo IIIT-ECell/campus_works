@@ -80,7 +80,7 @@ class CreateJob extends Component {
                                 <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Job Name</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="job_name" id="job_name" placeholder="Example Co" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">This is the Job Title</small>
+                                    <small className="form-text">This is the Job Title</small>
                                 </div>
                             </div>
 
@@ -103,7 +103,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="positions" className="col-sm-2 col-form-label font-weight-bold">Positions Open</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="position" id="position" placeholder="3" onChange={this.handleChange} required />
+                                    <input className="form-control" name="position" id="position" placeholder="3" type="number" onChange={this.handleChange} required />
                                     <small className="form-text text-muted">This number is not binding.</small>
                                 </div>                                
                             </div>
@@ -112,7 +112,7 @@ class CreateJob extends Component {
                                 <label htmlFor="start_date" className="col-sm-2 col-form-label font-weight-bold">Job start date</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="start_date" id="start_date" type="date" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Date from which the job starts</small>
+                                    <small className="form-text text-muted">Approximate date from which the job starts. This is not binding and may be altered after interns are accepted.</small>
                                 </div>
                             </div>
 
@@ -136,10 +136,10 @@ class CreateJob extends Component {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="stipend" className="col-sm-2 col-form-label font-weight-bold">Stipend</label>
+                                <label htmlFor="stipend" className="col-sm-2 col-form-label font-weight-bold">Approximate Stipend</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="stipend" id="stipend" placeholder="20000" type="number" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Job stipend (per month)</small>
+                                    <small className="form-text text-muted">Job stipend (per month). This needn't be a final number.</small>
                                 </div>
                             </div>
 
