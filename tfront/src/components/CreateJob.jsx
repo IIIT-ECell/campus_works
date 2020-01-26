@@ -80,7 +80,7 @@ class CreateJob extends Component {
                                 <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Job Name</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="job_name" id="job_name" placeholder="Example Co" onChange={this.handleChange} required />
-                                    <small className="form-text">This is the Job Title</small>
+                                    <small className="form-text text-light">This is the Job Title</small>
                                 </div>
                             </div>
 
@@ -88,7 +88,7 @@ class CreateJob extends Component {
                                 <label htmlFor="description" className="col-sm-2 col-form-label font-weight-bold">Description</label>
                                 <div className="col-sm-10">
                                     <textarea className="form-control" name="description" id="description" placeholder="A cool job" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Please describe the job</small>
+                                    <small className="form-text text-light">Please describe the job</small>
                                 </div>
                             </div>
 
@@ -96,7 +96,7 @@ class CreateJob extends Component {
                                 <label htmlFor="skill" className="col-sm-2 col-form-label font-weight-bold">Skill</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="skill" id="skill" placeholder="AI/ML, Big Data, Team Management" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Please list the skills required for this job. These could include the languages that the employee is expected to know.</small>
+                                    <small className="form-text text-light">Please list the skills required for this job. These could include the languages that the employee is expected to know.</small>
                                 </div>
                             </div>
 
@@ -104,7 +104,7 @@ class CreateJob extends Component {
                                 <label htmlFor="positions" className="col-sm-2 col-form-label font-weight-bold">Positions Open</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="position" id="position" placeholder="3" type="number" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">This number is not binding.</small>
+                                    <small className="form-text text-light">This number is not binding.</small>
                                 </div>                                
                             </div>
 
@@ -112,7 +112,7 @@ class CreateJob extends Component {
                                 <label htmlFor="start_date" className="col-sm-2 col-form-label font-weight-bold">Job start date</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="start_date" id="start_date" type="date" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Approximate date from which the job starts. This is not binding and may be altered after interns are accepted.</small>
+                                    <small className="form-text text-light">Approximate date from which the job starts. This is not binding and may be altered after interns are accepted.</small>
                                 </div>
                             </div>
 
@@ -120,7 +120,7 @@ class CreateJob extends Component {
                                 <label htmlFor="duration" className="col-sm-2 col-form-label font-weight-bold">Job duration</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="duration" id="duration" placeholder="3" type="number" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">How long will the job last? (in months)</small>
+                                    <small className="form-text text-light">How long will the job last? (in months)</small>
                                 </div>
                             </div>
 
@@ -131,7 +131,7 @@ class CreateJob extends Component {
                                         <option value="false">No</option>
                                         <option value="true">Yes</option>
                                     </select>
-                                    <small className="form-text text-muted">Are the dates flexible?</small>
+                                    <small className="form-text text-light">Are the dates flexible?</small>
                                 </div>
                             </div>
 
@@ -139,7 +139,7 @@ class CreateJob extends Component {
                                 <label htmlFor="stipend" className="col-sm-2 col-form-label font-weight-bold">Approximate Stipend</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="stipend" id="stipend" placeholder="20000" type="number" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Job stipend (per month). This needn't be a final number.</small>
+                                    <small className="form-text text-light">Job stipend (per month). This needn't be a final number.</small>
                                 </div>
                             </div>
 
@@ -147,7 +147,7 @@ class CreateJob extends Component {
                                 <label htmlFor="language" className="col-sm-2 col-form-label font-weight-bold">Languages</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="language" id="language" placeholder="c/cpp/python" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Programming languages required</small>
+                                    <small className="form-text text-light">Programming languages required</small>
                                 </div>
                             </div>
 
