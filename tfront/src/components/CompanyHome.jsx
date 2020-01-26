@@ -14,7 +14,7 @@ class CompanyHome extends Component {
     componentDidMount() {
         axios({
             method: "POST",
-            url: "http://localhost:8000/jobs",
+            url: "https://campusworks.pythonanywhere.com/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },

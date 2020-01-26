@@ -28,7 +28,7 @@ class Login extends Component{
         axios({
             crossDomain: true,
             method:"POST",
-            url:"http://localhost:8000/authenticate",
+            url:"https://campusworks.pythonanywhere.com/authenticate",
             data:{
                 username:this.formData.email,
                 password:this.formData.password
@@ -47,9 +47,9 @@ class Login extends Component{
             
             // Simulate an HTTP redirect:
             if(response.data.type==2)
-            window.location.replace("http://localhost:3000/company/home");
+            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
             else
-            window.location.replace("http://localhost:3000/student/home");
+            window.location.replace("https://ecell.iiit.ac.in/cworks/student/home");
         })
         .catch((error)=>{
             alert(JSON.stringify(error.response.data));
