@@ -77,10 +77,10 @@ class CreateJob extends Component {
                     <div className="container py-5">
                         <form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
                             <div className="form-group row">
-                                <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
+                                <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Job Name</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="job_name" id="job_name" placeholder="Example Co" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">This is the Company's name</small>
+                                    <small className="form-text text-muted">This is the Job Title</small>
                                 </div>
                             </div>
 
