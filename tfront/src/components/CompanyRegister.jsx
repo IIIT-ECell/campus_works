@@ -76,7 +76,7 @@ export default class CompanyRegister extends React.Component {
 
 
                 <div className="container my-5">
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
 
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
@@ -135,7 +135,7 @@ export default class CompanyRegister extends React.Component {
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-dark w-100" onSubmit={this.handleSubmit}>Submit</button>
+                        <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
                     </form>
                 </div>
             </div>
