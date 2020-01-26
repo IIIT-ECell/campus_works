@@ -119,6 +119,14 @@ class EditJob extends Component {
                         </div>
 
                         <div className="form-group row">
+                            <label htmlFor="positions" className="col-sm-2 col-form-label font-weight-bold">Positions Open</label>
+                            <div className="col-sm-10">
+                                <input className="form-control" name="num_pos" id="num_pos" placeholder="3" type="number" onChange={this.handleChange} required />
+                                <small className="form-text text-light">This number is not binding.</small>
+                            </div>                                
+                        </div>
+
+                        <div className="form-group row">
                             <label htmlFor="start_date" className="col-sm-2 col-form-label font-weight-bold">Job start date</label>
                             <div className="col-sm-10">
                                 <input className="form-control" name="start_date" id="start_date" type="date" onChange={this.handleChange} required />
