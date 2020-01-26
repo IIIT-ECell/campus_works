@@ -96,8 +96,16 @@ class CreateJob extends Component {
                                 <label htmlFor="skill" className="col-sm-2 col-form-label font-weight-bold">Skill</label>
                                 <div className="col-sm-10">
                                     <input className="form-control" name="skill" id="skill" placeholder="AI/ML, Big Data, Team Management" onChange={this.handleChange} required />
-                                    <small className="form-text text-muted">Please list the skills required for this job</small>
+                                    <small className="form-text text-muted">Please list the skills required for this job. These could include the languages that the employee is expected to know.</small>
                                 </div>
+                            </div>
+
+                            <div className="form-group row">
+                                <label htmlFor="positions" className="col-sm-2 col-form-label font-weight-bold">Positions Open</label>
+                                <div className="col-sm-10">
+                                    <input className="form-control" name="position" id="position" placeholder="3" onChange={this.handleChange} required />
+                                    <small className="form-text text-muted">This number is not binding.</small>
+                                </div>                                
                             </div>
 
                             <div className="form-group row">
