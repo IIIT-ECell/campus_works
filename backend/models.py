@@ -93,6 +93,7 @@ class Job(models.Model):
     stipend = models.IntegerField(blank=False)
     language = models.CharField(verbose_name="Programming languages",max_length=50)
     is_active = models.BooleanField(blank=False, default=True)
+    num_pos = models.PositiveSmallIntegerField(verbose_name='number of open positions', default=1, null=False)
 
 class Application(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)

@@ -14,6 +14,8 @@ class Landing extends Component {
                                 <h2 className="display-4 font-weight-bold">Campus Works</h2>
                                 <h5>Connecting Students with Startups. Internships have never been easier</h5>
                                 <Link to={"/register/company" }><Button variant="btn btn-dark" size="lg">Register as Company</Button></Link>
+                                <br/>
+                                <Link to={"/register/student" }><Button variant="btn btn-dark" size="lg">Register as Student</Button></Link>
                                 <br className="my-4"/>
                             </div>
                             <div className="order-lg-first w-50 mx-auto">

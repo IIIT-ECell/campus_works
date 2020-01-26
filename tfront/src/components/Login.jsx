@@ -36,28 +36,33 @@ class Login extends Component{
             headers:{
                 'Content-Type': 'application/json',
             }
-        }).then((response)=>{
+        })
+        .then((response)=>{
             console.log(response.data);
+
             localStorage.setItem("token",response.data.token);
             localStorage.setItem("isLoggedIn",true);
             localStorage.setItem("id",response.data.id);
             localStorage.setItem("type",response.data.type);
-
+            
             // Simulate an HTTP redirect:
             if(response.data.type==2)
-                window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
             else
-                window.location.replace("https://ecell.iiit.ac.in/cworks/student/home");
+            window.location.replace("https://ecell.iiit.ac.in/cworks/student/home");
+        })
+        .catch((error)=>{
+            alert(JSON.stringify(error.response.data));
         });
     }
-
+    
     render(){
         return(
             <div>
             <Nav1></Nav1>
             <div className="container vh-100 d-flex text-center align-self-center justify-content-center">
                 <div className="row">
-                    <Form className="my-auto bg-dark text-white rounded p-5">
+                    <Form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" id="email" placeholder="Enter email" onChange={this.handleChange} />
