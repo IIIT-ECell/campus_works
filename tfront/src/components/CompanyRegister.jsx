@@ -31,6 +31,7 @@ export default class CompanyRegister extends React.Component {
         this.formData[event.target.id] = event.target.value;
 
         if( event.target.type === 'checkbox') {
+            console.log(event.target.id, event.target.checked)
             this.setState({ isvalid: event.target.checked })
         }
     }
