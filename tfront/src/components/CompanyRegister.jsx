@@ -21,19 +21,29 @@ export default class CompanyRegister extends React.Component {
     constructor(props) {
         super(props);
         this.formData = {};
-        this.state = { issuccess: false, issubmit: false };
+        this.state = { issuccess: false, issubmit: false, isvalid: false };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
     handleChange(event){
         event.preventDefault();
+        // console.log(event.target.id, event.target.type === 'checkbox' ? event.target.checked : event.target.value)
         this.formData[event.target.id] = event.target.value;
+
+        if( event.target.type === 'checkbox') {
+            this.setState({ isvalid: event.target.checked })
+        }
     }
 
     handleSubmit(event){
         event.preventDefault();
+
+        if (!this.state.isvalid) {
+            alert("Agree to Terms and Conditions to create a company")
+            return;
+        }
+
         axios({
             method:"POST",
             url:"https://campusworks.pythonanywhere.com/company",
@@ -77,7 +87,6 @@ export default class CompanyRegister extends React.Component {
 
                 <div className="container my-5">
                     <form onSubmit={this.handleSubmit}>
-
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">
@@ -128,8 +137,8 @@ export default class CompanyRegister extends React.Component {
 
                         <div className="form-group my-5">
                             <div className="form-check">
-                                <input className="form-check-input" type="checkbox" id="gridCheck"/>
-                                <label className="form-check-label" htmlFor="gridCheck">
+                                <input className="form-check-input" type="checkbox" id="check" onChange={this.handleChange} required/>
+                                <label className="form-check-label" htmlFor="check">
                                     I have read and understood the <a href={process.env.PUBLIC_URL + '/assets/terms.pdf'} target="_blank" className="font-weight-bold text-danger">terms and conditions</a> in its entirety
                                 </label>
                             </div>
