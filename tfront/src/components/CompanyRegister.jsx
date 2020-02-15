@@ -40,7 +40,7 @@ export default class CompanyRegister extends React.Component {
         event.preventDefault();
 
         if (!this.state.isvalid) {
-            alert("Agree to Terms and Conditions to create a company")
+            alert("Agree to Terms and Conditions to create a company");
             return;
         }
 
