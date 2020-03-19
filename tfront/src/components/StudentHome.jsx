@@ -14,7 +14,7 @@ class StudentHome extends Component{
     componentDidMount(){
         axios({
             method: "GET",
-            url: "https://localhost:8000/jobs",
+            url: "https://campusworks.pythonanywhere.com/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },
