@@ -52,7 +52,9 @@ class StudentViews(APIView):
             new_user = CustomUser.objects.create_user(
                 email = email,
                 username = email,
-                password = password
+                password = password,
+                first_name = data['name'],
+                user_type = 1
             )
             print('New user not created')
             new_user.save()
