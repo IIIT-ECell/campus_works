@@ -46,9 +46,9 @@ class StudentRegister extends Component{
 
     render(){
         return(
-            <div className="container">
+            <div>
             <Nav1></Nav1>
-            <div className="vh-100 d-flex justify-content-center align-items-center">
+            <div className="d-flex justify-content-center align-items-center">
                 <div className="my-auto">
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formName">
