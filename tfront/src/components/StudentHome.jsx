@@ -14,7 +14,7 @@ class StudentHome extends Component{
     componentDidMount(){
         axios({
             method: "GET",
-            url: "https://campusworks.pythonanywhere.com/jobs",
+            url: "localhost:8000/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },
@@ -26,6 +26,16 @@ class StudentHome extends Component{
             this.setState({"jobs": res.data});
             console.log(this.state);
         });
+        axios({
+            method: "GET",
+            url: "localhost:8000/applications",
+            data: {
+                "token": localStorage.getItem("token"),
+            },
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
     }
 
     render(){
@@ -43,6 +53,7 @@ class StudentHome extends Component{
                         <th>Start Date</th>
                         <th>Skill</th>
                         <th>Stipend</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +64,7 @@ class StudentHome extends Component{
                             <td>{item.fields.start_date}</td>
                             <td>{item.fields.skill}</td>
                             <td>{item.fields.stipend}</td>
+                            <td><Button variant="primary"></Button></td>
                         </tr>)
                     })}
                 </tbody>

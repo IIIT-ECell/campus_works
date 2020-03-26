@@ -20,7 +20,9 @@ class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
+        print(token)
         user = CustomUser.objects.get(id=token.user_id)
+        print(user)
         return Response({'token': token.key, 'id': token.user_id, 'type':user.user_type})
 
 
@@ -103,6 +105,11 @@ class CompanyViews(APIView):
             return Response({"message":str(e),"success":False})
 
 class ApplicationViews(APIView):
+    def get(self, request, *args, **kwargs):
+        applications = Application.objects.all()
+        serializer = ApplicationStudentSerializer(applications, many=True)
+        return Response(serializer.data)
+
     def post(self, request, *args, **kwargs):
         application_serializer = ApplicationStudentSerializer(data=request.data)
         if application_serializer.is_valid():
@@ -113,7 +120,7 @@ class ApplicationViews(APIView):
 
     def put(self, request):
         data = json.loads(request.body)
-        try: 
+        try:
             token = data['token']
         except KeyError as e:
             return Response({"success": False, "message": str(e)})
@@ -256,25 +263,19 @@ class ViewJobs(APIView):
         return Response(json.loads(jobs))
 
 
-class ApplyForJob(APIView):
+class StudentApplications(APIView):
 
-    def post(self,request):
+    def get(self,request):
         data = json.loads(request.body)
         token = data['token']
         if not student_required(token):
            return Response({"message":"You cannot apply for jobs"}) 
-        try: 
-            user = CustomUser.objects.get(id=data['id'])
-            print(user.student_id)
-            # new_job = Job.objects.create(
-            #     job_name = data['job_name'],
-            #     company = data['company'],
-            #     description = data['description']
-            # )
-            # new_job.save()
-            return Response({"message":"Job added successfully"})
-        except Exception as e:
-            return Response({"message":str(e)})
-
+        try:
+            id = get_student_id(token)
+            applications = Application.objects.filter(student_id=id)
+            serializer = ApplicationStudentSerializer(applications, many=True)
+            return Response(serializer.data)
+        except:
+            Response({"message":"Cannot get application data"})
 
 

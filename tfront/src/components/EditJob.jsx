@@ -36,7 +36,7 @@ class EditJob extends Component {
 
         axios({
             method: "GET",
-            url: "https://campusworks.pythonanywhere.com/post-job",
+            url: "localhost:8000/post-job",
             params: {
                 token: this.token,
                 id: this.jobId
@@ -65,7 +65,7 @@ class EditJob extends Component {
 
         axios({
             method: "PUT",
-            url: "https://campusworks.pythonanywhere.com/post-job",
+            url: "localhost:8000/post-job",
             data: {
                 token: this.token,
                 id: this.id,
@@ -84,7 +84,7 @@ class EditJob extends Component {
             }
         }).then((response)=>{
             alert(response.data.message);
-            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            window.location.replace("localhost:3000/cworks/company/home");
         });
     }
 
