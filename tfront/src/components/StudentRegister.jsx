@@ -32,7 +32,7 @@ class StudentRegister extends Component{
             form_data.append(keys[i],this.formData[keys[i]]);
         }
         // form_data.append()
-        axios.post("localhost:8000/student",
+        axios.post("http://localhost:8000/student",
             form_data,
             {
                 headers:{

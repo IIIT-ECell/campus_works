@@ -46,7 +46,7 @@ export default class CompanyRegister extends React.Component {
 
         axios({
             method:"POST",
-            url:"localhost:8000/company",
+            url:"http://localhost:8000/company",
             data:this.formData,
             headers:{
                 'Content-Type': 'application/json',

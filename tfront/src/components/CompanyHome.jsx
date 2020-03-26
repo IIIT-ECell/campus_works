@@ -14,7 +14,7 @@ class CompanyHome extends Component {
     componentDidMount() {
         axios({
             method: "POST",
-            url: "localhost:8000/jobs",
+            url: "http://localhost:8000/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },

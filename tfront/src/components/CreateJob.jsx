@@ -44,7 +44,7 @@ class CreateJob extends Component {
 
         axios({
             method: "POST",
-            url: "localhost:8000/post-job",
+            url: "http://localhost:8000/post-job",
             data: {
                 token: this.token,
                 id: this.id,

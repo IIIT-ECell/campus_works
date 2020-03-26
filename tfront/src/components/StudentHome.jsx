@@ -14,7 +14,7 @@ class StudentHome extends Component{
     componentDidMount(){
         axios({
             method: "GET",
-            url: "localhost:8000/jobs",
+            url: "http://localhost:8000/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },
@@ -28,7 +28,7 @@ class StudentHome extends Component{
         });
         axios({
             method: "GET",
-            url: "localhost:8000/applications",
+            url: "http://localhost:8000/applications",
             data: {
                 "token": localStorage.getItem("token"),
             },
@@ -64,7 +64,7 @@ class StudentHome extends Component{
                             <td>{item.fields.start_date}</td>
                             <td>{item.fields.skill}</td>
                             <td>{item.fields.stipend}</td>
-                            <td><Button variant="primary"></Button></td>
+                            <td><Link to={'/apply/'+item.fields.company}><Button variant="primary">Apply</Button></Link></td>
                         </tr>)
                     })}
                 </tbody>

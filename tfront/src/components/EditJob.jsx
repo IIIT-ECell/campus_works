@@ -36,7 +36,7 @@ class EditJob extends Component {
 
         axios({
             method: "GET",
-            url: "localhost:8000/post-job",
+            url: "http://localhost:8000/post-job",
             params: {
                 token: this.token,
                 id: this.jobId
@@ -65,7 +65,7 @@ class EditJob extends Component {
 
         axios({
             method: "PUT",
-            url: "localhost:8000/post-job",
+            url: "http://localhost:8000/post-job",
             data: {
                 token: this.token,
                 id: this.id,
