@@ -55,7 +55,7 @@ export default class CompanyRegister extends React.Component {
             alert(response.data["message"]);
 
             if(response.data["success"]=="True") {
-                window.location.replace("localhost:3000/cworks/login");
+                window.location.replace("http://localhost:3000/login");
             }
         })
     }

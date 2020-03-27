@@ -22,11 +22,11 @@ class CompanyHome extends Component {
                 'Content-Type': 'application/json',
             }
         })
-            .then((res) => {
-                console.log(res);
-                this.setState({"jobs": res.data});
-                console.log(this.state);
-            });
+        .then((res) => {
+            console.log(res);
+            this.setState({"jobs": res.data});
+            console.log(this.state);
+        });
     }
 
 

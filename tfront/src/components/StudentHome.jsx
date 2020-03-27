@@ -35,7 +35,11 @@ class StudentHome extends Component{
             headers: {
                 'Content-Type': 'application/json',
             }
-        })
+        }).then((res) => {
+            console.log(res);
+            this.setState({"applications": res.data});
+            console.log(this.state);
+        });
     }
 
     render(){

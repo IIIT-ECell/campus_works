@@ -64,7 +64,7 @@ class CreateJob extends Component {
         }).then((response)=>{
             console.log(response.data);
             alert(response.data.message);
-            window.location.replace("localhost:3000/cworks/company/home");
+            window.location.replace("http://localhost:3000/company/home");
         });
     }
 

@@ -281,11 +281,12 @@ class StudentApplications(APIView):
 
     def get(self,request):
         data = json.loads(request.body)
+        print(data)
         token = data['token']
         if not student_required(token):
            return Response({"message":"You cannot apply for jobs"}) 
         try:
-            id = idget_student_id(token)
+            id = get_student_id(token)
             applications = Application.objects.filter(student_id=id)
             serializer = ApplicationStudentSerializer(applications, many=True)
             return Response(serializer.data)
