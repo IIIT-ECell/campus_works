@@ -14,20 +14,20 @@ class ApplyforJobs extends Component{
     }
 
     componentDidMount(){
-        // axios({
-        //     mehtod: "GET",
-        //     url: "",
-        //     data: {
-        //         id: this.props.match.params.job_id
-        //     },
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     }
-        // })
-        // .then((response)=>{
-        //     this.setState(response.data.data.fields);
-        //     console.log(this.state);
-        // })
+        axios({
+            mehtod: "GET",
+            url: "http://localhost:8000/student",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        .then((response)=>{
+            this.setState(response.data.data.fields);
+            console.log(this.state);
+        })
         console.log(this.state);
     }
     handleChange(event){

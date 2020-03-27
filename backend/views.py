@@ -37,9 +37,24 @@ class StudentViews(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, *args, **kwargs):
-        students = Student.objects.all()
-        serializer = StudentSerializer(students, many=True)
-        return Response(serializer.data)
+        data = json.loads(request.body)
+        print(data)
+        try:
+            key = data['token']
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+        
+        try:
+            token = Token.objects.get(key=key)
+            student = Student.objects.get(user_id=token.user_id)
+    
+        except Student.DoesNotExist as e:
+            return Response({"success": False, "message": str(e)})
+
+        student_json = serializers.serialize("json", [student, ])
+        print(json.loads(student_json)[0])
+        return Response({"success": True, "data": json.loads(student_json)[0]})
+
 
 
     def post(self, request, *args, **kwargs):
@@ -270,7 +285,7 @@ class StudentApplications(APIView):
         if not student_required(token):
            return Response({"message":"You cannot apply for jobs"}) 
         try:
-            id = get_student_id(token)
+            id = idget_student_id(token)
             applications = Application.objects.filter(student_id=id)
             serializer = ApplicationStudentSerializer(applications, many=True)
             return Response(serializer.data)
