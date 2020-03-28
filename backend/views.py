@@ -280,7 +280,7 @@ class ViewJobs(APIView):
 class StudentApplications(APIView):
 
     def get(self,request):
-        data = json.loads(request.body)
+        data = request.GET
         print(data)
         token = data['token']
         if not student_required(token):

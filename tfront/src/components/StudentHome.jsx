@@ -8,19 +8,13 @@ class StudentHome extends Component{
     
     constructor(props){
         super(props);
-        this.state={jobs:[]};
+        this.state={jobs:[],applications:[]};
     }
 
     componentDidMount(){
         axios({
             method: "GET",
             url: "http://localhost:8000/jobs",
-            data: {
-                "token": localStorage.getItem("token"),
-            },
-            headers: {
-                'Content-Type': 'application/json',
-            }
         }).then((res) => {
             console.log(res);
             this.setState({"jobs": res.data});
@@ -29,7 +23,7 @@ class StudentHome extends Component{
         axios({
             method: "GET",
             url: "http://localhost:8000/applications",
-            data: {
+            params: {
                 "token": localStorage.getItem("token"),
             },
             headers: {
@@ -68,7 +62,7 @@ class StudentHome extends Component{
                             <td>{item.fields.start_date}</td>
                             <td>{item.fields.skill}</td>
                             <td>{item.fields.stipend}</td>
-                            <td><Link to={'/apply/'+item.fields.company}><Button variant="primary">Apply</Button></Link></td>
+                            <td><Link to={'/apply/'+item.fields.company && !(item.id in this.state.applications)}><Button variant="primary">Apply</Button></Link></td>
                         </tr>)
                     })}
                 </tbody>
