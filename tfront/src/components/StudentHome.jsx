@@ -71,7 +71,7 @@ class StudentHome extends Component{
                             <td>{item.fields.start_date}</td>
                             <td>{item.fields.skill}</td>
                             <td>{item.fields.stipend}</td>
-                            <td><Link to={'/apply/'+item.fields.company && !(item.id in this.state.applications)}><Button variant="primary">Apply</Button></Link></td>
+                            <td><Link to={'/apply/'+item.fields.company}><Button variant="primary">Apply</Button></Link></td>
                         </tr>)
                     })}
                 </tbody>

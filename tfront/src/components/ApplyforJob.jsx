@@ -11,13 +11,15 @@ class ApplyforJobs extends Component{
         console.log(today);
         this.state={date_of_application: date};
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.setDefaultResume = this.setDefaultResume.bind(this);
     }
 
     componentDidMount(){
         axios({
             mehtod: "GET",
             url: "http://localhost:8000/student",
-            data: {
+            params: {
                 token: localStorage.getItem('token')
             },
             headers: {
@@ -25,17 +27,32 @@ class ApplyforJobs extends Component{
             }
         })
         .then((response)=>{
-            this.setState(response.data.data.fields);
+            console.log(response.data.data.fields);
+            this.setState({"student":response.data.data.fields});
             console.log(this.state);
         })
         console.log(this.state);
     }
+    
     handleChange(event){
         event.preventDefault();
         var key = event.target.id;
         var value = event.target.value;
         console.log(value);
         this.setState({key:value});
+    }
+
+    setDefaultResume(event){
+        event.preventDefault();
+        this.setState({"resume":this.state.student.resume});
+
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        var key = event.target.id;
+        var value = event.target.value;
+        console.log(value);
     }
 
     render(){
@@ -52,8 +69,8 @@ class ApplyforJobs extends Component{
                                 <Form.Label>Resume</Form.Label>
                                 <Form.Control type="file" id="resume" name="resume" value={this.state.resume}></Form.Control>
                             </Form.Group>
-                            <button type="submit" className="btn btn-primary col-6" onClick={this.handleSubmit}>Submit</button>
-                            <button type="reset" className="btn btn-primary col-6" onClick={this.handleSubmit}>Submit</button>
+                            <button type="submit" className="btn btn-success col-6" onSubmit={this.handleSubmit}>Submit</button>
+                            <button className="btn btn-warning col-6" onClick={this.setDefaultResume}>Default Resume</button>
                         </Form>
                 </div>
             </div>
