@@ -18,7 +18,6 @@ class StudentHome extends Component{
         }).then((res) => {
             console.log(res);
             this.setState({"jobs": res.data});
-            console.log(this.state);
         });
         axios({
             method: "GET",
@@ -29,10 +28,20 @@ class StudentHome extends Component{
             headers: {
                 'Content-Type': 'application/json',
             }
-        }).then((res) => {
-            console.log(res);
+        }).then((res)=>{
+            console.log(res.data);
             this.setState({"applications": res.data});
             console.log(this.state);
+            let jobs = this.state.jobs;
+            let applications = res.data;
+            for(let job in jobs){
+                for(let application in applications){
+                    if(jobs[job].pk==applications[application].job){
+                        delete jobs[job];
+                    }
+                }
+            }
+            this.setState({"jobs":jobs});
         });
     }
 
