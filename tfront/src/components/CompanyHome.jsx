@@ -41,7 +41,7 @@ class CompanyHome extends Component {
                     </Col>
                 </Row>
             </Container>
-            <Table responsive bordered hover striped>
+            <Table responsive bordered hover striped style={{minHeight: "75vh"}}>
                 <thead>
                     <tr>
                         <th colSpan="6">Jobs posted</th>
