@@ -14,7 +14,7 @@ class CompanyHome extends Component {
     componentDidMount() {
         axios({
             method: "POST",
-            url: "https://campusworks.pythonanywhere.com/jobs",
+            url: "http://localhost:8000/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },
@@ -22,11 +22,11 @@ class CompanyHome extends Component {
                 'Content-Type': 'application/json',
             }
         })
-            .then((res) => {
-                console.log(res);
-                this.setState({"jobs": res.data});
-                console.log(this.state);
-            });
+        .then((res) => {
+            console.log(res);
+            this.setState({"jobs": res.data});
+            console.log(this.state);
+        });
     }
 
 

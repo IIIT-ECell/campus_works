@@ -20,7 +20,9 @@ class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
+        print(token)
         user = CustomUser.objects.get(id=token.user_id)
+        print(user)
         return Response({'token': token.key, 'id': token.user_id, 'type':user.user_type})
 
 
@@ -35,9 +37,24 @@ class StudentViews(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, *args, **kwargs):
-        students = Student.objects.all()
-        serializer = StudentSerializer(students, many=True)
-        return Response(serializer.data)
+        data = request.GET
+        print(data)
+        try:
+            key = data['token']
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+        
+        try:
+            token = Token.objects.get(key=key)
+            student = Student.objects.get(user_id=token.user_id)
+    
+        except Student.DoesNotExist as e:
+            return Response({"success": False, "message": str(e)})
+
+        student_json = serializers.serialize("json", [student, ])
+        print(json.loads(student_json)[0])
+        return Response({"success": True, "data": json.loads(student_json)[0]})
+
 
 
     def post(self, request, *args, **kwargs):
@@ -103,6 +120,11 @@ class CompanyViews(APIView):
             return Response({"message":str(e),"success":False})
 
 class ApplicationViews(APIView):
+    def get(self, request, *args, **kwargs):
+        applications = Application.objects.get()
+        serializer = ApplicationStudentSerializer(applications)
+        return Response(serializer.data)
+
     def post(self, request, *args, **kwargs):
         application_serializer = ApplicationStudentSerializer(data=request.data)
         if application_serializer.is_valid():
@@ -113,7 +135,7 @@ class ApplicationViews(APIView):
 
     def put(self, request):
         data = json.loads(request.body)
-        try: 
+        try:
             token = data['token']
         except KeyError as e:
             return Response({"success": False, "message": str(e)})
@@ -128,9 +150,7 @@ class PostJob(APIView):
     def get(self, request):
         '''View a single job'''
         #should give all the job details for a given id
-
         data = request.GET
-
         try:
             id = data['id']
         except KeyError as e:
@@ -142,7 +162,8 @@ class PostJob(APIView):
             return Response({"success": False, "message": str(e)})
 
         job_json = serializers.serialize("json", [job, ])
-        return Response({"success": True, "data": json.loads(job_json)})
+        print(json.loads(job_json)[0])
+        return Response({"success": True, "data": json.loads(job_json)[0]})
         
 
 
@@ -256,25 +277,22 @@ class ViewJobs(APIView):
         return Response(json.loads(jobs))
 
 
-class ApplyForJob(APIView):
+class StudentApplications(APIView):
 
-    def post(self,request):
-        data = json.loads(request.body)
+    def get(self,request):
+        data = request.GET
+        # print(data)
         token = data['token']
         if not student_required(token):
            return Response({"message":"You cannot apply for jobs"}) 
-        try: 
-            user = CustomUser.objects.get(id=data['id'])
-            print(user.student_id)
-            # new_job = Job.objects.create(
-            #     job_name = data['job_name'],
-            #     company = data['company'],
-            #     description = data['description']
-            # )
-            # new_job.save()
-            return Response({"message":"Job added successfully"})
-        except Exception as e:
-            return Response({"message":str(e)})
-
+        try:
+            id = get_student_id(token)
+            student = Student.objects.get(id=id)
+            print(student.resume.path)
+            applications = Application.objects.filter(student_id=id)
+            serializer = ApplicationStudentSerializer(applications, many=True)
+            return Response(serializer.data)
+        except:
+            Response({"message":"Cannot get application data"})
 
 

@@ -26,6 +26,7 @@ urlpatterns = [
     path('company', views.CompanyViews.as_view()), 
     path('authenticate', views.CustomObtainAuthToken.as_view(), name='api_token_auth'),
     path('post-job',views.PostJob.as_view()),
-    path('apply-for-job',views.ApplyForJob.as_view()),
+    path('applications',views.StudentApplications.as_view()),
+    path('apply-for-job',views.ApplicationViews.as_view()),
     path('jobs',views.ViewJobs.as_view())
 ]
