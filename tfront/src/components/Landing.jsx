@@ -2,7 +2,19 @@ import React, { Component} from 'react';
 import './Landing.css'
 import {Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+
 class Landing extends Component {
+    componentDidMount(){
+        if(localStorage.getItem('token') && localStorage.getItem('isLoggedIn') && localStorage.getItem('id')){
+            if(localStorage.getItem('type')==1){
+                window.location.replace('http://localhost:3000/company/home');
+            }
+            else{
+                window.location.replace('http://localhost:3000/company/home');
+            }
+        }
+    }
+
     render() {
         console.log(this.props);
         return(
