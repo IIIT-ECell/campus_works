@@ -18,7 +18,7 @@ class ApplyforJobs extends Component{
     componentDidMount(){
         axios({
             mehtod: "GET",
-            url: "http://localhost:8000/student",
+            url: "https://campusworks.pythonanywhere.com/student",
             params: {
                 token: localStorage.getItem('token')
             },

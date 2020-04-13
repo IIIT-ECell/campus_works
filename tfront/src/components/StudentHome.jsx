@@ -14,14 +14,14 @@ class StudentHome extends Component{
     componentDidMount(){
         axios({
             method: "GET",
-            url: "http://localhost:8000/jobs",
+            url: "https://campusworks.pythonanywhere.com/jobs",
         }).then((res) => {
             console.log(res);
             this.setState({"jobs": res.data});
         });
         axios({
             method: "GET",
-            url: "http://localhost:8000/applications",
+            url: "https://campusworks.pythonanywhere.com/applications",
             params: {
                 "token": localStorage.getItem("token"),
             },
