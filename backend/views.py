@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.views.static import serve
 from django.core import serializers
 from backend.models import CustomUser, Student, Company, Job, Application
 from django.contrib.auth.hashers import make_password
@@ -15,6 +16,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from backend.decorators import student_required, company_required, get_company_id, get_student_id
 import json
 from .serializers import StudentSerializer, UserSerializer, ApplicationStudentSerializer
+import os
 
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -296,3 +298,11 @@ class StudentApplications(APIView):
             Response({"message":"Cannot get application data"})
 
 
+class Resume(APIView):
+
+    def get(self, request):
+        data = request.GET
+        student = Student.objects.get(id=data['id'])
+        filepath = student.resume.path
+        print(filepath)
+        return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
