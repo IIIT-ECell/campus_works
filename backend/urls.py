@@ -28,5 +28,6 @@ urlpatterns = [
     path('post-job',views.PostJob.as_view()),
     path('applications',views.StudentApplications.as_view()),
     path('apply-for-job',views.ApplicationViews.as_view()),
-    path('jobs',views.ViewJobs.as_view())
+    path('jobs',views.ViewJobs.as_view()),
+    path('resume',views.Resume.as_view()),
 ]
