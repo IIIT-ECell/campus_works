@@ -40,7 +40,7 @@ class StudentRegister extends Component{
                 }  
             }
         ).then((res)=>{
-            alert(res.data);
+            alert(res.data.message);
         })
     }
 
