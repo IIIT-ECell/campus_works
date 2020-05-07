@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && scp -r build/* ecell@ecell.iiit.ac.in:~/cworks"
+    "deploy": "react-scripts build && scp -r build/* ecell@10.4.20.184:~/cworks"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -27,7 +27,7 @@ class ApplyforJobs extends Component{
             }
         })
         .then((response)=>{
-            console.log(response.data.data.fields);
+            console.log(response.data);
             this.setState({"student":response.data.data.fields});
             console.log(this.state);
         })

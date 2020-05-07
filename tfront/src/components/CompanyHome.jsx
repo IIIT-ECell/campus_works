@@ -12,6 +12,9 @@ class CompanyHome extends Component {
     }
 
     componentDidMount() {
+        if(localStorage.getItem('token')==null){
+            window.location.replace('http://localhost:3000/login')
+        }
         axios({
             method: "POST",
             url: "http://localhost:8000/jobs",

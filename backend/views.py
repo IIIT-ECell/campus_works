@@ -40,7 +40,7 @@ class StudentViews(APIView):
 
     def get(self, request, *args, **kwargs):
         data = request.GET
-        print(data)
+        print(data['token'])
         try:
             key = data['token']
         except KeyError as e:
