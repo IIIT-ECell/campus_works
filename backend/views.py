@@ -128,12 +128,30 @@ class ApplicationViews(APIView):
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
-        application_serializer = ApplicationStudentSerializer(data=request.data)
-        if application_serializer.is_valid():
-            application_serializer.save()
-            return Response({'message':"Application successfully submitted","success":True})
-        else:
-            return Response({'message':application_serializer.error_messages,"success":False})
+        token = request.data['token']
+        if not student_required(token):  
+            return Response({"message":"Only students can apply for jobs","success":False})
+        try:
+            check = Application.objects.get(job_id=request.data['job_id'],student_id = get_student_id(token))
+            return Response({"message":"You have already applied to this job before","success":False})
+        except Exception as e:
+            print(str(e))
+            return Response({"message":str(e),"success":False})
+
+        application = Application(
+            job_id = request.data['job_id'],
+            student_id = get_student_id(token),
+            date_of_application = request.data['date_of_application']
+        )
+        application.save()
+        return Response({'message':"Application successfully submitted","success":True})
+
+        # application_serializer = ApplicationStudentSerializer(data=request.data)
+        # if application_serializer.is_valid():
+        #     application_serializer.save()
+        #     return Response({'message':"Application successfully submitted","success":True})
+        # else:
+        #     return Response({'message':application_serializer.error_messages,"success":False})
 
     def put(self, request):
         data = json.loads(request.body)

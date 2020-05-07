@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import NavStudent from './NavStudent';
-import { Form } from 'react-bootstrap';
+import { Form, FormGroup, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class ApplyforJobs extends Component{
     constructor(props){
@@ -9,10 +10,9 @@ class ApplyforJobs extends Component{
         var today = new Date(),
         date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         console.log(today);
-        this.state={date_of_application: date};
+        this.state={date_of_application: date,student:{student_id:""}};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.setDefaultResume = this.setDefaultResume.bind(this);
     }
 
     componentDidMount(){
@@ -29,9 +29,9 @@ class ApplyforJobs extends Component{
         .then((response)=>{
             console.log(response.data);
             this.setState({"student":response.data.data.fields});
+            this.setState({"pk":response.data.data.pk});
             console.log(this.state);
-        })
-        console.log(this.state);
+        })  
     }
     
     handleChange(event){
@@ -42,17 +42,22 @@ class ApplyforJobs extends Component{
         this.setState({key:value});
     }
 
-    setDefaultResume(event){
-        event.preventDefault();
-        this.setState({"resume":this.state.student.resume});
-
-    }
-
     handleSubmit(event){
         event.preventDefault();
-        var key = event.target.id;
-        var value = event.target.value;
-        console.log(value);
+        console.log(this.props.match.params.job_id);
+        axios({
+            method:'POST',
+            url: "http://localhost:8000/apply-for-job",
+            data:{
+                job_id:parseInt(this.props.match.params.job_id),
+                date_of_application: this.state.date_of_application,
+                token: localStorage.getItem('token')
+            }
+        })
+        .then((response)=>{
+            console.log(response);
+            alert(response.data.message);
+        })
     }
 
     render(){
@@ -65,12 +70,16 @@ class ApplyforJobs extends Component{
                                 <Form.Label>Date of Application</Form.Label>
                                 <Form.Control type="text" id="date_of_application" name="date_of_application" value={this.state.date_of_application} disabled></Form.Control>
                             </Form.Group>
-                            <Form.Group controlId="resume" className="col-8">
-                                <Form.Label>Resume</Form.Label>
-                                <Form.Control type="file" id="resume" name="resume" value={this.state.resume}></Form.Control>
-                            </Form.Group>
-                            <button type="submit" className="btn btn-success col-6" onSubmit={this.handleSubmit}>Submit</button>
-                            <button className="btn btn-warning col-6" onClick={this.setDefaultResume}>Default Resume</button>
+                            <FormGroup controlId="student_id" className="col-4">
+                                <Form.Label>Student Id</Form.Label>
+                                <Form.Control type="text" id="student_id" name="student_id" value={this.state.student.student_id} disabled></Form.Control>
+                            </FormGroup>
+                            <FormGroup controlId="phone_number" className="col-4">
+                                <Form.Label>Phone Number</Form.Label>
+                                <Form.Control type="text" id="phone_number" name="phone_number" value={this.state.student.phone_number} disabled></Form.Control>
+                            </FormGroup>
+                            <Button type="submit" variant="btn btn-success col-6" onSubmit={this.handleSubmit}>Submit</Button>
+                            <Link to={"/student/home"} className="col-6"><Button variant="btn btn-primary col-6">Back</Button></Link>
                         </Form>
                 </div>
             </div>
