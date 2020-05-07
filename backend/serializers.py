@@ -14,4 +14,4 @@ class UserSerializer(serializers.ModelSerializer):
 class ApplicationStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        fields = ['student_id','job_id','date_of_application']
+        fields = ['student_id','job_id','date_of_application','select_status']

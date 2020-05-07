@@ -18,30 +18,29 @@ class StudentHome extends Component{
         }).then((res) => {
             console.log(res);
             this.setState({"jobs": res.data});
-        });
-        axios({
-            method: "GET",
-            url: "http://localhost:8000/applications",
-            params: {
-                "token": localStorage.getItem("token"),
-            },
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((res)=>{
-            console.log(res.data);
-            this.setState({"applications": res.data});
-            console.log(this.state);
-            let jobs = this.state.jobs;
-            let applications = res.data;
-            for(let job in jobs){
-                for(let application in applications){
-                    if(jobs[job].pk==applications[application].job){
-                        delete jobs[job];
+            axios({
+                method: "GET",
+                url: "http://localhost:8000/applications",
+                params: {
+                    "token": localStorage.getItem("token"),
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((res)=>{
+                let jobs = this.state.jobs;
+                let applications = res.data;
+                for(let job in jobs){
+                    for(let application in applications){
+                        if(jobs[job].pk==applications[application].job_id){
+                            applications[application].job = jobs[job].fields;
+                            jobs.splice(job,1);
+                        }
                     }
                 }
-            }
-            this.setState({"jobs":jobs});
+                this.setState({"jobs":jobs, "applications":applications});
+                console.log(this.state);
+            });
         });
     }
 
@@ -52,7 +51,7 @@ class StudentHome extends Component{
                 <Table>
                 <thead>
                     <tr>
-                        <th colSpan="6">Jobs posted</th>
+                        <th colSpan="6">Jobs Available</th>
                     </tr>
                     <tr>
                         <th>Job Name</th>
@@ -74,7 +73,32 @@ class StudentHome extends Component{
                             <td><Link to={'/apply/'+item.pk}><Button variant="primary">Apply</Button></Link></td>
                         </tr>)
                     })}
+                    {this.state.jobs.length==0 && <td colSpan="6" className="text-center">No new jobs to show</td>}
                 </tbody>
+                </Table>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th colSpan="6">Applications Submitted</th>
+                        </tr>
+                        <tr>
+                            <th>Job Name</th>
+                            <th>Job Description</th>
+                            <th>Date of Application</th>
+                            <th>Status of Application</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.applications && this.state.applications.map((item, key)=>{
+                            return (<tr>
+                                <td>{item.job.job_name}</td>
+                                <td>{item.job.description}</td>
+                                <td>{item.date_of_application}</td>
+                                <td>{item.select_status}</td>
+                            </tr>
+                            )
+                        })}
+                    </tbody>
                 </Table>
             </div>
         )
