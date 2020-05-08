@@ -123,9 +123,16 @@ class CompanyViews(APIView):
 
 class ApplicationViews(APIView):
     def get(self, request, *args, **kwargs):
-        applications = Application.objects.get()
-        serializer = ApplicationStudentSerializer(applications)
-        return Response(serializer.data)
+        data = request.GET
+        token = data['token']
+        if student_required(token):
+            return Response({"message":"Students not allowed to see all applications","success":False})
+        job = Job.objects.get(id=data['job_id'])
+        if get_company_id(token) == job.company_id:
+            applications = serializers.serialize('json',Application.objects.filter(job_id=data['job_id']))
+            return Response(json.loads(applications))
+        else:
+            return Response({"message":"You did not post this job","success":False})
 
     def post(self, request, *args, **kwargs):
         token = request.data['token']
