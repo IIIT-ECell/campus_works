@@ -11,7 +11,7 @@ class CompanyHome extends Component {
         this.state = {jobs: []};
     }
 
-    componentDidMount() {
+    componentWillMount() {
         if(localStorage.getItem('token')==null){
             window.location.replace('https://ecell.iiit.ac.in/cworks/login')
         }

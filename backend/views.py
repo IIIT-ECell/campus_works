@@ -339,3 +339,19 @@ class Resume(APIView):
         filepath = student.resume.path
         print(filepath)
         return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
+
+class StudentProfile(APIView):
+    def get(self, request):
+        data = request.GET
+        print(data['student_id'])
+        student = Student.objects.get(id=data['student_id'])
+        student_json = serializers.serialize("json", [student])
+        return Response({"success":True, "data":json.loads(student_json)[0]})
+        # return json.loads(student_json)
+
+
+    # def post(self)
+
+    # def put(self)
+
+    # def delete(self)

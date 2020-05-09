@@ -22,6 +22,7 @@ import { Redirect } from 'react-router-dom';
 class CreateJob extends Component {
     constructor(props) {
         super(props);
+        this.state = {formSubmitted:false}
         this.formData = {"is_flexi": "false"};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -41,7 +42,7 @@ class CreateJob extends Component {
 
     handleSubmit(event){
         event.preventDefault();
-
+        this.setState({formSubmitted:true});
         axios({
             method: "POST",
             url: "https://campusworks.pythonanywhere.com/post-job",
@@ -65,6 +66,7 @@ class CreateJob extends Component {
             console.log(response.data);
             alert(response.data.message);
             window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            this.setState({formSubmitted:false});
         });
     }
 
@@ -151,8 +153,7 @@ class CreateJob extends Component {
                                     <small className="form-text text-light">Programming languages required</small>
                                 </div>
                             </div>
-
-                            <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
+                            {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
                         </form>
                     </div>
                 </div>
