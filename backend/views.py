@@ -162,6 +162,7 @@ class ApplicationViews(APIView):
 
     def put(self, request):
         data = json.loads(request.body)
+        print(data)
         try:
             token = data['token']
         except KeyError as e:
@@ -170,8 +171,15 @@ class ApplicationViews(APIView):
         if not company_required(token):
             return Response({"success": False, "message": "You cannot select applications"})
 
-        Application.objects.get(pk=data['application_id'])
-
+        company_id = get_company_id(data['token'])
+        application = Application.objects.get(pk=data['application_id'])
+        print(application.job.company_id)
+        if application.job.company_id == company_id:
+            application.select_status = data['select_status']
+            application.save()
+            return Response({"message":"Application successfully changed","success":True})
+        else:
+            return Response({"message":"Your company is authorized to this application","status":False})
 class PostJob(APIView):
 
     def get(self, request):

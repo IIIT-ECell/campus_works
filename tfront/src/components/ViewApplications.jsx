@@ -8,15 +8,17 @@ class ViewApplications extends Component{
     constructor(props){
         super(props);
         this.state={"applicants":[]};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
         axios({
-            'method':'GET',
-            'url':"http://localhost:8000/apply-for-job",
-            "params":{
-                "token": localStorage.getItem("token"),
-                "job_id": this.props.match.params.job_id,
+            method:'GET',
+            url:"http://localhost:8000/apply-for-job",
+            params:{
+                token: localStorage.getItem("token"),
+                job_id: this.props.match.params.job_id,
             }
         })
         .then((response)=>{
@@ -25,6 +27,42 @@ class ViewApplications extends Component{
             console.log(this.state);
         })
     }
+
+    handleChange(event){
+        event.preventDefault();
+        console.log(event.target.value);
+        console.log(event.target.attributes['pk'].value);
+        var applicants = this.state["applicants"];
+        for(var i in applicants){
+            if(applicants[i].pk==event.target.attributes['pk'].value){
+                applicants[i].fields['select_status'] = event.target.value;
+            }
+        }
+        this.setState({"applicants":applicants});
+        console.log(this.state);
+    }
+
+    handleSubmit(event,pk,status){
+        event.preventDefault();
+        console.log(status,pk);
+        axios({
+            method:'PUT',
+            url:'http://localhost:8000/apply-for-job',
+            data:{
+                token: localStorage.getItem('token'),
+                application_id:pk,
+                select_status:status
+            },
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        .then((response)=>{
+            console.log(response);
+            alert(response.data['message']);
+        })
+    }
+
     render(){
         return (
             <div>
@@ -38,6 +76,7 @@ class ViewApplications extends Component{
                         <tr>
                             <th>Date</th>
                             <th>Status</th>
+                            <th></th>
                             <th>Resume</th>
                         </tr>
                     </thead>
@@ -45,7 +84,17 @@ class ViewApplications extends Component{
                         {this.state.applicants && this.state.applicants.map((item,key)=>{
                             return (<tr>
                                 <td>{item.fields.date_of_application}</td>
-                                <td>{item.fields.select_status}</td>
+                                <td>
+                                    <select id="select_status" value={item.fields.select_status} pk={item.pk} onChange={this.handleChange}>
+                                        <option value='RCVD'>Application received</option>
+                                        <option value='SCRN'>Passed screening</option>
+                                        <option value='INTD'>Interviewed</option>
+                                        <option value='ACPT'>Accepted</option>
+                                        <option value='RJCT'>Rejected</option>
+                                        <option value='FLAG'>Flagged</option>
+                                    </select>
+                                </td>
+                                <td><Button variant="btn btn-success" onClick={(e)=>{this.handleSubmit(e,item.pk,item.fields.select_status)}}>Save</Button></td>
                                 <td><a href={"http://localhost:8000/resume?id="+item.fields.student} target="_blank">View</a></td>
                             </tr>)
                         })}
