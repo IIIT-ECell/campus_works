@@ -117,7 +117,3 @@ class Application(models.Model):
     ]
 
     select_status = models.CharField('selection status', choices=ACCEPT_STATUS_CHOICES, default=APPLICATION_RECEIVED, max_length=4);
-
-    resume_validate = FileValidator(
-        max_size=50*1024*1024, content_types=('application/pdf', ))
-    resume = models.FileField(validators=[resume_validate, ])

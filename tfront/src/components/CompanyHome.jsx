@@ -12,9 +12,12 @@ class CompanyHome extends Component {
     }
 
     componentDidMount() {
+        if(localStorage.getItem('token')==null){
+            window.location.replace('https://ecell.iiit.ac.in/cworks/login')
+        }
         axios({
             method: "POST",
-            url: "http://localhost:8000/jobs",
+            url: "https://campusworks.pythonanywhere.com/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },
@@ -44,7 +47,7 @@ class CompanyHome extends Component {
             <Table responsive bordered hover striped style={{minHeight: "75vh"}}>
                 <thead>
                     <tr>
-                        <th colSpan="6">Jobs posted</th>
+                        <th colSpan="7">Jobs posted</th>
                     </tr>
                     <tr>
                         <th>Job Name</th>
@@ -52,6 +55,7 @@ class CompanyHome extends Component {
                         <th>Start Date</th>
                         <th>Skill</th>
                         <th>Stipend</th>
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -64,6 +68,7 @@ class CompanyHome extends Component {
                             <td>{item.fields.skill}</td>
                             <td>{item.fields.stipend}</td>
                             <td><Link to={"/jobs/edit/" + item.pk}>Edit</Link></td>
+                            <td><Link to={"/view-applications/" + item.pk}>View Applications</Link></td>
                         </tr>)
                     })}
                 </tbody>

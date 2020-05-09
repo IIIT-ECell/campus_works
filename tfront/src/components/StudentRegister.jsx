@@ -32,7 +32,7 @@ class StudentRegister extends Component{
             form_data.append(keys[i],this.formData[keys[i]]);
         }
         // form_data.append()
-        axios.post("http://localhost:8000/student",
+        axios.post("https://campusworks.pythonanywhere.com/student",
             form_data,
             {
                 headers:{
@@ -40,7 +40,7 @@ class StudentRegister extends Component{
                 }  
             }
         ).then((res)=>{
-            alert(res.data);
+            alert(res.data.message);
         })
     }
 

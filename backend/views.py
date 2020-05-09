@@ -40,7 +40,7 @@ class StudentViews(APIView):
 
     def get(self, request, *args, **kwargs):
         data = request.GET
-        print(data)
+        print(data['token'])
         try:
             key = data['token']
         except KeyError as e:
@@ -123,20 +123,46 @@ class CompanyViews(APIView):
 
 class ApplicationViews(APIView):
     def get(self, request, *args, **kwargs):
-        applications = Application.objects.get()
-        serializer = ApplicationStudentSerializer(applications)
-        return Response(serializer.data)
+        data = request.GET
+        token = data['token']
+        if student_required(token):
+            return Response({"message":"Students not allowed to see all applications","success":False})
+        job = Job.objects.get(id=data['job_id'])
+        if get_company_id(token) == job.company_id:
+            applications = serializers.serialize('json',Application.objects.filter(job_id=data['job_id']))
+            return Response(json.loads(applications))
+        else:
+            return Response({"message":"You did not post this job","success":False})
 
     def post(self, request, *args, **kwargs):
-        application_serializer = ApplicationStudentSerializer(data=request.data)
-        if application_serializer.is_valid():
-            application_serializer.save()
-            return Response({'message':"Application successfully submitted","success":True})
-        else:
-            return Response({'message':application_serializer.error_messages,"success":False})
+        token = request.data['token']
+        if not student_required(token):  
+            return Response({"message":"Only students can apply for jobs","success":False})
+        try:
+            check = Application.objects.get(job_id=request.data['job_id'],student_id = get_student_id(token))
+            return Response({"message":"You have already applied to this job before","success":False})
+        except Exception as e:
+            print(str(e))
+            return Response({"message":str(e),"success":False})
+
+        application = Application(
+            job_id = request.data['job_id'],
+            student_id = get_student_id(token),
+            date_of_application = request.data['date_of_application']
+        )
+        application.save()
+        return Response({'message':"Application successfully submitted","success":True})
+
+        # application_serializer = ApplicationStudentSerializer(data=request.data)
+        # if application_serializer.is_valid():
+        #     application_serializer.save()
+        #     return Response({'message':"Application successfully submitted","success":True})
+        # else:
+        #     return Response({'message':application_serializer.error_messages,"success":False})
 
     def put(self, request):
         data = json.loads(request.body)
+        print(data)
         try:
             token = data['token']
         except KeyError as e:
@@ -145,8 +171,15 @@ class ApplicationViews(APIView):
         if not company_required(token):
             return Response({"success": False, "message": "You cannot select applications"})
 
-        Application.objects.get(pk=data['application_id'])
-
+        company_id = get_company_id(data['token'])
+        application = Application.objects.get(pk=data['application_id'])
+        print(application.job.company_id)
+        if application.job.company_id == company_id:
+            application.select_status = data['select_status']
+            application.save()
+            return Response({"message":"Application successfully changed","success":True})
+        else:
+            return Response({"message":"Your company is authorized to this application","status":False})
 class PostJob(APIView):
 
     def get(self, request):
