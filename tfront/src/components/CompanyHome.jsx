@@ -13,11 +13,11 @@ class CompanyHome extends Component {
 
     componentWillMount() {
         if(localStorage.getItem('token')==null){
-            window.location.replace('https://ecell.iiit.ac.in/cworks/login')
+            window.location.replace('http://localhost:3000/login')
         }
         axios({
             method: "POST",
-            url: "https://campusworks.pythonanywhere.com/jobs",
+            url: "http://localhost:8000/jobs",
             data: {
                 "token": localStorage.getItem("token"),
             },

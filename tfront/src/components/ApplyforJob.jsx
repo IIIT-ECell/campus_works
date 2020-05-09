@@ -18,7 +18,7 @@ class ApplyforJobs extends Component{
     componentDidMount(){
         axios({
             mehtod: "GET",
-            url: "https://campusworks.pythonanywhere.com/student",
+            url: "http://localhost:8000/student",
             params: {
                 token: localStorage.getItem('token')
             },
@@ -47,7 +47,7 @@ class ApplyforJobs extends Component{
         console.log(this.props.match.params.job_id);
         axios({
             method:'POST',
-            url: "https://campusworks.pythonanywhere.com/apply-for-job",
+            url: "http://localhost:8000/apply-for-job",
             data:{
                 job_id:parseInt(this.props.match.params.job_id),
                 date_of_application: this.state.date_of_application,

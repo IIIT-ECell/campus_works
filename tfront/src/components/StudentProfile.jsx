@@ -15,7 +15,7 @@ class StudentProfile extends Component{
     }
 
     componentWillMount(){
-        axios.get("https://campusworks.pythonanywhere.com/student",{
+        axios.get("http://localhost:8000/student",{
             params: {
                 "token":localStorage.getItem("token")
             },
@@ -44,7 +44,7 @@ class StudentProfile extends Component{
             form_data.append(keys[i],this.formData[keys[i]]);
         }
         // form_data.append()
-        axios.put("https://campusworks.pythonanywhere.com/student",
+        axios.put("http://localhost:8000/student",
             form_data,
             {
                 headers:{

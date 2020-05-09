@@ -14,13 +14,13 @@ class StudentHome extends Component{
     componentDidMount(){
         axios({
             method: "GET",
-            url: "https://campusworks.pythonanywhere.com/jobs",
+            url: "http://localhost:8000/jobs",
         }).then((res) => {
             console.log(res);
             this.setState({"jobs": res.data});
             axios({
                 method: "GET",
-                url: "https://campusworks.pythonanywhere.com/applications",
+                url: "http://localhost:8000/applications",
                 params: {
                     "token": localStorage.getItem("token"),
                 },
@@ -29,16 +29,17 @@ class StudentHome extends Component{
                 }
             }).then((res)=>{
                 let jobs = this.state.jobs;
-                let applications = res.data;
+                console.log(res.data);
+                let apps = res.data;
                 for(let job in jobs){
-                    for(let application in applications){
-                        if(jobs[job].pk==applications[application].job_id){
-                            applications[application].job = jobs[job].fields;
+                    for(let application in apps){
+                        if(jobs[job].pk==apps[application].job_id){
+                            apps[application].job = jobs[job].fields;
                             jobs.splice(job,1);
                         }
                     }
                 }
-                this.setState({"jobs":jobs, "applications":applications});
+                this.setState({"jobs":jobs,"applications":apps});
                 console.log(this.state);
             });
         });

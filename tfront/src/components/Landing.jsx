@@ -7,10 +7,10 @@ class Landing extends Component {
     componentDidMount(){
         if(localStorage.getItem('token') && localStorage.getItem('isLoggedIn') && localStorage.getItem('id')){
             if(localStorage.getItem('type')==1){
-                window.location.replace('https://ecell.iiit.ac.in/cworks/company/home');
+                window.location.replace('http://localhost:3000/company/home');
             }
             else{
-                window.location.replace('https://ecell.iiit.ac.in/cworks/company/home');
+                window.location.replace('http://localhost:3000/company/home');
             }
         }
     }
