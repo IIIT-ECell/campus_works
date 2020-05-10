@@ -80,6 +80,8 @@ class StudentViews(APIView):
             print('New user created')
             request.data['user']=new_user.id
         except:
+            email = data['email']
+            CustomUser.objects.get(username=email).delete()         
             return Response({'message':'Missing data',"success":False})
         student_serializer = StudentSerializer(data=request.data)
         if student_serializer.is_valid():
@@ -87,6 +89,7 @@ class StudentViews(APIView):
             return Response({"message":"Student created successfully","success":True})
         else:
             print('error', student_serializer.errors)
+            CustomUser.objects.get(username=email).delete()         
             return Response({"message":student_serializer.errors,"success":False})
 
 class CompanyViews(APIView):
