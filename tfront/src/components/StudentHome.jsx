@@ -32,6 +32,9 @@ class StudentHome extends Component{
                 console.log(res.data);
                 console.log(this.state.jobs);
                 let apps = res.data;
+                if (apps.length == 0){
+                    return;
+                }
                 for(let job in this.state.jobs){
                     console.log(job);
                     for(let application in apps){
