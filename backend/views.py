@@ -143,15 +143,15 @@ class ApplicationViews(APIView):
             return Response({"message":"You have already applied to this job before","success":False})
         except Exception as e:
             print(str(e))
-            return Response({"message":str(e),"success":False})
+            # return Response({"message":str(e),"success":False})
 
-        application = Application(
-            job_id = request.data['job_id'],
-            student_id = get_student_id(token),
-            date_of_application = request.data['date_of_application']
-        )
-        application.save()
-        return Response({'message':"Application successfully submitted","success":True})
+            application = Application(
+                job_id = request.data['job_id'],
+                student_id = get_student_id(token),
+                date_of_application = request.data['date_of_application']
+            )
+            application.save()
+            return Response({'message':"Application successfully submitted","success":True})
 
         # application_serializer = ApplicationStudentSerializer(data=request.data)
         # if application_serializer.is_valid():
