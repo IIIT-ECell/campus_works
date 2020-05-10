@@ -26,7 +26,7 @@ class StudentRegister extends Component{
     }
     handleSubmit(event){
         event.preventDefault();
-        this.setState({formSubmitted});
+        this.setState({formSubmitted:true});
         var form_data = new FormData();
         var keys = Object.keys(this.formData);
         console.log(keys);
