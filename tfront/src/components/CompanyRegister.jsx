@@ -46,7 +46,7 @@ export default class CompanyRegister extends React.Component {
 
         axios({
             method:"POST",
-            url:"https://campusworks.pythonanywhere.com/company",
+            url:"http://localhost:8000/company",
             data:this.formData,
             headers:{
                 'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default class CompanyRegister extends React.Component {
             alert(response.data["message"]);
 
             if(response.data["success"]=="True") {
-                window.location.replace("https://ecell.iiit.ac.in/cworks/login");
+                window.location.replace("http://localhost:3000/login");
             }
         })
     }

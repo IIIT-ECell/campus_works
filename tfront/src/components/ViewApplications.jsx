@@ -15,7 +15,7 @@ class ViewApplications extends Component{
     componentDidMount(){
         axios({
             method:'GET',
-            url:"https://campusworks.pythonanywhere.com/apply-for-job",
+            url:"http://localhost:8000/apply-for-job",
             params:{
                 token: localStorage.getItem("token"),
                 job_id: this.props.match.params.job_id,
@@ -47,7 +47,7 @@ class ViewApplications extends Component{
         console.log(status,pk);
         axios({
             method:'PUT',
-            url:'https://campusworks.pythonanywhere.com/apply-for-job',
+            url:'http://localhost:8000/apply-for-job',
             data:{
                 token: localStorage.getItem('token'),
                 application_id:pk,
@@ -95,7 +95,7 @@ class ViewApplications extends Component{
                                     </select>
                                 </td>
                                 <td><Button variant="btn btn-success" onClick={(e)=>{this.handleSubmit(e,item.pk,item.fields.select_status)}}>Save</Button></td>
-                                <td><a href={"https://campusworks.pythonanywhere.com/resume?id="+item.fields.student} target="_blank">View</a></td>
+                                <td><a href={"http://localhost:8000/resume?id="+item.fields.student} target="_blank">View</a></td>
                             </tr>)
                         })}
                     </tbody>
