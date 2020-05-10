@@ -21,7 +21,7 @@ export default class CompanyRegister extends React.Component {
     constructor(props) {
         super(props);
         this.formData = {};
-        this.state = { issuccess: false, issubmit: false, isvalid: false };
+        this.state = { issuccess: false, issubmit: false, isvalid: false, formSubmitted: false };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -38,7 +38,7 @@ export default class CompanyRegister extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
-
+        this.setState({formSubmitted:true});
         if (!this.state.isvalid) {
             alert("Agree to Terms and Conditions to create a company");
             return;
@@ -144,8 +144,7 @@ export default class CompanyRegister extends React.Component {
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
-                    </form>
+                        {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                    </form>
                 </div>
             </div>
 

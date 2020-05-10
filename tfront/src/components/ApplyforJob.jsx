@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 class ApplyforJobs extends Component{
     constructor(props){
         super(props);
+        this.state = {formSubmitted:false};
         var today = new Date(),
         date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         console.log(today);
@@ -44,6 +45,7 @@ class ApplyforJobs extends Component{
 
     handleSubmit(event){
         event.preventDefault();
+        this.setState({formSubmitted:true});
         console.log(this.props.match.params.job_id);
         axios({
             method:'POST',
@@ -57,6 +59,7 @@ class ApplyforJobs extends Component{
         .then((response)=>{
             console.log(response);
             alert(response.data.message);
+            this.setState({formSubmitted:false});
         })
     }
 
@@ -78,8 +81,8 @@ class ApplyforJobs extends Component{
                                 <Form.Label>Phone Number</Form.Label>
                                 <Form.Control type="text" id="phone_number" name="phone_number" value={this.state.student.phone_number} disabled></Form.Control>
                             </FormGroup>
-                            <Button type="submit" variant="btn btn-success col-6" onSubmit={this.handleSubmit}>Submit</Button>
-                            <Link to={"/student/home"} className="col-6"><Button variant="btn btn-primary col-6">Back</Button></Link>
+                             {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
+                             <Link to={"/student/home"} className="col-6"><Button variant="btn btn-primary col-6">Back</Button></Link>
                         </Form>
                 </div>
             </div>
