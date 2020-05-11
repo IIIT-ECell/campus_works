@@ -6,12 +6,9 @@ import {Link} from 'react-router-dom';
 class Landing extends Component {
     componentDidMount(){
         if(localStorage.getItem('token') && localStorage.getItem('isLoggedIn') && localStorage.getItem('id')){
-            if(localStorage.getItem('type')==1){
-                window.location.replace('https://ecell.iiit.ac.in/cworks/company/home');
-            }
-            else{
-                window.location.replace('https://ecell.iiit.ac.in/cworks/company/home');
-            }
+            localStorage.removeItem('token');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('id');
         }
     }
 
