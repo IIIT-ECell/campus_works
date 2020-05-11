@@ -351,6 +351,14 @@ class StudentProfile(APIView):
         student_json = serializers.serialize("json", [student])
         return Response({"success":True, "data":json.loads(student_json)[0]})
         # return json.loads(student_json)
+        
+class CompanyProfile(APIView):
+    def get(self, request):
+        data = request.GET
+        print(data['company_id'])
+        company = Company.objects.get(id=data['company_id'])
+        company_json = serializers.serialize("json", [company])
+        return Response({"success":True, "data":json.loads(company_json)[0]})
 
 
     # def post(self)

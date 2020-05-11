@@ -30,5 +30,6 @@ urlpatterns = [
     path('apply-for-job',views.ApplicationViews.as_view()),
     path('jobs',views.ViewJobs.as_view()),
     path('resume',views.Resume.as_view()),
-    path('profile/student',views.StudentProfile.as_view())
+    path('profile/student',views.StudentProfile.as_view()),
+    path('profile/company',views.CompanyProfile.as_view())
 ]
