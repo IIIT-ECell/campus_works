@@ -6,6 +6,7 @@ class Login extends Component{
     
     constructor(props){
         super(props);
+        this.state = {formSubmitted: false};
         this.formData = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -25,6 +26,7 @@ class Login extends Component{
     
     handleSubmit(event){
         event.preventDefault();
+        this.setState({formSubmitted:true});
         axios({
             crossDomain: true,
             method:"POST",
@@ -50,9 +52,12 @@ class Login extends Component{
             window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
             else
             window.location.replace("https://ecell.iiit.ac.in/cworks/student/home");
+            
+            this.setState({formSubmitted:false});
         })
         .catch((error)=>{
             alert(JSON.stringify(error.response.data));
+            this.setState({formSubmitted:false});
         });
     }
     
@@ -73,7 +78,7 @@ class Login extends Component{
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" id="password" placeholder="Password" onChange={this.handleChange}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit" onClick={this.handleSubmit}>Submit</Button>
+                        {this.state.formSubmitted===false && <Button variant="primary" type="submit" onClick={this.handleSubmit}>Submit</Button>}
                     </Form>
                 </div>
             </div>

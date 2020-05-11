@@ -21,6 +21,7 @@ import NavCompany from './NavCompany';
 class EditJob extends Component {
     constructor(props) {
         super(props);
+        this.state = {formSubmitted:false};
         this.formData = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -62,6 +63,7 @@ class EditJob extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.setState = {formSubmitted:true};
 
         axios({
             method: "PUT",
@@ -85,6 +87,7 @@ class EditJob extends Component {
         }).then((response)=>{
             alert(response.data.message);
             window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            this.setState({formSubmitted:false});
         });
     }
 
@@ -169,8 +172,7 @@ class EditJob extends Component {
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
-                    </form>
+                        {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                    </form>
                 </div>
             </div>
         );
