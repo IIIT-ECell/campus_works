@@ -14,6 +14,7 @@ import StudentHome from './StudentHome';
 import ApplyforJobs from './ApplyforJob';
 import StudentProfile from './StudentProfile';
 import ViewApplications from './ViewApplications';
+import CompanyProfile from './CompanyProfile';
 
 function App(props) {
     return (
@@ -29,6 +30,7 @@ function App(props) {
                         <Route exact path="/company/home" component={CompanyHome} />
                         <Route exact path="/student/home" component={StudentHome} />
                         <Route exact path="/student/profile" component={StudentProfile} />
+                        <Route exact path="/company/profile" component={CompanyProfile} />
                         <Route exact path="/jobs/new" component={CreateJob} />
                         <Route exact path="/jobs/edit/:id" component={EditJob} />
                         <Route exact path="/apply/:job_id" component={ApplyforJobs} />

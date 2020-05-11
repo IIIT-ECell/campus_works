@@ -28,17 +28,26 @@ class StudentHome extends Component{
                     'Content-Type': 'application/json',
                 }
             }).then((res)=>{
-                let jobs = this.state.jobs;
-                let applications = res.data;
-                for(let job in jobs){
-                    for(let application in applications){
-                        if(jobs[job].pk==applications[application].job_id){
-                            applications[application].job = jobs[job].fields;
-                            jobs.splice(job,1);
+                let jobs = [];
+                console.log(res.data);
+                console.log(this.state.jobs);
+                let apps = res.data;
+                if (apps.length == 0){
+                    return;
+                }
+                for(let job in this.state.jobs){
+                    console.log(job);
+                    for(let application in apps){
+                        console.log(application);
+                        if(this.state.jobs[job].pk==apps[application].job_id){
+                            apps[application].job = this.state.jobs[job].fields;
+                        }
+                        else{
+                            jobs.push(this.state.jobs[job]);
                         }
                     }
                 }
-                this.setState({"jobs":jobs, "applications":applications});
+                this.setState({"jobs":jobs,"applications":apps});
                 console.log(this.state);
             });
         });

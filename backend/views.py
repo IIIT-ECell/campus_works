@@ -80,6 +80,8 @@ class StudentViews(APIView):
             print('New user created')
             request.data['user']=new_user.id
         except:
+            email = data['email']
+            CustomUser.objects.get(username=email).delete()         
             return Response({'message':'Missing data',"success":False})
         student_serializer = StudentSerializer(data=request.data)
         if student_serializer.is_valid():
@@ -87,6 +89,7 @@ class StudentViews(APIView):
             return Response({"message":"Student created successfully","success":True})
         else:
             print('error', student_serializer.errors)
+            CustomUser.objects.get(username=email).delete()         
             return Response({"message":student_serializer.errors,"success":False})
 
 class CompanyViews(APIView):
@@ -143,15 +146,15 @@ class ApplicationViews(APIView):
             return Response({"message":"You have already applied to this job before","success":False})
         except Exception as e:
             print(str(e))
-            return Response({"message":str(e),"success":False})
+            # return Response({"message":str(e),"success":False})
 
-        application = Application(
-            job_id = request.data['job_id'],
-            student_id = get_student_id(token),
-            date_of_application = request.data['date_of_application']
-        )
-        application.save()
-        return Response({'message':"Application successfully submitted","success":True})
+            application = Application(
+                job_id = request.data['job_id'],
+                student_id = get_student_id(token),
+                date_of_application = request.data['date_of_application']
+            )
+            application.save()
+            return Response({'message':"Application successfully submitted","success":True})
 
         # application_serializer = ApplicationStudentSerializer(data=request.data)
         # if application_serializer.is_valid():
@@ -339,3 +342,19 @@ class Resume(APIView):
         filepath = student.resume.path
         print(filepath)
         return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
+
+class StudentProfile(APIView):
+    def get(self, request):
+        data = request.GET
+        print(data['student_id'])
+        student = Student.objects.get(id=data['student_id'])
+        student_json = serializers.serialize("json", [student])
+        return Response({"success":True, "data":json.loads(student_json)[0]})
+        # return json.loads(student_json)
+
+
+    # def post(self)
+
+    # def put(self)
+
+    # def delete(self)
