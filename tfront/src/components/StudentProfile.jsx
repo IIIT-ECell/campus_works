@@ -65,27 +65,23 @@ class StudentProfile extends Component{
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formName">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" id="name" required onChange={this.handleChange} placeholder="Enter Name"/>
+                        <Form.Control type="text" id="name" disabled onChange={this.handleChange} placeholder="Enter Name"/>
                     </Form.Group>
                     <Form.Group controlId="formEmail">
                         <Form.Label>Email Address</Form.Label>
-                        <Form.Control type="email" id="email" required onChange={this.handleChange} placeholder="Enter Email"/>
-                    </Form.Group>
-                    <Form.Group controlId="formPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" id="password" required onChange={this.handleChange} placeholder="Enter Password"/>
+                        <Form.Control type="email" id="email" disabled onChange={this.handleChange} placeholder="Enter Email"/>
                     </Form.Group>
                     <Form.Group controlId="formPhoneNumber">
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control type="number" id="phone_number" required onChange={this.handleChange} placeholder="Enter Phone Number"/>
+                        <Form.Control type="number" id="phone_number" disabled onChange={this.handleChange} placeholder="Enter Phone Number"/>
                     </Form.Group>
                     <Form.Group controlId="formRollNumber">
                         <Form.Label>Roll Number</Form.Label>
-                        <Form.Control type="number" id="student_id" required onChange={this.handleChange} placeholder="Enter Roll Number"/>
+                        <Form.Control type="number" id="student_id" disabled onChange={this.handleChange} placeholder="Enter Roll Number"/>
                     </Form.Group>
                     <Form.Group controlId="formStudy">
                         <Form.Label>Year of Study</Form.Label>
-                        <Form.Control as="select" id="year_of_study" required onChange={this.handleChange} placeholder="Enter Gender">
+                        <Form.Control as="select" id="year_of_study" disabled onChange={this.handleChange} placeholder="Enter Gender">
                         <option value="1">First Year Undergrad</option>
                         <option value="2">Second Year Undergrad</option>
                         <option value="3">Third Year Undergrad</option>
@@ -95,7 +91,7 @@ class StudentProfile extends Component{
                     </Form.Group>
                     <Form.Group controlId="formGender">
                         <Form.Label>Gender</Form.Label>
-                        <Form.Control as="select" id="gender" required onChange={this.handleChange} >
+                        <Form.Control as="select" id="gender" disabled onChange={this.handleChange} >
                             <option value="M">Male</option>
                             <option value="F">Female</option>
                             <option value="O">Other</option>
@@ -104,10 +100,11 @@ class StudentProfile extends Component{
                     </Form.Group>
                     <Form.Group controlId="formResume">
                         <Form.Label>Resume</Form.Label>
-                        <Form.Control type="file" accept=".pdf" required onChange={this.handleFile}/>
+                        <Form.Control type="file" accept=".pdf" disabled onChange={this.handleFile}/>
                     </Form.Group>
-                    <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>
-                </Form>
+                    <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>View</button>
+
+                 </Form>
                 </div>
             </div>
             </div>
