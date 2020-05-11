@@ -37,15 +37,18 @@ class StudentHome extends Component{
                 }
                 for(let job in this.state.jobs){
                     console.log(job);
+                    let flag = true;
                     for(let application in apps){
                         console.log(application);
                         if(this.state.jobs[job].pk==apps[application].job_id){
                             apps[application].job = this.state.jobs[job].fields;
-                        }
-                        else{
-                            jobs.push(this.state.jobs[job]);
+                            flag = false;
                         }
                     }
+                    if(flag===true){
+                        jobs.push(this.state.jobs[job]);
+                    }
+
                 }
                 this.setState({"jobs":jobs,"applications":apps});
                 console.log(this.state);

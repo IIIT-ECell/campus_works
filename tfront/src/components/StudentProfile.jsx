@@ -8,6 +8,7 @@ class StudentProfile extends Component{
     // refer to https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
     constructor(props){
         super(props);
+        this.state = {formSubmitted:false}
         this.formData = {'gender':'M','year_of_study':'1'};
         this.handleFile = this.handleFile.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -37,6 +38,7 @@ class StudentProfile extends Component{
     }
     handleSubmit(event){
         event.preventDefault();
+        this.setState({formSubmitted:true});
         var form_data = new FormData();
         var keys = Object.keys(this.formData);
         console.log(keys);
@@ -53,6 +55,7 @@ class StudentProfile extends Component{
             }
         ).then((res)=>{
             alert(res.data);
+            this.setState({formSubmitted:false});
         })
     }
 
@@ -102,8 +105,7 @@ class StudentProfile extends Component{
                         <Form.Label>Resume</Form.Label>
                         <Form.Control type="file" accept=".pdf" disabled onChange={this.handleFile}/>
                     </Form.Group>
-                    <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>View</button>
-
+                    {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                </Form>
                  </Form>
                 </div>
             </div>

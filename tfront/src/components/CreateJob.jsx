@@ -155,6 +155,7 @@ class CreateJob extends Component {
                             </div>
                             {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
                         </form>
+
                     </div>
                 </div>
             );
