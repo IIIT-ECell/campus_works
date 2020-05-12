@@ -29,8 +29,8 @@ function App(props) {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/company/home" component={CompanyHome} />
                         <Route exact path="/student/home" component={StudentHome} />
-                        <Route exact path="/student/profile" component={StudentProfile} />
-                        <Route exact path="/company/profile" component={CompanyProfile} />
+                        <Route exact path="/student/profile/:student_id" component={StudentProfile} />
+                        <Route exact path="/company/profile/:company_id" component={CompanyProfile} />
                         <Route exact path="/jobs/new" component={CreateJob} />
                         <Route exact path="/jobs/edit/:id" component={EditJob} />
                         <Route exact path="/apply/:job_id" component={ApplyforJobs} />
