@@ -8,23 +8,30 @@ class StudentProfile extends Component{
     // refer to https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
     constructor(props){
         super(props);
-        this.state = {formSubmitted:false}
+        this.state = {formSubmitted:false,student:{},user:{}}
         this.formData = {'gender':'M','year_of_study':'1'};
         this.handleFile = this.handleFile.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillMount(){
-        axios.get("https://campusworks.pythonanywhere.com/student",{
+    componentDidMount(){
+        console.log(this.state);
+        axios.get("https://campusworks.pythonanywhere.com/profile/student",{
             params: {
-                "token":localStorage.getItem("token")
+                "token":localStorage.getItem("token"),
+                "student_id":this.props.match.params.student_id,
             },
             headers:{
                 'Content-Type':'application/json'
             }
         }).then((res)=>{
-            console.log(res);
+            console.log(this.state);
+            if(res.data.success==true){
+                this.setState({student:res.data.student.fields});
+                this.setState({user:res.data.user.fields});
+                console.log(this.state);
+            }
         });
     }
 
@@ -60,57 +67,61 @@ class StudentProfile extends Component{
     }
 
     render(){
-        return(
-            <div>
-            <NavStudent></NavStudent>
-            <div className="d-flex justify-content-center align-items-center">
-                <div className="my-auto">
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="formName">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" id="name" disabled onChange={this.handleChange} placeholder="Enter Name"/>
-                    </Form.Group>
-                    <Form.Group controlId="formEmail">
-                        <Form.Label>Email Address</Form.Label>
-                        <Form.Control type="email" id="email" disabled onChange={this.handleChange} placeholder="Enter Email"/>
-                    </Form.Group>
-                    <Form.Group controlId="formPhoneNumber">
-                        <Form.Label>Phone Number</Form.Label>
-                        <Form.Control type="number" id="phone_number" disabled onChange={this.handleChange} placeholder="Enter Phone Number"/>
-                    </Form.Group>
-                    <Form.Group controlId="formRollNumber">
-                        <Form.Label>Roll Number</Form.Label>
-                        <Form.Control type="number" id="student_id" disabled onChange={this.handleChange} placeholder="Enter Roll Number"/>
-                    </Form.Group>
-                    <Form.Group controlId="formStudy">
-                        <Form.Label>Year of Study</Form.Label>
-                        <Form.Control as="select" id="year_of_study" disabled onChange={this.handleChange} placeholder="Enter Gender">
-                        <option value="1">First Year Undergrad</option>
-                        <option value="2">Second Year Undergrad</option>
-                        <option value="3">Third Year Undergrad</option>
-                        <option value="4">Fourth Year Undergrad</option>
-                        <option value="5">Postgrads (5th year DD, PG+)</option>
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="formGender">
-                        <Form.Label>Gender</Form.Label>
-                        <Form.Control as="select" id="gender" disabled onChange={this.handleChange} >
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                            <option value="O">Other</option>
-                            <option value="N">Prefer not to say</option>
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="formResume">
-                        <Form.Label>Resume</Form.Label>
-                        <Form.Control type="file" accept=".pdf" disabled onChange={this.handleFile}/>
-                    </Form.Group>
-                    {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                </Form>
-                 </Form>
+        if(this.state.student){
+            return(
+                <div>
+                <NavStudent></NavStudent>
+                <div className="d-flex justify-content-center align-items-center">
+                    <div className="my-auto">
+                    <Form onSubmit={this.handleSubmit}>
+                        <Form.Group controlId="formName">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" id="name" disabled onChange={this.handleChange} placeholder="Name" value={this.state.user.first_name}/>
+                        </Form.Group>
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Email Address</Form.Label>
+                            <Form.Control type="email" id="email" disabled onChange={this.handleChange} placeholder="Email" value={this.state.user.email}/>
+                        </Form.Group>
+                        <Form.Group controlId="formPhoneNumber">
+                            <Form.Label>Phone Number</Form.Label>
+                            <Form.Control type="number" id="phone_number" disabled onChange={this.handleChange} placeholder="Phone Number" value={this.state.student.phone_number}/>
+                        </Form.Group>
+                        <Form.Group controlId="formRollNumber">
+                            <Form.Label>Roll Number</Form.Label>
+                            <Form.Control type="number" id="student_id" disabled onChange={this.handleChange} placeholder="Roll Number" value={this.state.student.student_id}/>
+                        </Form.Group>
+                        <Form.Group controlId="formStudy">
+                            <Form.Label>Year of Study</Form.Label>
+                            <Form.Control as="select" id="year_of_study" disabled onChange={this.handleChange} placeholder="Gender" value={this.state.student.year_of_study}>
+                            <option value="1">First Year Undergrad</option>
+                            <option value="2">Second Year Undergrad</option>
+                            <option value="3">Third Year Undergrad</option>
+                            <option value="4">Fourth Year Undergrad</option>
+                            <option value="5">Postgrads (5th year DD, PG+)</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="formGender">
+                            <Form.Label>Gender</Form.Label>
+                            <Form.Control as="select" id="gender" disabled onChange={this.handleChange} value={this.state.student.gender}>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="O">Other</option>
+                                <option value="N">Prefer not to say</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="formResume">
+                            <a href={"https://campusworks.pythonanywhere.com/resume?id="+this.props.match.params.student_id} target="_blank">Resume Link</a>
+                        </Form.Group>
+                        {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
+                     </Form>
+                    </div>
                 </div>
-            </div>
-            </div>
-        )
+                </div>
+            )
+        }
+        else {
+            return <p>student doesnot exist</p>
+        }
     }
 }
 

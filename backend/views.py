@@ -346,20 +346,29 @@ class Resume(APIView):
 class StudentProfile(APIView):
     def get(self, request):
         data = request.GET
-        print(data['student_id'])
-        student = Student.objects.get(id=data['student_id'])
-        student_json = serializers.serialize("json", [student])
-        return Response({"success":True, "data":json.loads(student_json)[0]})
+        try:
+            student = Student.objects.get(id=data['student_id'])
+            user = student.user
+            print(user)
+            student_json = serializers.serialize("json", [student])
+            user_json = serializers.serialize("json", [user])
+            # print(student)
+            return Response({"success":True, "student":json.loads(student_json)[0],"user":json.loads(user_json)[0]})
+        except Exception as e: 
+            return Response({"success":False, "data":str(e)})
+
         # return json.loads(student_json)
         
 class CompanyProfile(APIView):
     def get(self, request):
         data = request.GET
         print(data['company_id'])
-        company = Company.objects.get(id=data['company_id'])
-        company_json = serializers.serialize("json", [company])
-        return Response({"success":True, "data":json.loads(company_json)[0]})
-
+        try:
+            company = Company.objects.get(id=data['company_id']).select_related('customuser')
+            company_json = serializers.serialize("json", [company])
+            return Response({"success":True, "data":json.loads(company_json)[0]})
+        except:            
+            return Response({"success":False, "data":str(e)})
 
     # def post(self)
 
