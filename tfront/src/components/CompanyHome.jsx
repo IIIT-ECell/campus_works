@@ -8,13 +8,14 @@ class CompanyHome extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {jobs: []};
+        this.state = {jobs: [],company:{}};
     }
 
     componentWillMount() {
         if(localStorage.getItem('token')==null){
             window.location.replace('https://ecell.iiit.ac.in/cworks/login')
         }
+        
         axios({
             method: "POST",
             url: "https://campusworks.pythonanywhere.com/jobs",
@@ -29,6 +30,7 @@ class CompanyHome extends Component {
             console.log(res);
             this.setState({"jobs": res.data});
             console.log(this.state);
+            
         });
     }
 
@@ -36,7 +38,7 @@ class CompanyHome extends Component {
     render() {
         return (
             <div>
-            <NavCompany></NavCompany>
+            <NavCompany props={this.state.company}/>
             <Container className="p-4">
                 <Row>
                     <Col md={{ span:4, offset:8}}>

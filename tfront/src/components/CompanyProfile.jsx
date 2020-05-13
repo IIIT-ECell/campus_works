@@ -1,5 +1,6 @@
 import React,{ Component } from "react";
 import NavCompany from './NavCompany';
+import NavStudent from './NavStudent';
 import { Form } from "react-bootstrap";
 import './App.css';
 import axios from "axios";
@@ -66,7 +67,8 @@ class CompanyProfile extends React.Component{
         if(this.state.company){
         return(
             <div>
-                <NavCompany></NavCompany>
+                {localStorage.getItem('type')==1 && <NavStudent></NavStudent>}
+                {localStorage.getItem('type')==2 && <NavCompany></NavCompany>}
                 <div className="container my-5">
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group row">
@@ -88,7 +90,7 @@ class CompanyProfile extends React.Component{
                         <div className="form-group row">
                             <label className="col-sm-2 col-form-label font-weight-bold">Contact Name</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" placeholder="Joe Stark" name="contact_name" id="poc" onChange={this.handleChange} disabled value={this.state.student.poc}></input>
+                                <input type="text" className="form-control" placeholder="Joe Stark" name="contact_name" id="poc" onChange={this.handleChange} disabled value={this.state.company.poc}></input>
                                 <small className="form-text text-muted">Contact Name</small>
                             </div>
                         </div>
@@ -96,7 +98,7 @@ class CompanyProfile extends React.Component{
                         <div className="form-group row">
                             <label className="col-sm-2 col-form-label font-weight-bold">About</label>
                             <div className="col-sm-10">
-                                <textarea className="form-control" placeholder="Describe your company's projects, values, and tech stack" id="about" name="about" onChange={this.handleChange} disabled value={this.state.student.about}></textarea>
+                                <textarea className="form-control" placeholder="Describe your company's projects, values, and tech stack" id="about" name="about" onChange={this.handleChange} disabled value={this.state.company.about}></textarea>
                                 <small className="form-text text-muted">About the Organization</small>
                             </div>
                         </div>
