@@ -3,6 +3,7 @@ import {Table, Button, Container, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NavCompany from './NavCompany';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 class CompanyHome extends Component {
 
@@ -39,17 +40,12 @@ class CompanyHome extends Component {
         return (
             <div>
             <NavCompany props={this.state.company}/>
-            <Container className="p-4">
-                <Row>
-                    <Col md={{ span:4, offset:8}}>
-                        <Link to="/jobs/new"><Button>+ Add Job</Button></Link>
-                    </Col>
-                </Row>
-            </Container>
+            
             <Table responsive bordered hover striped style={{minHeight: "75vh"}}>
                 <thead>
                     <tr>
-                        <th colSpan="7">Jobs posted</th>
+                        <th colSpan="5">Jobs posted</th>
+                        <th colSpan="2"><Link to="/jobs/new"><Button><FontAwesomeIcon icon="plus"/> Add Job</Button></Link></th>
                     </tr>
                     <tr>
                         <th>Job Name</th>
@@ -69,7 +65,7 @@ class CompanyHome extends Component {
                             <td>{item.fields.start_date}</td>
                             <td>{item.fields.skill}</td>
                             <td>{item.fields.stipend}</td>
-                            <td><Link to={"/jobs/edit/" + item.pk}>Edit</Link></td>
+                            <td><Link to={"/jobs/edit/" + item.pk}><FontAwesomeIcon icon="edit"/> Edit</Link></td>
                             <td><Link to={"/view-applications/" + item.pk}>View Applications</Link></td>
                         </tr>)
                     })}

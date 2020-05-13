@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class NavCompany extends Component{
     constructor(props){
@@ -38,9 +39,9 @@ class NavCompany extends Component{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto text-white">
-                        <Nav.Link><Link to={"/company/home"} className="text-white">Home</Link></Nav.Link>
-                        <Nav.Link><Link to={"/login"} className="text-white">Logout</Link></Nav.Link>
-                        <Nav.Link><Link to={"/company/profile/"+this.state.company.pk} className="text-white">Profile</Link></Nav.Link>
+                        <Nav.Link><Link to={"/company/home"} className="text-white"><FontAwesomeIcon icon="home"/> Home</Link></Nav.Link>
+                        <Nav.Link><Link to={"/login"} className="text-white"><FontAwesomeIcon icon="sign-out-alt"/> Logout</Link></Nav.Link>
+                        <Nav.Link><Link to={"/company/profile/"+this.state.company.pk} className="text-white"><FontAwesomeIcon icon="user"/> Profile</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
