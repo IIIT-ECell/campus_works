@@ -120,7 +120,7 @@ class StudentProfile extends Component{
             )
         }
         else {
-            return <p>student doesnot exist</p>
+            return <p>Student Doesn't Exist.</p>
         }
     }
 }
