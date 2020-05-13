@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Nav1 extends Component{
     render(){
@@ -19,8 +20,8 @@ class Nav1 extends Component{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto text-white">
-                        <Nav.Link><Link to={"/register"} className="text-white">Register</Link></Nav.Link>
-                        <Nav.Link><Link to={"/login"} className="text-white">Login</Link></Nav.Link>
+                        <Nav.Link><Link to={"/register"} className="text-white"><FontAwesomeIcon icon="user-plus"/> Register</Link></Nav.Link>
+                        <Nav.Link><Link to={"/login"} className="text-white"><FontAwesomeIcon icon="sign-in-alt"/> Login</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

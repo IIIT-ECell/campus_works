@@ -94,8 +94,25 @@ class StudentViews(APIView):
 
 class CompanyViews(APIView):
 
-    def get(self,request):
-        pass
+    def get(self, request, *args, **kwargs):
+        data = request.GET
+        print(data['token'])
+        try:
+            key = data['token']
+        except KeyError as e:
+            return Response({"success": False, "message": str(e)})
+        
+        try:
+            token = Token.objects.get(key=key)
+            student = Company.objects.get(user_id=token.user_id)
+    
+        except Company.DoesNotExist as e:
+            return Response({"success": False, "message": str(e)})
+
+        student_json = serializers.serialize("json", [student, ])
+        print(json.loads(student_json)[0])
+        return Response({"success": True, "data": json.loads(student_json)[0]})
+
 
     def post(self,request):
         data = json.loads(request.body)
@@ -322,7 +339,7 @@ class StudentApplications(APIView):
         # print(data)
         token = data['token']
         if not student_required(token):
-           return Response({"message":"You cannot apply for jobs"}) 
+           return Response({"message":"You cannot apply for jobs","success":False}) 
         try:
             id = get_student_id(token)
             student = Student.objects.get(id=id)
@@ -331,7 +348,7 @@ class StudentApplications(APIView):
             serializer = ApplicationStudentSerializer(applications, many=True)
             return Response(serializer.data)
         except:
-            Response({"message":"Cannot get application data"})
+            Response({"message":"Cannot get application data","success":False})
 
 
 class Resume(APIView):
@@ -364,10 +381,13 @@ class CompanyProfile(APIView):
         data = request.GET
         print(data['company_id'])
         try:
-            company = Company.objects.get(id=data['company_id']).select_related('customuser')
+            company = Company.objects.get(id=data['company_id'])
             company_json = serializers.serialize("json", [company])
-            return Response({"success":True, "data":json.loads(company_json)[0]})
-        except:            
+            user = company.user
+            user_json = serializers.serialize("json", [user])
+
+            return Response({"success":True, "company":json.loads(company_json)[0], "user":json.loads(user_json)[0]})
+        except Exception as e:            
             return Response({"success":False, "data":str(e)})
 
     # def post(self)

@@ -2,6 +2,7 @@ import React,{ Component } from "react";
 import { Form } from "react-bootstrap";
 import NavStudent from './NavStudent';
 import axios from "axios";
+import NavCompany from "./NavCompany";
 
 
 class StudentProfile extends Component{
@@ -70,7 +71,8 @@ class StudentProfile extends Component{
         if(this.state.student){
             return(
                 <div>
-                <NavStudent></NavStudent>
+                {localStorage.getItem('type')==1 && <NavStudent></NavStudent>}
+                {localStorage.getItem('type')==2 && <NavCompany></NavCompany>}
                 <div className="d-flex justify-content-center align-items-center">
                     <div className="my-auto">
                     <Form onSubmit={this.handleSubmit}>
@@ -120,7 +122,7 @@ class StudentProfile extends Component{
             )
         }
         else {
-            return <p>student doesnot exist</p>
+            return <p>Student Doesn't Exist.</p>
         }
     }
 }

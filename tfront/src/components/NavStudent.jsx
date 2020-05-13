@@ -1,8 +1,27 @@
 import React,{Component} from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class NavStudent extends Component{
+    constructor(props){
+        super(props);
+        this.state={student:{}};
+    }
+    componentDidMount(){
+        axios({
+            method:"GET",
+            url:"https://campusworks.pythonanywhere.com/student",
+            params:{
+                "token":localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            console.log(res.data.data);
+            this.setState({"student":res.data.data});
+        })
+    }
     render(){
         return(
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -19,8 +38,10 @@ class NavStudent extends Component{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto text-white">
-                        <Nav.Link><Link to={"/student/home"} className="text-white">Home</Link></Nav.Link>
-                        <Nav.Link><Link to={"/login"} className="text-white">Logout</Link></Nav.Link>
+                    <Nav.Link>
+                        <Link to={"/student/home"} className="text-white"><FontAwesomeIcon icon="home"/> Home</Link></Nav.Link>
+                        <Nav.Link><Link to={"/login"} className="text-white"><FontAwesomeIcon icon="sign-out-alt"/> Logout</Link></Nav.Link>
+                        <Nav.Link><Link to={"/student/profile/"+this.state.student.pk} className="text-white"><FontAwesomeIcon icon="user"/> Profile</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
