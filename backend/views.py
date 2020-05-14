@@ -61,12 +61,11 @@ class StudentViews(APIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        print(data['password'])
+        if 'email' not in data or 'password' not in data or 'name' not in data:
+            return HttpResponseServerError("No email or password or name not given")
         try:
             email = data['email']
             password = data['password']
-            if email is None or password is None:
-                return HttpResponseServerError("No email or password given")
             print(email)
             new_user = CustomUser.objects.create_user(
                 email = email,
@@ -79,10 +78,8 @@ class StudentViews(APIView):
             new_user.save()
             print('New user created')
             request.data['user']=new_user.id
-        except:
-            email = data['email']
-            CustomUser.objects.get(username=email).delete()         
-            return Response({'message':'Missing data',"success":False})
+        except Exception as e:
+            return Response({"message":[str(e)], "success":False})
         student_serializer = StudentSerializer(data=request.data)
         if student_serializer.is_valid():
             student_serializer.save()

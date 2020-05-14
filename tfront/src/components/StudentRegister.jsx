@@ -42,7 +42,19 @@ class StudentRegister extends Component{
                 }  
             }
         ).then((res)=>{
-            alert(res.data.message);
+            if(res.data.success==true){
+                alert(res.data.message);
+            }
+            else{
+                for(var i in res.data.message){
+                    alert(res.data.message[i]);
+                }
+                console.log(res.data.message)
+            }
+            this.setState({formSubmitted:false})
+        })
+        .catch((err)=>{
+            alert(err.message);
             this.setState({formSubmitted:false})
         })
     }
@@ -68,11 +80,11 @@ class StudentRegister extends Component{
                     </Form.Group>
                     <Form.Group controlId="formPhoneNumber">
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control type="number" id="phone_number" required onChange={this.handleChange} placeholder="Enter Phone Number"/>
+                        <Form.Control type="number" id="phone_number" min="99999999" required onChange={this.handleChange} placeholder="Enter Phone Number"/>
                     </Form.Group>
                     <Form.Group controlId="formRollNumber">
                         <Form.Label>Roll Number</Form.Label>
-                        <Form.Control type="number" id="student_id" required onChange={this.handleChange} placeholder="Enter Roll Number"/>
+                        <Form.Control type="number" id="student_id" min="20000000" required onChange={this.handleChange} placeholder="Enter Roll Number"/>
                     </Form.Group>
                     <Form.Group controlId="formStudy">
                         <Form.Label>Year of Study</Form.Label>
