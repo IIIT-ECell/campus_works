@@ -23,9 +23,11 @@ class Landing extends Component {
                             <div className="col-md-6 my-auto">
                                 <h2 className="display-4 font-weight-bold">Campus Works</h2>
                                 <h5>Connecting Students with Startups. Internships have never been easier</h5>
-                                <Link to={"/register/company" }><Button variant="btn btn-dark" size="lg">Register as Company <FontAwesomeIcon icon="user-cog"/></Button></Link>
-                                <br/>
-                                <Link to={"/register/student" }><Button variant="btn btn-dark" size="lg">Register as Student <FontAwesomeIcon icon="user-graduate"/></Button></Link>
+                                <div className="row">
+                                    <Link to={"/register/company"} className="w-100 p-1"><Button variant="btn btn-dark" size="lg">Register as Company <FontAwesomeIcon icon="user-cog"/></Button></Link>
+                                    <br/>
+                                    <Link to={"/register/student"} className="w-100 p-1"><Button variant="btn btn-dark" size="lg">Register as Student <FontAwesomeIcon icon="user-graduate"/></Button></Link>
+                                </div>
                                 <br className="my-4"/>
                             </div>
                             <div className="order-lg-first w-50 mx-auto">
