@@ -83,8 +83,8 @@ class ApplyforJobs extends Component{
                                 </FormGroup>
                             </div>
                             <div className="row">
-                                {this.state.formSubmitted===false && <Button variant="btn btn-success" className="w-100 col-md-6" onClick={this.handleSubmit}>Submit</Button>}
-                                <Link to={"/student/home"} className="col-md-6"><Button variant="btn btn-primary" className="w-100"><FontAwesomeIcon icon="long-arrow-alt-left"/> Back</Button></Link>
+                                {this.state.formSubmitted===false && <p className="col-md-6 p-1"><Button variant="btn btn-success" className="w-100" onClick={this.handleSubmit}>Submit</Button></p>}
+                                <Link to={"/student/home"} className="col-md-6 p-1"><Button variant="btn btn-primary" className="w-100"><FontAwesomeIcon icon="long-arrow-alt-left"/> Back</Button></Link>
                             </div>
                         </Form>
                 </div>

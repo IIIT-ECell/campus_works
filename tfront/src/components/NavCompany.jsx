@@ -25,7 +25,7 @@ class NavCompany extends Component{
     }
     render(){
         return(
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
                 <Navbar.Brand className="nav-logo">
                 <Link to={"/"}>
                 <img
