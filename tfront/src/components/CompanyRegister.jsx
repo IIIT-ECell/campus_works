@@ -54,7 +54,7 @@ export default class CompanyRegister extends React.Component {
         }).then((response)=>{
             alert(response.data["message"]);
 
-            if(response.data["success"]=="True") {
+            if(response.data["success"]==true) {
                 window.location.replace("https://ecell.iiit.ac.in/cworks/login");
             }
         })
