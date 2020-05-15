@@ -109,7 +109,8 @@ class StudentRegister extends Component{
                         <Form.Label>Resume</Form.Label>
                         <Form.Control type="file" accept=".pdf" required onChange={this.handleFile}/>
                     </Form.Group>
-                    {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                </Form>
+                    {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                
+                </Form>
                 </div>
             </div>
             </div>

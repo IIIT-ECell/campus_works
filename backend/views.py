@@ -35,6 +35,18 @@ class UserViews(APIView):
         serializer = UserSerializer(user, many=True)
         return Response(serializer.data)
 
+    def put(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        if 'token' not in data:
+            return HttpResponseServerError("No token given")
+        if 'password' not in data:
+            return HttpResponseServerError("No new password given")
+        token = Token.objects.get(key=data['token'])
+        user = CustomUser.objects.get(id=token.user_id)
+        user.set_password(data['password'])
+        user.save()
+        return Response({"message":"Password changed successfully","success":True})
+
 class StudentViews(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
