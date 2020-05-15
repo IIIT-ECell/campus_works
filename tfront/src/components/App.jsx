@@ -15,11 +15,12 @@ import ApplyforJobs from './ApplyforJob';
 import StudentProfile from './StudentProfile';
 import ViewApplications from './ViewApplications';
 import CompanyProfile from './CompanyProfile';
-import ReactDOM from 'react-dom'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import {faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft} from '@fortawesome/free-solid-svg-icons'
-library.add(fab, faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft);
+import ReactDOM from 'react-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import {faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import PasswordChange from './PasswordChange';
+library.add(fab, faUser, faUserPlus, faUserEdit, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft);
 function App(props) {
     return (
         <div>
@@ -39,6 +40,7 @@ function App(props) {
                         <Route exact path="/jobs/edit/:id" component={EditJob} />
                         <Route exact path="/apply/:job_id" component={ApplyforJobs} />
                         <Route exact path="/view-applications/:job_id" component={ViewApplications} />
+                        <Route exact path="/change-password" component={PasswordChange}/>
                     </Switch>
                 </div>
             </Router>

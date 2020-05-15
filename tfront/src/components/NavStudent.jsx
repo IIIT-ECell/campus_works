@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Navbar, Nav} from 'react-bootstrap';
+import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -37,11 +37,13 @@ class NavStudent extends Component{
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="ml-auto text-white">
-                    <Nav.Link>
-                        <Link to={"/student/home"} className="text-white"><FontAwesomeIcon icon="home"/> Home</Link></Nav.Link>
+                    <Nav className="ml-auto">
+                        <Nav.Link><Link to={"/student/home"} className="text-white"><FontAwesomeIcon icon="home"/> Home</Link></Nav.Link>
                         <Nav.Link><Link to={"/login"} className="text-white"><FontAwesomeIcon icon="sign-out-alt"/> Logout</Link></Nav.Link>
-                        <Nav.Link><Link to={"/student/profile/"+this.state.student.pk} className="text-white"><FontAwesomeIcon icon="user"/> Profile</Link></Nav.Link>
+                        <NavDropdown title="Profile" id="basic-nav-dropdown" className="mr-auto" alignRight variant="dark" bg="dark">
+                            <NavDropdown.Item><Link to={"/student/profile/"+this.state.student.pk}><FontAwesomeIcon icon="user"/> View Profile</Link></NavDropdown.Item>
+                            <NavDropdown.Item><Link to={"/change-password/"}><FontAwesomeIcon icon="user-edit"/> Change Password</Link></NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
