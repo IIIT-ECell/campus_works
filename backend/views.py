@@ -98,7 +98,7 @@ class StudentViews(APIView):
             return Response({"message":"Student created successfully","success":True})
         else:
             print('error', student_serializer.errors)
-            CustomUser.objects.get(username=daa['email']).delete()         
+            CustomUser.objects.get(username=data['email']).delete()         
             return Response({"message":student_serializer.errors,"success":False})
 
 class CompanyViews(APIView):
