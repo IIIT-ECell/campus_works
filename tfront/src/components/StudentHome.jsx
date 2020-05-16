@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavStudent from './NavStudent';
-import {Table, Button} from 'react-bootstrap';
+import {Table, Button, Accordion, Card, Row} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -37,12 +37,11 @@ class StudentHome extends Component{
                     return;
                 }
                 for(let job in this.state.jobs){
-                    console.log(job);
                     let flag = true;
                     for(let application in apps){
-                        console.log(application);
-                        if(this.state.jobs[job].pk==apps[application].job_id){
-                            apps[application].job = this.state.jobs[job].fields;
+                        console.log(this.state.jobs[job].id);
+                        if(this.state.jobs[job].id==apps[application].job_id){
+                            apps[application].job = this.state.jobs[job];
                             flag = false;
                         }
                     }
@@ -85,34 +84,33 @@ class StudentHome extends Component{
                         })}
                     </tbody>
                 </Table>
-                <Table responsive striped bordered hover>
-                <thead>
-                    <tr>
-                        <th colSpan="6">Jobs Available</th>
-                    </tr>
-                    <tr>
-                        <th>Job Name</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>Skill</th>
-                        <th>Stipend</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
+                <Accordion>
                     {this.state.jobs && this.state.jobs.map((item, key) => {
-                        return (<tr>
-                            <td>{item.fields.job_name}</td>
-                            <td>{item.fields.description}</td>
-                            <td>{item.fields.start_date}</td>
-                            <td>{item.fields.skill}</td>
-                            <td>{item.fields.stipend}</td>
-                            <td><Link to={'/apply/'+item.pk}><Button variant="primary"><FontAwesomeIcon icon="file-signature"/> Apply</Button></Link></td>
-                        </tr>)
+                        return (
+                            <Table responsive>
+                            <Card>
+                                <tbody>
+                                    <tr>
+                                    <Accordion.Toggle as={Card.Header} eventKey={key} colSpan="7">
+                                    <td><Link to={"/company/profile/"+item.company.id}>{item.company.user.first_name}</Link></td>
+                                    <td>{item.job_name}</td>
+                                    <td>{item.start_date}</td>
+                                    <td>{item.skill}</td>
+                                    <td>{item.stipend}</td>
+                                    <td><Link to={'/apply/'+item.id}><Button variant="primary"><FontAwesomeIcon icon="file-signature"/> Apply</Button></Link></td>    
+                                    <td><Button variant="info"><FontAwesomeIcon icon="eye"/> View</Button></td>
+                                    </Accordion.Toggle>
+                                    <Accordion.Collapse eventKey={key}>
+                                        <Card.Body>Hello! I'm the body</Card.Body>
+                                    </Accordion.Collapse>
+                                    </tr>
+                                </tbody>
+                            </Card>
+                            </Table>
+                        )
                     })}
                     {this.state.jobs.length==0 && <td colSpan="6" className="text-center">No new jobs to show</td>}
-                </tbody>
-                </Table>
+                </Accordion>
                 
             </div>
         )
