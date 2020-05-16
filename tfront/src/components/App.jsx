@@ -18,9 +18,9 @@ import CompanyProfile from './CompanyProfile';
 import ReactDOM from 'react-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import {faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import {faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faUserEdit, faEye} from '@fortawesome/free-solid-svg-icons';
 import PasswordChange from './PasswordChange';
-library.add(fab, faUser, faUserPlus, faUserEdit, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft);
+library.add(fab, faUser, faUserPlus, faUserEdit, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faEye);
 function App(props) {
     return (
         <div>

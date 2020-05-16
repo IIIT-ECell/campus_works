@@ -45,7 +45,8 @@ class EditJob extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            this.formData = response.data.data[0].fields;
+            console.log(response);
+            this.formData = response.data.data.fields;
 
             for(let key in this.formData) {
                 try { document.getElementById(key).value = this.formData[key]; }
@@ -86,7 +87,9 @@ class EditJob extends Component {
             }
         }).then((response)=>{
             alert(response.data.message);
-            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            if(response.data.success==true){
+                window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            }
             this.setState({formSubmitted:false});
         });
     }
