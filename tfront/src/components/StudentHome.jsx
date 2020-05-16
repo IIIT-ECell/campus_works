@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavStudent from './NavStudent';
-import {Table, Button, Accordion, Card, Row} from 'react-bootstrap';
+import {Table, Button, Accordion, Card, Row, ListGroup, ListGroupItem} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -88,6 +88,9 @@ class StudentHome extends Component{
                     {this.state.jobs && this.state.jobs.map((item, key) => {
                         return (
                             <Table responsive>
+                                <tr>
+                                    <th colSpan="7"></th>
+                                </tr>
                             <Card>
                                 <tbody>
                                     <tr>
@@ -101,7 +104,14 @@ class StudentHome extends Component{
                                     <td><Button variant="info"><FontAwesomeIcon icon="eye"/> View</Button></td>
                                     </Accordion.Toggle>
                                     <Accordion.Collapse eventKey={key}>
-                                        <Card.Body>Hello! I'm the body</Card.Body>
+                                        <Card.Body>
+                                            <ListGroup>
+                                                <ListGroupItem>Description:{item.description}</ListGroupItem>
+                                                <ListGroupItem>Languages Used:{item.language}</ListGroupItem>
+                                                <ListGroupItem>Duration:{item.duration}</ListGroupItem>
+                                                <ListGroupItem>Flexible?:{item.is_flexi}</ListGroupItem>
+                                            </ListGroup>
+                                        </Card.Body>
                                     </Accordion.Collapse>
                                     </tr>
                                 </tbody>
