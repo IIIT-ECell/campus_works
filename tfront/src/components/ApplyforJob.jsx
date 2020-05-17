@@ -19,11 +19,9 @@ class ApplyforJobs extends Component{
         axios({
             mehtod: "GET",
             url: "https://campusworks.pythonanywhere.com/student",
-            params: {
-                token: localStorage.getItem('token')
-            },
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": "Token "+localStorage.getItem('token')
             }
         })
         .then((response)=>{

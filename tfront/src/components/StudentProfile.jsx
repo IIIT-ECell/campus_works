@@ -20,11 +20,11 @@ class StudentProfile extends Component{
         console.log(this.state);
         axios.get("https://campusworks.pythonanywhere.com/profile/student",{
             params: {
-                "token":localStorage.getItem("token"),
                 "student_id":this.props.match.params.student_id,
             },
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                "Authorization":"Token " + localStorage.getItem("token"),
             }
         }).then((res)=>{
             console.log(this.state);

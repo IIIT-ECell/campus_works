@@ -69,9 +69,8 @@ class StudentViews(APIView):
 
     def get(self, request, *args, **kwargs):
         data = request.GET
-        print(data["token"])
         try:
-            key = data["token"]
+            key = request.auth
         except KeyError as e:
             return Response({"success": False, "message": str(e)})
 
@@ -391,8 +390,8 @@ class ViewJobs(APIView):
 class StudentApplications(APIView):
     def get(self, request):
         data = request.GET
-        # print(data)
-        token = data["token"]
+        print(request.auth)
+        token = request.auth
         if not student_required(token):
             return Response({"message": "You cannot apply for jobs", "success": False})
         try:
