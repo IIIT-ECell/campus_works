@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavStudent from './NavStudent';
-import {Table, Button, Accordion, Card, Row, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Table, Button, Accordion, Card, Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -60,7 +60,7 @@ class StudentHome extends Component{
         return(
             <div>
                 <NavStudent></NavStudent>
-                <Table responsive striped bordered hover>
+                <Table responsive striped bordered hover className="p-5">
                     <thead>
                         <tr>
                             <th colSpan="6">Applications Submitted</th>
@@ -82,44 +82,57 @@ class StudentHome extends Component{
                             </tr>
                             )
                         })}
+                        {this.state.applications.length==0 && <tr><td colSpan="4">No applications</td></tr>}
                     </tbody>
                 </Table>
-                <Accordion>
+
+                <Accordion className="pt-5">
+                    <Card>
+                        <Card.Header>
+                        <h5>List of Jobs</h5>
+                        </Card.Header>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                                <Row>
+                                    <Col>Company</Col>
+                                    <Col>Job Name</Col>
+                                    <Col>Start Date</Col>
+                                    <Col>Skill Reqd</Col>
+                                    <Col>Stipend</Col>
+                                    <Col></Col>
+                                    <Col></Col>
+                                </Row>
+                        </Card.Header>
+                    </Card>
                     {this.state.jobs && this.state.jobs.map((item, key) => {
                         return (
-                            <Table responsive>
-                                <tr>
-                                    <th colSpan="7"></th>
-                                </tr>
                             <Card>
-                                <tbody>
-                                    <tr>
                                     <Accordion.Toggle as={Card.Header} eventKey={key} colSpan="7">
-                                    <td><Link to={"/company/profile/"+item.company.id}>{item.company.user.first_name}</Link></td>
-                                    <td>{item.job_name}</td>
-                                    <td>{item.start_date}</td>
-                                    <td>{item.skill}</td>
-                                    <td>{item.stipend}</td>
-                                    <td><Link to={'/apply/'+item.id}><Button variant="primary"><FontAwesomeIcon icon="file-signature"/> Apply</Button></Link></td>    
-                                    <td><Button variant="info"><FontAwesomeIcon icon="eye"/> View</Button></td>
+                                    <Row>
+                                        <Col><Link to={"/company/profile/"+item.company.id}>{item.company.user.first_name}</Link></Col>
+                                        <Col>{item.job_name}</Col>
+                                        <Col>{item.start_date}</Col>
+                                        <Col>{item.skill}</Col>
+                                        <Col>{item.stipend}</Col>
+                                        <Col><Button variant="info"><FontAwesomeIcon icon="eye"/> View</Button></Col>
+                                        <Col><Link to={'/apply/'+item.id}><Button variant="primary"><FontAwesomeIcon icon="file-signature"/> Apply</Button></Link></Col>
+                                    </Row>
                                     </Accordion.Toggle>
                                     <Accordion.Collapse eventKey={key}>
                                         <Card.Body>
                                             <ListGroup>
-                                                <ListGroupItem>Description:{item.description}</ListGroupItem>
-                                                <ListGroupItem>Languages Used:{item.language}</ListGroupItem>
-                                                <ListGroupItem>Duration:{item.duration}</ListGroupItem>
-                                                <ListGroupItem>Flexible?:{item.is_flexi}</ListGroupItem>
+                                                <ListGroupItem>Description: {item.description}</ListGroupItem>
+                                                <ListGroupItem>Languages Used: {item.language}</ListGroupItem>
+                                                <ListGroupItem>Duration: {item.duration}</ListGroupItem>
+                                                <ListGroupItem>Flexible?: {item.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
                                             </ListGroup>
                                         </Card.Body>
                                     </Accordion.Collapse>
-                                    </tr>
-                                </tbody>
                             </Card>
-                            </Table>
                         )
                     })}
-                    {this.state.jobs.length==0 && <td colSpan="6" className="text-center">No new jobs to show</td>}
+                    {this.state.jobs.length==0 && <Card><Card.Header>No new jobs to show</Card.Header></Card>}
                 </Accordion>
                 
             </div>
