@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
 import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,8 +16,8 @@ import StudentProfile from './StudentProfile';
 import ViewApplications from './ViewApplications';
 import CompanyProfile from './CompanyProfile';
 import ReactDOM from 'react-dom';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {fab} from '@fortawesome/free-brands-svg-icons';
 import {faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faUserEdit, faEye} from '@fortawesome/free-solid-svg-icons';
 import PasswordChange from './PasswordChange';
 library.add(fab, faUser, faUserPlus, faUserEdit, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faEye);
@@ -28,9 +28,9 @@ function App(props) {
                 <div>
                     <Switch>
                         <Route exact path="/" render={(props) => <Home {...props} />} />
-                        <Route exact path="/register" component={RegisterForm}/>
+                        <Route exact path="/register" component={RegisterForm} />
                         <Route exact path="/register/company" render={(props) => <CompanyRegister {...props} />} />
-                        <Route exact path="/register/student" component={StudentRegister}  />
+                        <Route exact path="/register/student" component={StudentRegister} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/company/home" component={CompanyHome} />
                         <Route exact path="/student/home" component={StudentHome} />
@@ -40,7 +40,7 @@ function App(props) {
                         <Route exact path="/jobs/edit/:id" component={EditJob} />
                         <Route exact path="/apply/:job_id" component={ApplyforJobs} />
                         <Route exact path="/view-applications/:job_id" component={ViewApplications} />
-                        <Route exact path="/change-password" component={PasswordChange}/>
+                        <Route exact path="/change-password" component={PasswordChange} />
                     </Switch>
                 </div>
             </Router>

@@ -22,11 +22,9 @@ class StudentHome extends Component{
             axios({
                 method: "GET",
                 url: "https://campusworks.pythonanywhere.com/applications",
-                params: {
-                    "token": localStorage.getItem("token"),
-                },
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': "Token "+localStorage.getItem("token")
                 }
             }).then((res)=>{
                 let jobs = [];

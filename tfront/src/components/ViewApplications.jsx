@@ -17,8 +17,10 @@ class ViewApplications extends Component{
             method:'GET',
             url:"https://campusworks.pythonanywhere.com/apply-for-job",
             params:{
-                token: localStorage.getItem("token"),
                 job_id: this.props.match.params.job_id,
+            },
+            headers:{
+                'Authorization': "Token "+localStorage.getItem("token")
             }
         })
         .then((response)=>{
