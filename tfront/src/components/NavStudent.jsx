@@ -13,8 +13,8 @@ class NavStudent extends Component{
         axios({
             method:"GET",
             url:"https://campusworks.pythonanywhere.com/student",
-            params:{
-                "token":localStorage.getItem("token")
+            headers:{
+                "Authorization":"Token "+localStorage.getItem("token")
             }
         })
         .then((res)=>{
