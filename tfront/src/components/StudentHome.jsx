@@ -95,13 +95,12 @@ class StudentHome extends Component{
                     <Card>
                         <Card.Header>
                                 <Row>
-                                    <Col>Company</Col>
-                                    <Col>Job Name</Col>
-                                    <Col>Start Date</Col>
-                                    <Col>Skill Reqd</Col>
-                                    <Col>Stipend</Col>
-                                    <Col></Col>
-                                    <Col></Col>
+                                    <Col className="font-weight-bold">Company</Col>
+                                    <Col className="font-weight-bold">Job Name</Col>
+                                    <Col className="font-weight-bold">Start Date</Col>
+                                    <Col className="font-weight-bold">Stipend</Col>
+                                    <Col className="font-weight-bold"></Col>
+                                    <Col className="font-weight-bold"></Col>
                                 </Row>
                         </Card.Header>
                     </Card>
@@ -113,7 +112,6 @@ class StudentHome extends Component{
                                         <Col><Link to={"/company/profile/"+item.company.id}>{item.company.user.first_name}</Link></Col>
                                         <Col>{item.job_name}</Col>
                                         <Col>{item.start_date}</Col>
-                                        <Col>{item.skill}</Col>
                                         <Col>{item.stipend}</Col>
                                         <Col><Button variant="info"><FontAwesomeIcon icon="eye"/> View</Button></Col>
                                         <Col><Link to={'/apply/'+item.id}><Button variant="primary"><FontAwesomeIcon icon="file-signature"/> Apply</Button></Link></Col>
@@ -123,6 +121,7 @@ class StudentHome extends Component{
                                         <Card.Body>
                                             <ListGroup>
                                                 <ListGroupItem>Description: {item.description}</ListGroupItem>
+                                                <ListGroupItem>Skills Reqd: {item.skill}</ListGroupItem>
                                                 <ListGroupItem>Languages Used: {item.language}</ListGroupItem>
                                                 <ListGroupItem>Duration: {item.duration}</ListGroupItem>
                                                 <ListGroupItem>Flexible?: {item.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
