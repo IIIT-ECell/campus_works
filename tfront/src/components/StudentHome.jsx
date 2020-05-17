@@ -94,7 +94,7 @@ class StudentHome extends Component{
                     </Card>
                     <Card>
                         <Card.Header>
-                                <Row>
+                                <Row xs={3} md={6}>
                                     <Col className="font-weight-bold">Company</Col>
                                     <Col className="font-weight-bold">Job Name</Col>
                                     <Col className="font-weight-bold">Start Date</Col>
@@ -108,7 +108,7 @@ class StudentHome extends Component{
                         return (
                             <Card>
                                     <Accordion.Toggle as={Card.Header} eventKey={key} colSpan="7">
-                                    <Row>
+                                    <Row xs={3} md={6}>
                                         <Col><Link to={"/company/profile/"+item.company.id}>{item.company.user.first_name}</Link></Col>
                                         <Col>{item.job_name}</Col>
                                         <Col>{item.start_date}</Col>
@@ -120,11 +120,11 @@ class StudentHome extends Component{
                                     <Accordion.Collapse eventKey={key}>
                                         <Card.Body>
                                             <ListGroup>
-                                                <ListGroupItem>Description: {item.description}</ListGroupItem>
-                                                <ListGroupItem>Skills Reqd: {item.skill}</ListGroupItem>
-                                                <ListGroupItem>Languages Used: {item.language}</ListGroupItem>
-                                                <ListGroupItem>Duration: {item.duration}</ListGroupItem>
-                                                <ListGroupItem>Flexible?: {item.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
+                                                <ListGroupItem><strong>Description: </strong>{item.description}</ListGroupItem>
+                                                <ListGroupItem><strong>Skills Reqd: </strong>{item.skill}</ListGroupItem>
+                                                <ListGroupItem><strong>Languages Used: </strong>{item.language}</ListGroupItem>
+                                                <ListGroupItem><strong>Duration: </strong>{item.duration}</ListGroupItem>
+                                                <ListGroupItem><strong>Flexible?: </strong>{item.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
                                             </ListGroup>
                                         </Card.Body>
                                     </Accordion.Collapse>
