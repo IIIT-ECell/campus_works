@@ -11,11 +11,9 @@ class NavCompany extends Component {
     }
     componentWillMount() {
         axios.get("https://campusworks.pythonanywhere.com/company", {
-            params: {
-                "token": localStorage.getItem("token")
-            },
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Token "+localStorage.getItem("token")
             }
         })
             .then((res) => {
