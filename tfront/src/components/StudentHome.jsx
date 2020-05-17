@@ -60,7 +60,46 @@ class StudentHome extends Component{
         return(
             <div>
                 <NavStudent></NavStudent>
-                <Table responsive striped bordered hover className="p-5">
+                <Accordion>
+                    <Card>
+                        <Card.Header>
+                        <Row xs={2} md={4}>
+                            <Col>Job Name</Col>
+                            <Col>Job Description</Col>
+                            <Col>Date of Application</Col>
+                            <Col>Status of Application</Col>
+                        </Row>
+                        </Card.Header>
+                    </Card>
+                {this.state.applications && this.state.applications.map((item, key)=>{
+                    return (
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey={"s"+key} colSpan="7">
+                            <Row xs={2} md={4}>
+                                <Col>{item.job.job_name}</Col>
+                                <Col className="text-truncate">{item.job.description}</Col>
+                                <Col className="text-truncate">{item.date_of_application}</Col>
+                                <Col>{item.select_status}</Col>            
+                            </Row>
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey={"s"+key}>
+                            <Card.Body>
+                                <ListGroup>
+                                    <ListGroupItem><strong>Description: </strong>{item.job.description}</ListGroupItem>
+                                    <ListGroupItem><strong>Skills Reqd: </strong>{item.job.skill}</ListGroupItem>
+                                    <ListGroupItem><strong>Languages Used: </strong>{item.job.language}</ListGroupItem>
+                                    <ListGroupItem><strong>Duration: </strong>{item.job.duration}</ListGroupItem>
+                                    <ListGroupItem><strong>Flexible?: </strong>{item.job.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
+                                </ListGroup>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    )
+                })}
+                {this.state.applications.length==0 && <tr><td colSpan="4">No applications</td></tr>}
+                </Accordion>
+
+                {/* <Table responsive striped bordered hover className="p-5">
                     <thead>
                         <tr>
                             <th colSpan="6">Applications Submitted</th>
@@ -84,7 +123,7 @@ class StudentHome extends Component{
                         })}
                         {this.state.applications.length==0 && <tr><td colSpan="4">No applications</td></tr>}
                     </tbody>
-                </Table>
+                </Table> */}
 
                 <Accordion className="pt-5">
                     <Card>
