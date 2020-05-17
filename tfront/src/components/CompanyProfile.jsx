@@ -18,10 +18,10 @@ class CompanyProfile extends React.Component {
         console.log(this.state);
         axios.get("https://campusworks.pythonanywhere.com/profile/company", {
             params: {
-                "token": localStorage.getItem("token"),
                 "company_id": this.companyId,
             },
             headers: {
+                "Authorization": "Token "+localStorage.getItem("token"),
                 'Content-Type': 'application/json'
             }
         }).then((res) => {

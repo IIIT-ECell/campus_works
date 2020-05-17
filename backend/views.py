@@ -115,7 +115,6 @@ class StudentViews(APIView):
         else:
             print("error", student_serializer.errors)
             user = CustomUser.objects.get(username=data["email"])
-            print(user)
             user.delete()
             return Response({"message": student_serializer.errors, "success": False})
 
@@ -123,9 +122,8 @@ class StudentViews(APIView):
 class CompanyViews(APIView):
     def get(self, request, *args, **kwargs):
         data = request.GET
-        print(data["token"])
         try:
-            key = data["token"]
+            key = request.auth
         except KeyError as e:
             return Response({"success": False, "message": str(e)})
 
@@ -137,7 +135,6 @@ class CompanyViews(APIView):
             return Response({"success": False, "message": str(e)})
 
         student_json = serializers.serialize("json", [student,])
-        print(json.loads(student_json)[0])
         return Response({"success": True, "data": json.loads(student_json)[0]})
 
     def post(self, request):
@@ -175,7 +172,7 @@ class CompanyViews(APIView):
 class ApplicationViews(APIView):
     def get(self, request, *args, **kwargs):
         data = request.GET
-        token = data["token"]
+        token = request.auth
         if student_required(token):
             return Response(
                 {

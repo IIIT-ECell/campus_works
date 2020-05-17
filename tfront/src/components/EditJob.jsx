@@ -39,10 +39,10 @@ class EditJob extends Component {
             method: "GET",
             url: "https://campusworks.pythonanywhere.com/post-job",
             params: {
-                token: this.token,
                 id: this.jobId
             }, headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization":"Token "+this.token,
             }
         }).then(response => {
             console.log(response);
