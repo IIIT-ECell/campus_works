@@ -15,8 +15,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from backend.decorators import student_required, company_required, get_company_id, get_student_id
 import json
-from .serializers import StudentSerializer, UserSerializer, ApplicationStudentSerializer
+from .serializers import JobSerializer, UserSerializer, StudentSerializer, CompanySerializer, ApplicationStudentSerializer
 import os
+import copy
 
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -72,7 +73,7 @@ class StudentViews(APIView):
 
 
     def post(self, request, *args, **kwargs):
-        data = request.data
+        data = copy.deepcopy(request.data)
         if 'email' not in data or 'password' not in data or 'name' not in data:
             return HttpResponseServerError("No email or password or name not given")
         try:
@@ -89,16 +90,18 @@ class StudentViews(APIView):
             print('New user not created')
             new_user.save()
             print('New user created')
-            request.data['user']=new_user.id
+            data["user"] = new_user.id
         except Exception as e:
             return Response({"message":[str(e)], "success":False})
-        student_serializer = StudentSerializer(data=request.data)
+        student_serializer = StudentSerializer(data=data)
         if student_serializer.is_valid():
             student_serializer.save()
             return Response({"message":"Student created successfully","success":True})
         else:
             print('error', student_serializer.errors)
-            CustomUser.objects.get(username=email).delete()         
+            user = CustomUser.objects.get(username=data['email'])
+            print(user)
+            user.delete()         
             return Response({"message":student_serializer.errors,"success":False})
 
 class CompanyViews(APIView):
@@ -325,9 +328,10 @@ class ViewJobs(APIView):
         # key = data["token"]
         # if not company_required(key):
         #     return Response({"message":"You cannot see jobs"}) 
-        jobs = serializers.serialize('json',Job.objects.all())
-        return Response(json.loads(jobs))
-
+        jobs = Job.objects.prefetch_related('company').all()
+        job_serializer = JobSerializer(jobs, many=True)
+        print(job_serializer.data)
+        return Response(job_serializer.data)
 
     def post(self, request):
         '''Gives you multiple jobs'''

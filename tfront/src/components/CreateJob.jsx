@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Nav1 from './Nav1';
 import { Redirect } from 'react-router-dom';
+import NavCompany from './NavCompany';
 
 /*
  * From Job model:
@@ -76,7 +77,7 @@ class CreateJob extends Component {
         } else {
             return(
                 <div>
-                    <Nav1 />
+                    <NavCompany/>
                     <div className="container py-5">
                         <form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
                             <div className="form-group row">

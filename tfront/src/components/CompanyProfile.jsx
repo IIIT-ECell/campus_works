@@ -70,41 +70,28 @@ class CompanyProfile extends React.Component{
                 {localStorage.getItem('type')==1 && <NavStudent></NavStudent>}
                 {localStorage.getItem('type')==2 && <NavCompany></NavCompany>}
                 <div className="container my-5">
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-group row">
-                            <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
-                            <div className="col-sm-10">
-                                <input className="form-control" name="name" id="name" placeholder="ABC Inc." onChange={this.handleChange} disabled value={this.state.user.first_name}/>
-                                <small className="form-text text-muted">Company's name</small>
-                            </div>
+                    <Form onSubmit={this.handleSubmit} className="container p-5">
+                        <div className="row">
+                            <Form.Group className="col-md-4">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control name="name" id="name" placeholder="ABC Inc." onChange={this.handleChange} disabled value={this.state.user.first_name}/>
+                            </Form.Group>
+                            <Form.Group className="col-md-4">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control name="email" id="email" placeholder="joe@email.com" onChange={this.handleChange} disabled value={this.state.user.email}/>
+                            </Form.Group>
+                            <Form.Group className="col-md-4">
+                                <Form.Label>Contact Name</Form.Label>
+                                <Form.Control  name="contact_name" id="poc" onChange={this.handleChange} disabled value={this.state.company.poc}/>
+                            </Form.Group>
+                            <Form.Group className="col-md-8 offset-md-2">
+                                <Form.Label>About</Form.Label>
+                                <Form.Control type="textarea" id="about" name="about" onChange={this.handleChange} disabled value={this.state.company.about}/>
+                            </Form.Group>
                         </div>
-
-                        <div className="form-group row">
-                            <label htmlFor="email" className="col-sm-2 col-form-label font-weight-bold">Email address</label>
-                            <div className="col-sm-10">
-                                <input type="email" className="form-control" name="email" id="email" placeholder="joe@email.com" onChange={this.handleChange} disabled value={this.state.user.email}/>
-                                <small className="form-text text-muted">Contact Email Address</small>
-                            </div>
-                        </div>
-
-                        <div className="form-group row">
-                            <label className="col-sm-2 col-form-label font-weight-bold">Contact Name</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" placeholder="Joe Stark" name="contact_name" id="poc" onChange={this.handleChange} disabled value={this.state.company.poc}></input>
-                                <small className="form-text text-muted">Contact Name</small>
-                            </div>
-                        </div>
-
-                        <div className="form-group row">
-                            <label className="col-sm-2 col-form-label font-weight-bold">About</label>
-                            <div className="col-sm-10">
-                                <textarea className="form-control" placeholder="Describe your company's projects, values, and tech stack" id="about" name="about" onChange={this.handleChange} disabled value={this.state.company.about}></textarea>
-                                <small className="form-text text-muted">About the Organization</small>
-                            </div>
-                        </div>
+                        
                         {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
-
-                    </form>
+                    </Form>
                 </div>
             </div>
         )

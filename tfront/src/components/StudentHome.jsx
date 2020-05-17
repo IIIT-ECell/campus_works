@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavStudent from './NavStudent';
-import {Table, Button} from 'react-bootstrap';
+import {Table, Button, Accordion, Card, Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -37,12 +37,11 @@ class StudentHome extends Component{
                     return;
                 }
                 for(let job in this.state.jobs){
-                    console.log(job);
                     let flag = true;
                     for(let application in apps){
-                        console.log(application);
-                        if(this.state.jobs[job].pk==apps[application].job_id){
-                            apps[application].job = this.state.jobs[job].fields;
+                        console.log(this.state.jobs[job].id);
+                        if(this.state.jobs[job].id==apps[application].job_id){
+                            apps[application].job = this.state.jobs[job];
                             flag = false;
                         }
                     }
@@ -61,7 +60,7 @@ class StudentHome extends Component{
         return(
             <div>
                 <NavStudent></NavStudent>
-                <Table responsive striped bordered hover>
+                <Table responsive striped bordered hover className="p-5">
                     <thead>
                         <tr>
                             <th colSpan="6">Applications Submitted</th>
@@ -83,36 +82,57 @@ class StudentHome extends Component{
                             </tr>
                             )
                         })}
+                        {this.state.applications.length==0 && <tr><td colSpan="4">No applications</td></tr>}
                     </tbody>
                 </Table>
-                <Table responsive striped bordered hover>
-                <thead>
-                    <tr>
-                        <th colSpan="6">Jobs Available</th>
-                    </tr>
-                    <tr>
-                        <th>Job Name</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>Skill</th>
-                        <th>Stipend</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
+
+                <Accordion className="pt-5">
+                    <Card>
+                        <Card.Header>
+                        <h5>List of Jobs</h5>
+                        </Card.Header>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                                <Row>
+                                    <Col className="font-weight-bold">Company</Col>
+                                    <Col className="font-weight-bold">Job Name</Col>
+                                    <Col className="font-weight-bold">Start Date</Col>
+                                    <Col className="font-weight-bold">Stipend</Col>
+                                    <Col className="font-weight-bold"></Col>
+                                    <Col className="font-weight-bold"></Col>
+                                </Row>
+                        </Card.Header>
+                    </Card>
                     {this.state.jobs && this.state.jobs.map((item, key) => {
-                        return (<tr>
-                            <td>{item.fields.job_name}</td>
-                            <td>{item.fields.description}</td>
-                            <td>{item.fields.start_date}</td>
-                            <td>{item.fields.skill}</td>
-                            <td>{item.fields.stipend}</td>
-                            <td><Link to={'/apply/'+item.pk}><Button variant="primary"><FontAwesomeIcon icon="file-signature"/> Apply</Button></Link></td>
-                        </tr>)
+                        return (
+                            <Card>
+                                    <Accordion.Toggle as={Card.Header} eventKey={key} colSpan="7">
+                                    <Row>
+                                        <Col><Link to={"/company/profile/"+item.company.id}>{item.company.user.first_name}</Link></Col>
+                                        <Col>{item.job_name}</Col>
+                                        <Col>{item.start_date}</Col>
+                                        <Col>{item.stipend}</Col>
+                                        <Col><Button variant="info"><FontAwesomeIcon icon="eye"/> View</Button></Col>
+                                        <Col><Link to={'/apply/'+item.id}><Button variant="primary"><FontAwesomeIcon icon="file-signature"/> Apply</Button></Link></Col>
+                                    </Row>
+                                    </Accordion.Toggle>
+                                    <Accordion.Collapse eventKey={key}>
+                                        <Card.Body>
+                                            <ListGroup>
+                                                <ListGroupItem>Description: {item.description}</ListGroupItem>
+                                                <ListGroupItem>Skills Reqd: {item.skill}</ListGroupItem>
+                                                <ListGroupItem>Languages Used: {item.language}</ListGroupItem>
+                                                <ListGroupItem>Duration: {item.duration}</ListGroupItem>
+                                                <ListGroupItem>Flexible?: {item.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
+                                            </ListGroup>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                            </Card>
+                        )
                     })}
-                    {this.state.jobs.length==0 && <td colSpan="6" className="text-center">No new jobs to show</td>}
-                </tbody>
-                </Table>
+                    {this.state.jobs.length==0 && <Card><Card.Header>No new jobs to show</Card.Header></Card>}
+                </Accordion>
                 
             </div>
         )
