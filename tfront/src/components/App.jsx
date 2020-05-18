@@ -15,7 +15,6 @@ import ApplyforJobs from './ApplyforJob';
 import StudentProfile from './StudentProfile';
 import ViewApplications from './ViewApplications';
 import CompanyProfile from './CompanyProfile';
-import ReactDOM from 'react-dom';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faUserEdit, faEye} from '@fortawesome/free-solid-svg-icons';

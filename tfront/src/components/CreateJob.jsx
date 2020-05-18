@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Nav1 from './Nav1';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import NavCompany from './NavCompany';
 
 /*
@@ -23,7 +22,7 @@ import NavCompany from './NavCompany';
 class CreateJob extends Component {
     constructor(props) {
         super(props);
-        this.state = {formSubmitted:false}
+        this.state = {formSubmitted: false}
         this.formData = {"is_flexi": "false"};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -35,15 +34,15 @@ class CreateJob extends Component {
         this.type = localStorage.getItem("type");
     }
 
-    handleChange(event){
+    handleChange(event) {
         event.preventDefault();
         this.formData[event.target.id] = event.target.value;
         console.log(this.formData);
     }
 
-    handleSubmit(event){
+    handleSubmit(event) {
         event.preventDefault();
-        this.setState({formSubmitted:true});
+        this.setState({formSubmitted: true});
         axios({
             method: "POST",
             url: "https://campusworks.pythonanywhere.com/post-job",
@@ -63,21 +62,21 @@ class CreateJob extends Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((response)=>{
+        }).then((response) => {
             console.log(response.data);
             alert(response.data.message);
             window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
-            this.setState({formSubmitted:false});
+            this.setState({formSubmitted: false});
         });
     }
 
     render() {
-        if(!(localStorage.getItem("token") && localStorage.getItem("type") == 2)) {
+        if (!(localStorage.getItem("token") && localStorage.getItem("type") === 2)) {
             return <Redirect to="/" />;
         } else {
-            return(
+            return (
                 <div>
-                    <NavCompany/>
+                    <NavCompany />
                     <div className="container py-5">
                         <form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
                             <div className="form-group row">
@@ -109,7 +108,7 @@ class CreateJob extends Component {
                                 <div className="col-sm-10">
                                     <input className="form-control" name="num_pos" id="num_pos" placeholder="3" type="number" onChange={this.handleChange} required />
                                     <small className="form-text text-light">This number is not binding.</small>
-                                </div>                                
+                                </div>
                             </div>
 
                             <div className="form-group row">
@@ -154,7 +153,7 @@ class CreateJob extends Component {
                                     <small className="form-text text-light">Programming languages required</small>
                                 </div>
                             </div>
-                            {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
+                            {this.state.formSubmitted === false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
                         </form>
 
                     </div>

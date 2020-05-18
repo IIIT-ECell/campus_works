@@ -21,14 +21,14 @@ import NavCompany from './NavCompany';
 class EditJob extends Component {
     constructor(props) {
         super(props);
-        this.state = {formSubmitted:false};
+        this.state = {formSubmitted: false};
         this.formData = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        const { id } = this.props.match.params;
+        const {id} = this.props.match.params;
         this.jobId = id;
 
         this.token = localStorage.getItem("token");
@@ -42,14 +42,14 @@ class EditJob extends Component {
                 id: this.jobId
             }, headers: {
                 'Content-Type': 'application/json',
-                "Authorization":"Token "+this.token,
+                "Authorization": "Token " + this.token,
             }
         }).then(response => {
             console.log(response);
             this.formData = response.data.data.fields;
 
-            for(let key in this.formData) {
-                try { document.getElementById(key).value = this.formData[key]; }
+            for (let key in this.formData) {
+                try {document.getElementById(key).value = this.formData[key];}
                 catch {}
             }
         });
@@ -64,7 +64,7 @@ class EditJob extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.setState = {formSubmitted:true};
+        this.setState = {formSubmitted: true};
 
         axios({
             method: "PUT",
@@ -85,17 +85,17 @@ class EditJob extends Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((response)=>{
+        }).then((response) => {
             alert(response.data.message);
-            if(response.data.success==true){
+            if (response.data.success === true) {
                 window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
             }
-            this.setState({formSubmitted:false});
+            this.setState({formSubmitted: false});
         });
     }
 
     render() {
-        return(
+        return (
             <div>
                 <NavCompany></NavCompany>
                 <div className="container py-5">
@@ -129,7 +129,7 @@ class EditJob extends Component {
                             <div className="col-sm-10">
                                 <input className="form-control" name="num_pos" id="num_pos" placeholder="3" type="number" onChange={this.handleChange} required />
                                 <small className="form-text text-light">This number is not binding.</small>
-                            </div>                                
+                            </div>
                         </div>
 
                         <div className="form-group row">
@@ -175,7 +175,7 @@ class EditJob extends Component {
                             </div>
                         </div>
 
-                        {this.state.formSubmitted===false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                    </form>
+                        {this.state.formSubmitted === false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}                    </form>
                 </div>
             </div>
         );

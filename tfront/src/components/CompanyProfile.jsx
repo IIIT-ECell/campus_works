@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import NavCompany from './NavCompany';
 import NavStudent from './NavStudent';
 import {Form} from "react-bootstrap";
@@ -21,11 +21,11 @@ class CompanyProfile extends React.Component {
                 "company_id": this.companyId,
             },
             headers: {
-                "Authorization": "Token "+localStorage.getItem("token"),
+                "Authorization": "Token " + localStorage.getItem("token"),
                 'Content-Type': 'application/json'
             }
         }).then((res) => {
-            if (res.data.success == true) {
+            if (res.data.success === true) {
                 this.setState({company: res.data.company.fields});
                 this.setState({user: res.data.user.fields});
                 console.log(this.state);
@@ -72,8 +72,8 @@ class CompanyProfile extends React.Component {
         if (this.state.company) {
             return (
                 <div>
-                    {localStorage.getItem('type') == 1 && <NavStudent></NavStudent>}
-                    {localStorage.getItem('type') == 2 && <NavCompany></NavCompany>}
+                    {localStorage.getItem('type') === 1 && <NavStudent></NavStudent>}
+                    {localStorage.getItem('type') === 2 && <NavCompany></NavCompany>}
                     <div className="container my-5">
                         <Form onSubmit={this.handleSubmit} className="container p-5">
                             <div className="row">
