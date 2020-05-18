@@ -52,7 +52,7 @@ function App(props) {
                 </div>
             </div>
 
-            <div className="container-fluid bg-dark">
+            <div className="container-fluid" style={{'background-color':'black'}}>
                 <div className="row">
                     <div className="col text-center px-5">
                         <h5 className="py-5 font-weight-bold text-white">An E-Cell IIIT-H Initiative</h5>

@@ -3,6 +3,7 @@ import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import './Nav1.css';
 
 class NavCompany extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class NavCompany extends Component {
     }
     render() {
         return (
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+            <Navbar collapseOnSelect expand="lg" variant="dark" sticky="top">
                 <Navbar.Brand className="nav-logo">
                     <Link to={"/"}>
                         <img
