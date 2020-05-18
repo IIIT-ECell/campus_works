@@ -9,7 +9,7 @@ class StudentProfile extends Component {
     // refer to https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
     constructor(props) {
         super(props);
-        this.state = {formSubmitted: false, isEditing: false, student: {}, user: {}}
+        this.state = {formSubmitted: false, isEditing: false, resumeUploaded:false, student: {}, user: {}}
         this.handleFile = this.handleFile.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,6 +38,7 @@ class StudentProfile extends Component {
 
     handleFile(event) {
         event.preventDefault();
+        this.setState({resumeUploaded:true});
         this.setState({resume: event.target.files[0]}, () => console.log(this.state.resume));
     }
 
@@ -56,14 +57,29 @@ class StudentProfile extends Component {
         let formData = {...this.state, student_id: this.studentId};
         delete formData["formSubmitted"];
         delete formData["isEditing"];
-        console.log(formData);
-        formData["token"] = localStorage.getItem("token");
+        var form_data = new FormData();
+        var keys = Object.keys(formData['student']);
+        for (var i in keys) {
+            form_data.append(keys[i], formData['student'][keys[i]]);
+        }
+        var keys = Object.keys(formData['user']);
+        for (var i in keys) {
+            form_data.append(keys[i], formData['user'][keys[i]]);
+        }
+        form_data.append('token',localStorage.getItem("token"));
+        if(this.state.resumeUploaded){
+            form_data.append('resume',this.state.resume);
+        }
+        else{
+            form_data.delete('resume');
+        }
+        console.log(form_data);
 
         axios.put("https://campusworks.pythonanywhere.com/profile/student",
-            formData,
+            form_data,
             {
                 headers: {
-                    // 'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data'
                 }
             }
         ).then((res) => {

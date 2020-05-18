@@ -434,8 +434,8 @@ class StudentProfile(APIView):
         # return json.loads(student_json)
 
     def put(self, request):
-        data = json.loads(request.body)
-        print(request.FILES)
+        data = copy.deepcopy(request.data)
+        # print(request.FILES)
         print(data)
 
         if "token" not in data:
@@ -453,33 +453,36 @@ class StudentProfile(APIView):
                 status=403,
             )
 
-        student_details = data["student"]
-        user_details = data["user"]
-
-        student_id = data["student_id"]
+        student_id = get_student_id(token)
 
         student = Student.objects.get(id=student_id)
         user = student.user
 
-        if "first_name" in user_details:
-            user.first_name = user_details["first_name"]
+        if "first_name" in data:
+            user.first_name = data["first_name"]
 
-        if "phone_number" in student_details:
-            student.phone_number = student_details["phone_number"]
+        # if "phone_number" in student_details:
+        #     student.phone_number = student_details["phone_number"]
 
-        if "year_of_study" in student_details:
-            student.year_of_study = student_details["year_of_study"]
+        # if "year_of_study" in student_details:
+        #     student.year_of_study = student_details["year_of_study"]
 
-        if "gender" in student_details:
-            student.gender = student_details["gender"]
+        # if "gender" in student_details:
+        #     student.gender = student_details["gender"]
 
-        if "resume" in data:
-            student.resume = data["resume"]
+        # if "resume" in data:
+        #     student.resume = data["resume"]
+
+        serializer = StudentSerializer(student, data=data,partial=True)
 
         user.save()
-        student.save()
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "writable fields have been edited", "success":True})
+        else:
+            return Response({"message": serializer.errors, "success": False})
 
-        return Response({"message": "writable fields have been edited"})
+
 
 
 class CompanyProfile(APIView):
