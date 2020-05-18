@@ -65,7 +65,7 @@ class StudentRegister extends Component {
                 <Nav1></Nav1>
                 <div className="d-flex justify-content-center align-items-center">
                     <div className="my-auto">
-                        <Form onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit} className="p-5">
                             <Form.Group controlId="formName">
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control type="text" id="name" required onChange={this.handleChange} placeholder="Enter Name" />
@@ -109,7 +109,7 @@ class StudentRegister extends Component {
                                 <Form.Label>Resume</Form.Label>
                                 <Form.Control type="file" accept=".pdf" required onChange={this.handleFile} />
                             </Form.Group>
-                            {this.state.formSubmitted === false && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
+                            {this.state.formSubmitted === false && <button type="submit" className="btn btn-primary w-100" onClick={this.handleSubmit} style={{"background-color":"black","border-color":"#1a1a1a"}}>Submit</button>}
                         </Form>
                     </div>
                 </div>
