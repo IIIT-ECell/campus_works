@@ -32,13 +32,10 @@ class ViewApplications extends Component {
     handleChange(event) {
         event.preventDefault();
         console.log(event.target.value);
-        console.log(event.target.attributes['pk'].value);
-        var applicants = this.state["applicants"];
-        for (var i in applicants) {
-            if (applicants[i].pk === event.target.attributes['pk'].value) {
-                applicants[i].fields['select_status'] = event.target.value;
-            }
-        }
+        console.log();
+        let applicants = this.state["applicants"];
+        let key = event.target.attributes['pk'].value
+        applicants[key].fields['select_status'] = event.target.value;
         this.setState({"applicants": applicants});
         console.log(this.state);
     }
@@ -88,7 +85,7 @@ class ViewApplications extends Component {
                             return (<tr>
                                 <td>{item.fields.date_of_application}</td>
                                 <td>
-                                    <select id="select_status" value={item.fields.select_status} pk={item.pk} onChange={this.handleChange}>
+                                    <select id="select_status" value={item.fields.select_status} pk={key} onChange={this.handleChange}>
                                         <option value='RCVD'>Application received</option>
                                         <option value='SCRN'>Passed screening</option>
                                         <option value='INTD'>Interviewed</option>

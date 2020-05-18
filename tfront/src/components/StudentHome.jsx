@@ -10,6 +10,10 @@ class StudentHome extends Component {
     constructor(props) {
         super(props);
         this.state = {jobs: [], applications: []};
+        this.darkbg={"background-color":"black","color":"white"};
+        this.darkbgonly={"background-color":"black"};
+        this.stringify_status = this.stringify_status.bind(this);
+        this.get_card_colour = this.get_card_colour.bind(this);
     }
 
     componentDidMount() {
@@ -54,30 +58,59 @@ class StudentHome extends Component {
         });
     }
 
+    get_card_colour(key){
+        let colours = {
+            "RCVD":{"background-color":"#fafafa"},
+            "SCRN":{"background-color":"#95a3ab"},
+            "INTD":{"background-color":"#452981","color":"#fafafa"},
+            "ACPT":{"background-color":"#206b00","color":"#fafafa"},
+            "FLAG":{"background-color":"#f9c440"},
+            "RJCT":{"background-color":"#a10705","color":"#fafafa"}
+        };
+        return colours[key];
+    }
+
+    stringify_status(key){
+        let mapping={
+            'RCVD':"Application received",
+            'SCRN':"Passed screening",
+            'INTD':"Interviewed",
+            'ACPT':"Accepted",
+            'RJCT':"Rejected",
+            'FLAG':"Flagged"
+        }
+        return mapping[key];
+    }
+
     render() {
         return (
             <div>
                 <NavStudent></NavStudent>
                 <Accordion>
-                    <Card>
+                    <Card className="pink-purple-gradient-text text-white">
+                        <Card.Header>
+                            <h5>Applications Submitted</h5>
+                        </Card.Header>
+                    </Card>
+                    <Card style={this.darkbg}>
                         <Card.Header>
                             <Row xs={2} md={4}>
-                                <Col>Job Name</Col>
-                                <Col>Job Description</Col>
-                                <Col>Date of Application</Col>
-                                <Col>Status of Application</Col>
+                                <Col className="font-weight-bold">Job Name</Col>
+                                <Col className="font-weight-bold">Job Description</Col>
+                                <Col className="font-weight-bold">Date of Application</Col>
+                                <Col className="font-weight-bold">Status of Application</Col>
                             </Row>
                         </Card.Header>
                     </Card>
                     {this.state.applications && this.state.applications.map((item, key) => {
                         return (
-                            <Card>
+                            <Card style={this.get_card_colour(item.select_status)}>
                                 <Accordion.Toggle as={Card.Header} eventKey={"s" + key} colSpan="7">
                                     <Row xs={2} md={4}>
                                         <Col>{item.job.job_name}</Col>
                                         <Col className="text-truncate">{item.job.description}</Col>
-                                        <Col className="text-truncate">{item.date_of_application}</Col>
-                                        <Col>{item.select_status}</Col>
+                                        <Col className="text-truncate">{item.date_of_application.substring(0,10)}</Col>
+                                        <Col> {this.stringify_status(item.select_status)}</Col>
                                     </Row>
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey={"s" + key}>
@@ -94,42 +127,16 @@ class StudentHome extends Component {
                             </Card>
                         )
                     })}
-                    {this.state.applications.length === 0 && <tr><td colSpan="4">No applications</td></tr>}
+                    {this.state.applications.length === 0 && <Card><Card.Header><Row><Col xs={12} className="text-center">No applications</Col></Row></Card.Header></Card>}
                 </Accordion>
 
-                {/* <Table responsive striped bordered hover className="p-5">
-                    <thead>
-                        <tr>
-                            <th colSpan="6">Applications Submitted</th>
-                        </tr>
-                        <tr>
-                            <th>Job Name</th>
-                            <th>Job Description</th>
-                            <th>Date of Application</th>
-                            <th>Status of Application</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.applications && this.state.applications.map((item, key)=>{
-                            return (<tr>
-                                <td>{item.job.job_name}</td>
-                                <td>{item.job.description}</td>
-                                <td>{item.date_of_application}</td>
-                                <td>{item.select_status}</td>
-                            </tr>
-                            )
-                        })}
-                        {this.state.applications.length==0 && <tr><td colSpan="4">No applications</td></tr>}
-                    </tbody>
-                </Table> */}
-
                 <Accordion className="pt-5">
-                    <Card>
+                    <Card className="pink-purple-gradient-text text-white">
                         <Card.Header>
                             <h5>List of Jobs</h5>
                         </Card.Header>
                     </Card>
-                    <Card>
+                    <Card style={this.darkbg}>
                         <Card.Header>
                             <Row xs={3} md={6}>
                                 <Col className="font-weight-bold">Company</Col>
@@ -154,7 +161,7 @@ class StudentHome extends Component {
                                         <Col><Link to={'/apply/' + item.id}><Button variant="primary"><FontAwesomeIcon icon="file-signature" /> Apply</Button></Link></Col>
                                     </Row>
                                 </Accordion.Toggle>
-                                <Accordion.Collapse eventKey={key}>
+                                <Accordion.Collapse eventKey={key} style={this.darkbgonly}>
                                     <Card.Body>
                                         <ListGroup>
                                             <ListGroupItem><strong>Description: </strong>{item.description}</ListGroupItem>
@@ -168,7 +175,7 @@ class StudentHome extends Component {
                             </Card>
                         )
                     })}
-                    {this.state.jobs.length === 0 && <Card><Card.Header>No new jobs to show</Card.Header></Card>}
+                    {this.state.jobs.length === 0 && <Card><Card.Header><Row><Col xs={12} className="text-center">No new jobs to show</Col></Row></Card.Header></Card>}
                 </Accordion>
 
             </div>
