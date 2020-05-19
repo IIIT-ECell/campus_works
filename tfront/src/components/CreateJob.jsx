@@ -71,14 +71,14 @@ class CreateJob extends Component {
     }
 
     render() {
-        if (!(localStorage.getItem("token") && localStorage.getItem("type") === 2)) {
-            return <Redirect to="/" />;
+        if (!(localStorage.getItem("token") && localStorage.getItem("type") === "2")) {
+            return <Redirect to="/login" />;
         } else {
             return (
                 <div>
                     <NavCompany />
                     <div className="container py-5">
-                        <form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
+                        <form className="my-auto text-white rounded p-5" style={{"background-color":"black"}} onSubmit={this.handleSubmit}>
                             <div className="form-group row">
                                 <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Job Name</label>
                                 <div className="col-sm-10">

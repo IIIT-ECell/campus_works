@@ -44,6 +44,7 @@ class StudentRegister extends Component {
         ).then((res) => {
             if (res.data.success === true) {
                 alert(res.data.message);
+                window.location.replace("https://ecell.iiit.ac.in/cworks/login");
             }
             else {
                 for (var i in res.data.message) {

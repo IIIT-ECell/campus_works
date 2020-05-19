@@ -9,8 +9,8 @@
         display: inline-flex;
     }
     .ml-auto{
-        margin-bottom: auto;
-        margin-right: auto;
-        margin-top: auto;
+        margin-bottom: auto !important;
+        margin-right: auto !important;
+        margin-top: auto !important;
     }
 }
