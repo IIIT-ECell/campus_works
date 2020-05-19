@@ -72,8 +72,8 @@ class CompanyProfile extends React.Component {
         if (this.state.company) {
             return (
                 <div>
-                    {localStorage.getItem('type') === 1 && <NavStudent></NavStudent>}
-                    {localStorage.getItem('type') === 2 && <NavCompany></NavCompany>}
+                    {localStorage.getItem('type') === "1" && <NavStudent></NavStudent>}
+                    {localStorage.getItem('type') === "2" && <NavCompany></NavCompany>}
                     <div className="container my-5">
                         <Form onSubmit={this.handleSubmit} className="container p-5">
                             <div className="row">

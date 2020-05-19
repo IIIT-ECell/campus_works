@@ -96,8 +96,8 @@ class StudentProfile extends Component {
         if (this.state.student) {
             return (
                 <div>
-                    {localStorage.getItem('type') === 1 && <NavStudent></NavStudent>}
-                    {localStorage.getItem('type') === 2 && <NavCompany></NavCompany>}
+                    {localStorage.getItem('type') === "1" && <NavStudent></NavStudent>}
+                    {localStorage.getItem('type') === "2" && <NavCompany></NavCompany>}
                     <div className="container-flex justify-content-center align-items-center">
                         <div className="my-auto">
                             <Form onSubmit={this.handleSubmit} className="container p-5" enctype="multipart/form-data">
