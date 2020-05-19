@@ -99,7 +99,7 @@ class EditJob extends Component {
             <div>
                 <NavCompany></NavCompany>
                 <div className="container py-5">
-                    <form className="my-auto bg-dark text-white rounded p-5" onSubmit={this.handleSubmit}>
+                    <form className="my-auto text-white rounded p-5" style={{"background-color":"black"}} onSubmit={this.handleSubmit}>
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">

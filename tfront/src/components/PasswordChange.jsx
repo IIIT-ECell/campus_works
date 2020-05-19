@@ -46,8 +46,8 @@ class PasswordChange extends Component {
     render() {
         return (
             <div>
-                {localStorage.getItem('type') === 1 && <NavStudent></NavStudent>}
-                {localStorage.getItem('type') === 2 && <NavCompany></NavCompany>}
+                {localStorage.getItem('type') === "1" && <NavStudent></NavStudent>}
+                {localStorage.getItem('type') === "2" && <NavCompany></NavCompany>}
                 <Form onSubmit={this.handleSubmit} className="container p-5">
                     <div className="row">
                         <Form.Group controlId="formPassword" className="col-md-4 offset-md-2">

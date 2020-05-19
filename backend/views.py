@@ -60,7 +60,7 @@ class UserViews(APIView):
         token = Token.objects.get(key=data["token"])
         user = CustomUser.objects.get(id=token.user_id)
         user.set_password(data["password"])
-        # user.save()
+        user.save()
         return Response({"message": "Password changed successfully", "success": True})
 
 
@@ -353,7 +353,7 @@ class PostJob(APIView):
             if "num_pos" in keys:
                 new_job.num_pos = data["num_pos"]
             new_job.save()
-            return Response({"message": "Job edited successfully"})
+            return Response({"message": "Job edited successfully","success": True})
         except Exception as e:
             return Response({"message": str(e)})
 
