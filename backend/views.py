@@ -34,7 +34,7 @@ import copy
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
-        token = Token.objects.get(key=response.data["token"])
+        token = Token.objects.get(key=response.auth)
         print(token)
         user = CustomUser.objects.get(id=token.user_id)
         print(user)
@@ -53,11 +53,12 @@ class UserViews(APIView):
 
     def put(self, request, *args, **kwargs):
         data = json.loads(request.body)
-        if "token" not in data:
+        token = request.auth
+        if token is None:
             return HttpResponseServerError("No token given")
         if "password" not in data:
             return HttpResponseServerError("No new password given")
-        token = Token.objects.get(key=data["token"])
+        token = Token.objects.get(key=request.auth)
         user = CustomUser.objects.get(id=token.user_id)
         user.set_password(data["password"])
         user.save()
@@ -190,7 +191,7 @@ class ApplicationViews(APIView):
             return Response({"message": "You did not post this job", "success": False})
 
     def post(self, request, *args, **kwargs):
-        token = request.data["token"]
+        token = request.auth
         if not student_required(token):
             return Response(
                 {"message": "Only students can apply for jobs", "success": False}
@@ -230,7 +231,7 @@ class ApplicationViews(APIView):
         data = json.loads(request.body)
         print(data)
         try:
-            token = data["token"]
+            token = request.auth
         except KeyError as e:
             return Response({"success": False, "message": str(e)})
 
@@ -239,7 +240,7 @@ class ApplicationViews(APIView):
                 {"success": False, "message": "You cannot select applications"}
             )
 
-        company_id = get_company_id(data["token"])
+        company_id = get_company_id(token)
         application = Application.objects.get(pk=data["application_id"])
         print(application.job.company_id)
         if application.job.company_id == company_id:
@@ -280,7 +281,7 @@ class PostJob(APIView):
         data = json.loads(request.body)
 
         try:
-            token = data["token"]
+            token = request.auth
         except KeyError as e:
             return Response({"success": False, "message": str(e)})
 
@@ -324,7 +325,7 @@ class PostJob(APIView):
     def put(self, request):
         data = json.loads(request.body)
         try:
-            token = data["token"]
+            token = request.auth
             if not company_required(token):
                 return Response({"message": "You cannot post jobs"})
             job_id = data["job_id"]
@@ -353,7 +354,7 @@ class PostJob(APIView):
             if "num_pos" in keys:
                 new_job.num_pos = data["num_pos"]
             new_job.save()
-            return Response({"message": "Job edited successfully","success": True})
+            return Response({"message": "Job edited successfully", "success": True})
         except Exception as e:
             return Response({"message": str(e)})
 
@@ -377,7 +378,7 @@ class ViewJobs(APIView):
         # incomplete
         data = json.loads(request.body)
         print(data)
-        key = data["token"]
+        key = request.auth
         token = Token.objects.get(key=key)
         company = Company.objects.get(user_id=token.user_id)
         jobs = serializers.serialize("json", Job.objects.filter(company_id=company.id))
@@ -438,11 +439,11 @@ class StudentProfile(APIView):
         # print(request.FILES)
         print(data)
 
-        if "token" not in data:
+        token = request.auth
+
+        if token is None:
             print("token not found")
             return Response({"success": False, "message": "Auth token not found"})
-
-        token = data["token"]
 
         if not student_required(token):
             return Response(
@@ -473,16 +474,16 @@ class StudentProfile(APIView):
         # if "resume" in data:
         #     student.resume = data["resume"]
 
-        serializer = StudentSerializer(student, data=data,partial=True)
+        serializer = StudentSerializer(student, data=data, partial=True)
 
         user.save()
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "writable fields have been edited", "success":True})
+            return Response(
+                {"message": "writable fields have been edited", "success": True}
+            )
         else:
             return Response({"message": serializer.errors, "success": False})
-
-
 
 
 class CompanyProfile(APIView):
@@ -511,11 +512,11 @@ class CompanyProfile(APIView):
         data = json.loads(request.body)
         print(data)
 
-        if "token" not in data:
+        token = request.auth
+
+        if token is None:
             print("token not found")
             return Response({"success": False, "message": "Auth token not found"})
-
-        token = data["token"]
 
         if not company_required(token):
             return Response(
