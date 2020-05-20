@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {Form, Button} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Nav1 from './Nav1';
 class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {formSubmitted: false};
+        this.state = { formSubmitted: false };
         this.formData = {};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -26,7 +26,7 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.setState({formSubmitted: true});
+        this.setState({ formSubmitted: true });
         axios({
             crossDomain: true,
             method: "POST",
@@ -53,11 +53,11 @@ class Login extends Component {
                 else
                     window.location.replace("https://ecell.iiit.ac.in/cworks/student/home");
 
-                this.setState({formSubmitted: false});
+                this.setState({ formSubmitted: false });
             })
             .catch((error) => {
                 alert(JSON.stringify(error.response.data));
-                this.setState({formSubmitted: false});
+                this.setState({ formSubmitted: false });
             });
     }
 
@@ -67,7 +67,7 @@ class Login extends Component {
                 <Nav1></Nav1>
                 <div className="container vh-100 d-flex text-center align-self-center justify-content-center">
                     <div className="row">
-                        <Form className="my-auto text-white rounded p-5" style={{"background-color":"black"}} onSubmit={this.handleSubmit}>
+                        <Form className="my-auto text-white rounded p-5" style={{ "background-color": "black" }} onSubmit={this.handleSubmit}>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control type="email" id="email" placeholder="Enter email" onChange={this.handleChange} />
@@ -78,7 +78,7 @@ class Login extends Component {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" id="password" placeholder="Password" onChange={this.handleChange} />
                             </Form.Group>
-                            {this.state.formSubmitted === false && <Button style={{"background-color":"#002e99","border-color":"#002e00"}} type="submit" onClick={this.handleSubmit}>Submit</Button>}
+                            {this.state.formSubmitted === false && <Button style={{ "background-color": "#002e99", "border-color": "#002e00" }} type="submit" onClick={this.handleSubmit}>Submit</Button>}
                         </Form>
                     </div>
                 </div>

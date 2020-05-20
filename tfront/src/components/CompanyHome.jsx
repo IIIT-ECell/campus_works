@@ -20,11 +20,9 @@ class CompanyHome extends Component {
         axios({
             method: "POST",
             url: "https://campusworks.pythonanywhere.com/jobs",
-            data: {
-                "token": localStorage.getItem("token"),
-            },
             headers: {
                 'Content-Type': 'application/json',
+                "Authorization": "Token " + localStorage.getItem("token"),
             }
         })
             .then((res) => {

@@ -47,7 +47,6 @@ class CreateJob extends Component {
             method: "POST",
             url: "https://campusworks.pythonanywhere.com/post-job",
             data: {
-                token: this.token,
                 id: this.id,
                 job_name: this.formData.job_name,
                 description: this.formData.description,
@@ -60,7 +59,8 @@ class CreateJob extends Component {
                 num_pos: this.formData.num_pos,
             },
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Token " + this.token,
             }
         }).then((response) => {
             console.log(response.data);
@@ -78,7 +78,7 @@ class CreateJob extends Component {
                 <div>
                     <NavCompany />
                     <div className="container py-5">
-                        <form className="my-auto text-white rounded p-5" style={{"background-color":"black"}} onSubmit={this.handleSubmit}>
+                        <form className="my-auto text-white rounded p-5" style={{"background-color": "black"}} onSubmit={this.handleSubmit}>
                             <div className="form-group row">
                                 <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Job Name</label>
                                 <div className="col-sm-10">

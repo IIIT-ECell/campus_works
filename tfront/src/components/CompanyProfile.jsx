@@ -48,13 +48,13 @@ class CompanyProfile extends React.Component {
         let formData = {...this.state, company_id: this.companyId};
         delete formData["formSubmitted"];
         delete formData["isEditing"];
-        formData["token"] = localStorage.getItem("token");
 
         axios.put("https://campusworks.pythonanywhere.com/profile/company",
             formData,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    "Authorization": "Token " + localStorage.getItem("token"),
                 }
             }
         ).then((res) => {

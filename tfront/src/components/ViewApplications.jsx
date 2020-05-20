@@ -48,12 +48,12 @@ class ViewApplications extends Component {
             method: 'PUT',
             url: 'https://campusworks.pythonanywhere.com/apply-for-job',
             data: {
-                token: localStorage.getItem('token'),
                 application_id: pk,
                 select_status: status
             },
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": "Token " + localStorage.getItem("token"),
             }
         })
             .then((response) => {

@@ -30,8 +30,10 @@ class PasswordChange extends Component {
             method: "PUT",
             url: "https://campusworks.pythonanywhere.com/user",
             data: {
-                token: localStorage.getItem('token'),
                 password: this.formData['password']
+            },
+            headers: {
+                "Authorization": "Token " + localStorage.getItem("token")
             }
         })
             .then((res) => {

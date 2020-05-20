@@ -70,7 +70,6 @@ class EditJob extends Component {
             method: "PUT",
             url: "https://campusworks.pythonanywhere.com/post-job",
             data: {
-                token: this.token,
                 id: this.id,
                 job_id: this.jobId,
                 job_name: this.formData.job_name,
@@ -83,7 +82,8 @@ class EditJob extends Component {
                 language: this.formData.language,
             },
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": this.token,
             }
         }).then((response) => {
             alert(response.data.message);
@@ -99,7 +99,7 @@ class EditJob extends Component {
             <div>
                 <NavCompany></NavCompany>
                 <div className="container py-5">
-                    <form className="my-auto text-white rounded p-5" style={{"background-color":"black"}} onSubmit={this.handleSubmit}>
+                    <form className="my-auto text-white rounded p-5" style={{"background-color": "black"}} onSubmit={this.handleSubmit}>
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">

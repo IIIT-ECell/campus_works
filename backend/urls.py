@@ -15,21 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from backend import views 
+from backend import views
 from rest_framework.authtoken.views import obtain_auth_token
 
 appname = "backend"
 
 urlpatterns = [
-    path('user',views.UserViews.as_view()),
-    path('student', views.StudentViews.as_view()), 
-    path('company', views.CompanyViews.as_view()), 
-    path('authenticate', views.CustomObtainAuthToken.as_view(), name='api_token_auth'),
-    path('post-job',views.PostJob.as_view()),
-    path('applications',views.StudentApplications.as_view()),
-    path('apply-for-job',views.ApplicationViews.as_view()),
-    path('jobs',views.ViewJobs.as_view()),
-    path('resume',views.Resume.as_view()),
-    path('profile/student',views.StudentProfile.as_view()),
-    path('profile/company',views.CompanyProfile.as_view())
+    path("user", views.UserViews.as_view()),
+    path("student", views.StudentViews.as_view()),
+    path("company", views.CompanyViews.as_view()),
+    path("authenticate", views.CustomObtainAuthToken.as_view(), name="api_token_auth"),
+    path("post-job", views.PostJob.as_view()),
+    path("applications", views.StudentApplications.as_view()),
+    path("apply-for-job", views.ApplicationViews.as_view()),
+    path("jobs", views.ViewJobs.as_view()),
+    path("resume", views.Resume.as_view()),
+    path("profile/student", views.StudentProfile.as_view()),
+    path("profile/company", views.CompanyProfile.as_view()),
 ]
