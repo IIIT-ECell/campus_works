@@ -19,6 +19,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {faUser, faUserPlus, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faUserEdit, faEye} from '@fortawesome/free-solid-svg-icons';
 import PasswordChange from './PasswordChange';
+import PageNotFound from './PageNotFound';
 library.add(fab, faUser, faUserPlus, faUserEdit, faEdit, faSignOutAlt, faSignInAlt, faHome, faFileSignature, faPlus, faChartLine, faUserGraduate, faUserCog, faLongArrowAltLeft, faEye);
 function App(props) {
     return (
@@ -40,6 +41,7 @@ function App(props) {
                         <Route exact path="/apply/:job_id" component={ApplyforJobs} />
                         <Route exact path="/view-applications/:job_id" component={ViewApplications} />
                         <Route exact path="/change-password" component={PasswordChange} />
+                        <Route path="*" component={PageNotFound} />
                     </Switch>
                 </div>
             </Router>
