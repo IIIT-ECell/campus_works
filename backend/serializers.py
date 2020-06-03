@@ -1,3 +1,5 @@
+import copy
+
 from rest_framework import serializers
 from .models import Student, CustomUser, Application, Job, Company
 
@@ -38,3 +40,11 @@ class JobCompanySerializer(serializers.Serializer):
     job = JobSerializer()
 
 
+def user_filter(user_dict):
+    user = copy.deepcopy(user_dict)
+
+    # add fields to hide here
+    for hidden_field in ["password"]:
+        del user["fields"][hidden_field]
+
+    return user

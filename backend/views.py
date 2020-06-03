@@ -26,6 +26,7 @@ from .serializers import (
     StudentSerializer,
     CompanySerializer,
     ApplicationStudentSerializer,
+    user_filter,
 )
 import os
 import copy
@@ -35,9 +36,9 @@ class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data["token"])
-        print(token)
+
         user = CustomUser.objects.get(id=token.user_id)
-        print(user)
+
         return Response(
             {"token": token.key, "id": token.user_id, "type": user.user_type}
         )
@@ -49,19 +50,23 @@ class UserViews(APIView):
     def get(self, request, *args, **kwargs):
         user = CustomUser.objects.all()
         serializer = UserSerializer(user, many=True)
+
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
         data = json.loads(request.body)
         token = request.auth
+
         if token is None:
             return HttpResponseServerError("No token given")
         if "password" not in data:
             return HttpResponseServerError("No new password given")
+
         token = Token.objects.get(key=request.auth)
         user = CustomUser.objects.get(id=token.user_id)
         user.set_password(data["password"])
         user.save()
+
         return Response({"message": "Password changed successfully", "success": True})
 
 
@@ -82,7 +87,6 @@ class StudentViews(APIView):
             return Response({"success": False, "message": str(e)})
 
         student_json = serializers.serialize("json", [student,])
-        print(json.loads(student_json)[0])
         return Response({"success": True, "data": json.loads(student_json)[0]})
 
     def post(self, request, *args, **kwargs):
@@ -129,13 +133,13 @@ class CompanyViews(APIView):
 
         try:
             token = Token.objects.get(key=key)
-            student = Company.objects.get(user_id=token.user_id)
+            company = Company.objects.get(user_id=token.user_id)
 
         except Company.DoesNotExist as e:
             return Response({"success": False, "message": str(e)})
 
-        student_json = serializers.serialize("json", [student,])
-        return Response({"success": True, "data": json.loads(student_json)[0]})
+        company_json = serializers.serialize("json", [company,])
+        return Response({"success": True, "data": json.loads(company_json)[0]})
 
     def post(self, request):
         data = json.loads(request.body)
@@ -417,16 +421,12 @@ class StudentProfile(APIView):
         try:
             student = Student.objects.get(id=data["student_id"])
             user = student.user
-            print(user)
-            student_json = serializers.serialize("json", [student])
-            user_json = serializers.serialize("json", [user])
-            # print(student)
+            student_json = json.loads(serializers.serialize("json", [student]))[0]
+            user_json = json.loads(serializers.serialize("json", [user]))[0]
+            user_json = user_filter(user_json)
+
             return Response(
-                {
-                    "success": True,
-                    "student": json.loads(student_json)[0],
-                    "user": json.loads(user_json)[0],
-                }
+                {"success": True, "student": student_json, "user": user_json,}
             )
         except Exception as e:
             return Response({"success": False, "data": str(e)})
@@ -493,16 +493,13 @@ class CompanyProfile(APIView):
         print(data["company_id"])
         try:
             company = Company.objects.get(id=data["company_id"])
-            company_json = serializers.serialize("json", [company])
             user = company.user
-            user_json = serializers.serialize("json", [user])
+            company_json = json.loads(serializers.serialize("json", [company]))[0]
+            user_json = json.loads(serializers.serialize("json", [user]))[0]
+            user_json = user_filter(user_json)
 
             return Response(
-                {
-                    "success": True,
-                    "company": json.loads(company_json)[0],
-                    "user": json.loads(user_json)[0],
-                }
+                {"success": True, "company": company_json, "user": user_json,}
             )
         except Exception as e:
             return Response({"success": False, "data": str(e)})
