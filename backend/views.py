@@ -483,8 +483,8 @@ class StudentProfile(APIView):
             return Response(
                 {"message": "writable fields have been edited", "success": True}
             )
-        else:
-            return Response({"message": serializer.errors, "success": False})
+
+        return Response({"message": serializer.errors, "success": False})
 
 
 class CompanyProfile(APIView):
@@ -507,8 +507,6 @@ class CompanyProfile(APIView):
         except Exception as e:
             return Response({"success": False, "data": str(e)})
 
-    # def post(self)
-
     def put(self, request):
         data = json.loads(request.body)
         print(data)
@@ -528,10 +526,19 @@ class CompanyProfile(APIView):
                 status=403,
             )
 
+        company_id = get_company_id(token)
+
+        if company_id != data["company_id"]:
+            return Response(
+                {
+                    "success": False,
+                    "message": "You can not edit someone else's profile",
+                },
+                status=403,
+            )
+
         company_details = data["company"]
         user_details = data["user"]
-
-        company_id = data["company_id"]
 
         company = Company.objects.get(id=company_id)
         user = company.user
