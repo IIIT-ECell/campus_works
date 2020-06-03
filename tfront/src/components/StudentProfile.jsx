@@ -3,21 +3,21 @@ import {Form, Row} from "react-bootstrap";
 import NavStudent from './NavStudent';
 import axios from "axios";
 import NavCompany from "./NavCompany";
+import {textSpanIsEmpty} from "typescript";
 
 
 class StudentProfile extends Component {
     // refer to https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
     constructor(props) {
         super(props);
-        this.state = {formSubmitted: false, isEditing: false, resumeUploaded: false, student: {}, user: {}}
+        this.state = {isEditable: false, formSubmitted: false, isEditing: false, resumeUploaded: false, student: {}, user: {}}
         this.handleFile = this.handleFile.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.studentId = this.props.match.params.student_id;
+        this.studentId = parseInt(this.props.match.params.student_id);
     }
 
     componentDidMount() {
-        console.log(this.state);
         axios.get("https://campusworks.pythonanywhere.com/profile/student", {
             params: {
                 "student_id": this.studentId,
@@ -27,19 +27,26 @@ class StudentProfile extends Component {
                 "Authorization": "Token " + localStorage.getItem("token"),
             }
         }).then((res) => {
-            console.log(this.state);
             if (res.data.success === true) {
                 this.setState({student: res.data.student.fields});
                 this.setState({user: res.data.user.fields});
-                console.log(this.state);
             }
         });
+
+        axios.get("https://campusworks.pythonanywhere.com/student", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Token " + localStorage.getItem("token"),
+            }
+        }).then(res => {
+            this.setState({isEditable: res.data.data.pk === this.studentId});
+        })
     }
 
     handleFile(event) {
         event.preventDefault();
         this.setState({resumeUploaded: true});
-        this.setState({resume: event.target.files[0]}, () => console.log(this.state.resume));
+        this.setState({resume: event.target.files[0]});
     }
 
     handleChange(event) {
@@ -57,23 +64,25 @@ class StudentProfile extends Component {
         let formData = {...this.state, student_id: this.studentId};
         delete formData["formSubmitted"];
         delete formData["isEditing"];
+
         var form_data = new FormData();
+
         var keys = Object.keys(formData['student']);
         for (var i in keys) {
             form_data.append(keys[i], formData['student'][keys[i]]);
         }
-        var keys = Object.keys(formData['user']);
+        form_data.set("student_id", this.studentId);
+
+        keys = Object.keys(formData['user']);
         for (var i in keys) {
             form_data.append(keys[i], formData['user'][keys[i]]);
         }
 
         if (this.state.resumeUploaded) {
             form_data.append('resume', this.state.resume);
-        }
-        else {
+        } else {
             form_data.delete('resume');
         }
-        console.log(form_data);
 
         axios.put("https://campusworks.pythonanywhere.com/profile/student",
             form_data,
@@ -101,7 +110,7 @@ class StudentProfile extends Component {
                     {localStorage.getItem('type') === "2" && <NavCompany></NavCompany>}
                     <div className="container-flex justify-content-center align-items-center">
                         <div className="my-auto">
-                            <Form onSubmit={this.handleSubmit} className="container p-5" enctype="multipart/form-data">
+                            <Form onSubmit={this.handleSubmit} className="container p-5" encType="multipart/form-data">
                                 <div className="row">
                                     <Form.Group className="col-md-4">
                                         <Form.Label>Name</Form.Label>
@@ -148,7 +157,7 @@ class StudentProfile extends Component {
                                         <Form.Control type="file" accept=".pdf" required id="resume" onChange={this.handleFile} />
                                     </Form.Group>
                                 )}
-                                {!this.state.isEditing && <button className="btn btn-dark w-100" onClick={() => this.setState({isEditing: true})}>Edit</button>}
+                                {this.state.isEditable && !this.state.isEditing && <button className="btn btn-dark w-100" onClick={() => this.setState({isEditing: true})}>Edit</button>}
 
                                 {!this.state.formSubmitted && this.state.isEditing && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
                             </Form>

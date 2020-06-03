@@ -34,7 +34,7 @@ import copy
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
-        token = Token.objects.get(key=response.auth)
+        token = Token.objects.get(key=response.data["token"])
         print(token)
         user = CustomUser.objects.get(id=token.user_id)
         print(user)
@@ -78,7 +78,6 @@ class StudentViews(APIView):
         try:
             token = Token.objects.get(key=key)
             student = Student.objects.get(user_id=token.user_id)
-
         except Student.DoesNotExist as e:
             return Response({"success": False, "message": str(e)})
 
@@ -436,7 +435,6 @@ class StudentProfile(APIView):
 
     def put(self, request):
         data = copy.deepcopy(request.data)
-        # print(request.FILES)
         print(data)
 
         token = request.auth
@@ -456,28 +454,31 @@ class StudentProfile(APIView):
 
         student_id = get_student_id(token)
 
+        if student_id != int(data["student_id"][0]):
+            return Response(
+                {
+                    "success": False,
+                    "message": "You can not edit someone else's profile",
+                },
+                status=403,
+            )
+
         student = Student.objects.get(id=student_id)
         user = student.user
 
         if "first_name" in data:
             user.first_name = data["first_name"]
 
-        # if "phone_number" in student_details:
-        #     student.phone_number = student_details["phone_number"]
+        cleaned_data = {}
 
-        # if "year_of_study" in student_details:
-        #     student.year_of_study = student_details["year_of_study"]
+        for editable in ["phone_number", "year_of_study", "gender", "resume"]:
+            if editable in data:
+                cleaned_data[editable] = data[editable]
 
-        # if "gender" in student_details:
-        #     student.gender = student_details["gender"]
+        serializer = StudentSerializer(student, data=cleaned_data, partial=True)
 
-        # if "resume" in data:
-        #     student.resume = data["resume"]
-
-        serializer = StudentSerializer(student, data=data, partial=True)
-
-        user.save()
         if serializer.is_valid():
+            user.save()
             serializer.save()
             return Response(
                 {"message": "writable fields have been edited", "success": True}
