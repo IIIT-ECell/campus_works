@@ -21,7 +21,6 @@ class CompanyHome extends Component {
             method: "POST",
             url: "https://campusworks.pythonanywhere.com/jobs",
             headers: {
-                'Content-Type': 'application/json',
                 "Authorization": "Token " + localStorage.getItem("token"),
             }
         })

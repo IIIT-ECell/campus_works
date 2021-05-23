@@ -377,11 +377,9 @@ class ViewJobs(APIView):
         return Response(job_serializer.data)
 
     def post(self, request):
-        """Gives you multiple jobs"""
-        # incomplete
-        data = json.loads(request.body)
-        print(data)
-        key = request.auth
+        key = request.auth        
+        if key is None:
+            return HttpResponseServerError("No token given")
         token = Token.objects.get(key=key)
         company = Company.objects.get(user_id=token.user_id)
         jobs = serializers.serialize("json", Job.objects.filter(company_id=company.id))
