@@ -25,10 +25,8 @@ class ApplyforJobs extends Component {
             }
         })
             .then((response) => {
-                console.log(response.data);
                 this.setState({"student": response.data.data.fields});
                 this.setState({"pk": response.data.data.pk});
-                console.log(this.state);
             })
     }
 
@@ -36,14 +34,12 @@ class ApplyforJobs extends Component {
         event.preventDefault();
         var key = event.target.id;
         var value = event.target.value;
-        console.log(value);
         this.setState({key: value});
     }
 
     handleSubmit(event) {
         event.preventDefault();
         this.setState({formSubmitted: true});
-        console.log(this.props.match.params.job_id);
         axios({
             method: 'POST',
             url: "https://campusworks.pythonanywhere.com/apply-for-job",
@@ -56,7 +52,6 @@ class ApplyforJobs extends Component {
             }
         })
             .then((response) => {
-                console.log(response);
                 alert(response.data.message);
                 this.setState({formSubmitted: true});
             })

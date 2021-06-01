@@ -21,7 +21,6 @@ class StudentHome extends Component {
             method: "GET",
             url: "https://campusworks.pythonanywhere.com/jobs",
         }).then((res) => {
-            console.log(res);
             this.setState({"jobs": res.data});
             axios({
                 method: "GET",
@@ -32,8 +31,6 @@ class StudentHome extends Component {
                 }
             }).then((res) => {
                 let jobs = [];
-                console.log(res.data);
-                console.log(this.state.jobs);
                 let apps = res.data;
                 if (apps.length === 0) {
                     return;
@@ -41,7 +38,6 @@ class StudentHome extends Component {
                 for (let job in this.state.jobs) {
                     let flag = true;
                     for (let application in apps) {
-                        console.log(this.state.jobs[job].id);
                         if (this.state.jobs[job].id === apps[application].job_id) {
                             apps[application].job = this.state.jobs[job];
                             flag = false;
@@ -53,7 +49,6 @@ class StudentHome extends Component {
 
                 }
                 this.setState({"jobs": jobs, "applications": apps});
-                console.log(this.state);
             });
         });
     }
@@ -117,10 +112,10 @@ class StudentHome extends Component {
                                     <Card.Body>
                                         <ListGroup>
                                             <ListGroupItem><strong>Description: </strong>{item.job.description}</ListGroupItem>
-                                            <ListGroupItem><strong>Skills Reqd: </strong>{item.job.skill}</ListGroupItem>
+                                            <ListGroupItem><strong>Skills Required: </strong>{item.job.skill}</ListGroupItem>
                                             <ListGroupItem><strong>Languages Used: </strong>{item.job.language}</ListGroupItem>
                                             <ListGroupItem><strong>Duration: </strong>{item.job.duration}</ListGroupItem>
-                                            <ListGroupItem><strong>Flexible?: </strong>{item.job.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
+                                            <ListGroupItem><strong>Flexibility: </strong>{item.job.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
                                         </ListGroup>
                                     </Card.Body>
                                 </Accordion.Collapse>
@@ -165,10 +160,10 @@ class StudentHome extends Component {
                                     <Card.Body>
                                         <ListGroup>
                                             <ListGroupItem><strong>Description: </strong>{item.description}</ListGroupItem>
-                                            <ListGroupItem><strong>Skills Reqd: </strong>{item.skill}</ListGroupItem>
+                                            <ListGroupItem><strong>Skills Required: </strong>{item.skill}</ListGroupItem>
                                             <ListGroupItem><strong>Languages Used: </strong>{item.language}</ListGroupItem>
                                             <ListGroupItem><strong>Duration: </strong>{item.duration}</ListGroupItem>
-                                            <ListGroupItem><strong>Flexible?: </strong>{item.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
+                                            <ListGroupItem><strong>Flexibility: </strong>{item.is_flexi && "Yes"}{!item.is_flexi && "No"}</ListGroupItem>
                                         </ListGroup>
                                     </Card.Body>
                                 </Accordion.Collapse>

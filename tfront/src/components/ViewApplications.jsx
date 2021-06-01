@@ -23,27 +23,23 @@ class ViewApplications extends Component {
             }
         })
             .then((response) => {
-                console.log(response);
                 this.setState({'applicants': response.data});
-                console.log(this.state);
+                
             })
     }
 
     handleChange(event) {
         event.preventDefault();
-        console.log(event.target.value);
-        console.log();
         let applicants = this.state["applicants"];
+        console.log(applicants)
         let key = event.target.attributes['pk'].value
         applicants[key].fields['select_status'] = event.target.value;
         this.setState({"applicants": applicants});
-        console.log(this.state);
     }
 
     handleSubmit(event, pk, status) {
         event.preventDefault();
         this.setState({formSubmitted: true});
-        console.log(status, pk);
         axios({
             method: 'PUT',
             url: 'https://campusworks.pythonanywhere.com/apply-for-job',
@@ -57,7 +53,6 @@ class ViewApplications extends Component {
             }
         })
             .then((response) => {
-                console.log(response);
                 alert(response.data['message']);
                 this.setState({formSubmitted: false});
             })
@@ -74,6 +69,7 @@ class ViewApplications extends Component {
 
                         </tr>
                         <tr>
+                            <th>Applicant ID</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th></th>
@@ -83,7 +79,8 @@ class ViewApplications extends Component {
                     <tbody>
                         {this.state.applicants && this.state.applicants.map((item, key) => {
                             return (<tr>
-                                <td>{item.fields.date_of_application}</td>
+                                <td>{item.fields.student}</td>
+                                <td>{new Date(item.fields.date_of_application).toDateString()}</td>
                                 <td>
                                     <select id="select_status" value={item.fields.select_status} pk={key} onChange={this.handleChange}>
                                         <option value='RCVD'>Application received</option>

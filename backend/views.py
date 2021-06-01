@@ -92,7 +92,7 @@ class StudentViews(APIView):
     def post(self, request, *args, **kwargs):
         data = copy.deepcopy(request.data)
         if "email" not in data or "password" not in data or "name" not in data:
-            return HttpResponseServerError("No email or password or name not given")
+            return HttpResponseServerError("No email, password or name not given")
         try:
             email = data["email"]
             password = data["password"]
@@ -359,7 +359,7 @@ class PostJob(APIView):
             new_job.save()
             return Response({"message": "Job edited successfully", "success": True})
         except Exception as e:
-            return Response({"message": str(e)})
+            return Response({"message": str(e), "success": False})
 
             # check the person editing the job is the person who posted it
 
@@ -479,7 +479,7 @@ class StudentProfile(APIView):
             user.save()
             serializer.save()
             return Response(
-                {"message": "writable fields have been edited", "success": True}
+                {"message": "The given fields have been edited", "success": True}
             )
 
         return Response({"message": serializer.errors, "success": False})

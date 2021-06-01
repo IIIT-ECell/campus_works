@@ -17,7 +17,6 @@ export default class CompanyRegister extends React.Component {
         this.formData[event.target.id] = event.target.value;
 
         if (event.target.type === 'checkbox') {
-            console.log(event.target.id, event.target.checked)
             this.setState({isvalid: event.target.checked})
         }
     }
@@ -27,6 +26,7 @@ export default class CompanyRegister extends React.Component {
         this.setState({formSubmitted: true});
         if (!this.state.isvalid) {
             alert("Agree to Terms and Conditions to create a company");
+            this.setState({formSubmitted: false});
             return;
         }
 
@@ -79,7 +79,7 @@ export default class CompanyRegister extends React.Component {
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">
-                                <input className="form-control" name="name" id="name" placeholder="ABC Inc." onChange={this.handleChange} required />
+                                <input className="form-control" name="name" id="name" placeholder="Enter Company Name" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">This is the Company's name</small>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ export default class CompanyRegister extends React.Component {
                         <div className="form-group row">
                             <label htmlFor="email" className="col-sm-2 col-form-label font-weight-bold">Email address</label>
                             <div className="col-sm-10">
-                                <input type="email" className="form-control" name="email" id="email" placeholder="joe@email.com" onChange={this.handleChange} required />
+                                <input type="email" className="form-control" name="email" id="email" placeholder="Enter Email Address of POC" onChange={this.handleChange} required />
                                 <small className="form-text text-muted">This is used to log into the portal and create job posting, and manage them</small>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ export default class CompanyRegister extends React.Component {
                         <div className="form-group row">
                             <label className="col-sm-2 col-form-label font-weight-bold">Password</label>
                             <div className="col-sm-10">
-                                <input type="password" className="form-control" name="password" id="password" onChange={this.handleChange} required></input>
+                                <input type="password" className="form-control" placeholder="Enter Password" name="password" id="password" onChange={this.handleChange} required></input>
                                 <small className="form-text text-muted">This password can be changed once the portal is up</small>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ export default class CompanyRegister extends React.Component {
                         <div className="form-group row">
                             <label className="col-sm-2 col-form-label font-weight-bold">Contact Name</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" placeholder="Joe Stark" name="contact_name" id="poc" onChange={this.handleChange} required></input>
+                                <input type="text" className="form-control" placeholder="Enter Name of POC" name="contact_name" id="poc" onChange={this.handleChange} required></input>
                                 <small className="form-text text-muted">The point of contact for campus works/will manage the account on company's behalf</small>
                             </div>
                         </div>
@@ -111,7 +111,7 @@ export default class CompanyRegister extends React.Component {
                         <div className="form-group row">
                             <label className="col-sm-2 col-form-label font-weight-bold">Phone Number</label>
                             <div className="col-sm-10">
-                                <input type="number" className="form-control" placeholder="1234567890" id="phone_number" name="phone_number" onChange={this.handleChange} required></input>
+                                <input type="number" className="form-control" placeholder="Enter Contact Number" id="phone_number" name="phone_number" onChange={this.handleChange} required></input>
                                 <small className="form-text text-muted">Number is not displayed on the website. For internal contact purposes only</small>
                             </div>
                         </div>

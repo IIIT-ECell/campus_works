@@ -19,7 +19,6 @@ class NavStudent extends Component {
             }
         })
             .then((res) => {
-                console.log(res.data.data);
                 this.setState({"student": res.data.data});
             })
     }

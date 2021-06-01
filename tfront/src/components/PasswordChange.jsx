@@ -20,7 +20,6 @@ class PasswordChange extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.formData);
         if (this.formData['password'] !== this.formData['confirm-password'] || this.formData['password'] === "") {
             alert('Passwords donot confirm');
             return;
@@ -37,7 +36,6 @@ class PasswordChange extends Component {
             }
         })
             .then((res) => {
-                console.log(res);
                 alert(res.data.message);
                 if (res.data.success === true) {
                     window.location.replace("https://ecell.iiit.ac.in/cworks/login");

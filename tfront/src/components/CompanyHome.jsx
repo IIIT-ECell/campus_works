@@ -25,10 +25,7 @@ class CompanyHome extends Component {
             }
         })
             .then((res) => {
-                console.log(res);
                 this.setState({"jobs": res.data});
-                console.log(this.state);
-
             });
     }
 

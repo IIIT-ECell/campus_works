@@ -14,7 +14,6 @@ class Landing extends Component {
     }
 
     render() {
-        console.log(this.props);
         return(
             <div id="intro" className="vh-100">
                 <div className="mask d-flex justify-content-center align-items-center">

@@ -93,9 +93,15 @@ class StudentProfile extends Component {
                 }
             }
         ).then((res) => {
-            alert(res.data);
-            this.setState({formSubmitted: false});
-            window.location.reload(false);
+            if(res.data.success)
+            {
+                alert(res.data);
+            }
+            else
+            {
+                alert("Invalid details provided")
+                this.setState({formSubmitted: false});
+            }
         }).catch(err => {
             alert("An error occured: " + err);
             this.setState({formSubmitted: false});

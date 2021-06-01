@@ -18,7 +18,6 @@ class NavCompany extends Component {
             }
         })
             .then((res) => {
-                console.log(res.data.data);
                 this.setState({"company": res.data.data});
             });
     }

@@ -37,7 +37,6 @@ class CreateJob extends Component {
     handleChange(event) {
         event.preventDefault();
         this.formData[event.target.id] = event.target.value;
-        console.log(this.formData);
     }
 
     handleSubmit(event) {
@@ -63,10 +62,11 @@ class CreateJob extends Component {
                 "Authorization": "Token " + this.token,
             }
         }).then((response) => {
-            console.log(response.data);
             alert(response.data.message);
-            window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
-            this.setState({formSubmitted: false});
+            if (response.data.message == "Job added successfully")
+                window.location.replace("https://ecell.iiit.ac.in/cworks/company/home");
+            else
+                this.setState({formSubmitted: false});
         });
     }
 
@@ -82,7 +82,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Job Name</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="job_name" id="job_name" placeholder="Example Co" onChange={this.handleChange} required />
+                                    <input className="form-control" name="job_name" id="job_name" placeholder="Enter Job Title" onChange={this.handleChange} required />
                                     <small className="form-text text-light">This is the Job Title</small>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="description" className="col-sm-2 col-form-label font-weight-bold">Description</label>
                                 <div className="col-sm-10">
-                                    <textarea className="form-control" name="description" id="description" placeholder="A cool job" onChange={this.handleChange} required />
+                                    <textarea className="form-control" name="description" id="description" placeholder="Enter Job Description" onChange={this.handleChange} required />
                                     <small className="form-text text-light">Please describe the job</small>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="skill" className="col-sm-2 col-form-label font-weight-bold">Skill</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="skill" id="skill" placeholder="AI/ML, Big Data, Team Management" onChange={this.handleChange} required />
+                                    <input className="form-control" name="skill" id="skill" placeholder="Enter Preferred Candidate Skills" onChange={this.handleChange} required />
                                     <small className="form-text text-light">Please list the skills required for this job. These could include the languages that the employee is expected to know.</small>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="positions" className="col-sm-2 col-form-label font-weight-bold">Positions Open</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="num_pos" id="num_pos" placeholder="3" type="number" onChange={this.handleChange} required />
+                                    <input className="form-control" name="num_pos" id="num_pos" placeholder="Enter Number of Open Positions" type="number" onChange={this.handleChange} required />
                                     <small className="form-text text-light">This number is not binding.</small>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="duration" className="col-sm-2 col-form-label font-weight-bold">Job duration</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="duration" id="duration" placeholder="3" type="number" onChange={this.handleChange} required />
+                                    <input className="form-control" name="duration" id="duration" placeholder="Enter Job Duration" type="number" onChange={this.handleChange} required />
                                     <small className="form-text text-light">How long will the job last? (in months)</small>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="stipend" className="col-sm-2 col-form-label font-weight-bold">Approximate Stipend</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="stipend" id="stipend" placeholder="20000" type="number" onChange={this.handleChange} required />
+                                    <input className="form-control" name="stipend" id="stipend" placeholder="Enter Job Stipend" type="number" onChange={this.handleChange} required />
                                     <small className="form-text text-light">Job stipend (per month). This needn't be a final number.</small>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@ class CreateJob extends Component {
                             <div className="form-group row">
                                 <label htmlFor="language" className="col-sm-2 col-form-label font-weight-bold">Languages</label>
                                 <div className="col-sm-10">
-                                    <input className="form-control" name="language" id="language" placeholder="c/cpp/python" onChange={this.handleChange} required />
+                                    <input className="form-control" name="language" id="language" placeholder="Enter Preferred Languages Required" onChange={this.handleChange} required />
                                     <small className="form-text text-light">Programming languages required</small>
                                 </div>
                             </div>

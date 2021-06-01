@@ -29,7 +29,6 @@ class StudentRegister extends Component {
         this.setState({formSubmitted: true});
         var form_data = new FormData();
         var keys = Object.keys(this.formData);
-        console.log(keys);
         for (var i in keys) {
             form_data.append(keys[i], this.formData[keys[i]]);
         }
@@ -50,7 +49,6 @@ class StudentRegister extends Component {
                 for (var i in res.data.message) {
                     alert(res.data.message[i]);
                 }
-                console.log(res.data.message)
             }
             this.setState({formSubmitted: false})
         })
