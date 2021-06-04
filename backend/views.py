@@ -473,7 +473,7 @@ class CompanyProfile(APIView):
         data = request.GET
         try:
             comp_id = int(data["student_id"])
-            val = int((stud_id-458069)**0.5)
+            val = int((comp_id-458069)**0.5)
             company = Company.objects.get(id=val)
             user = company.user
             company_json = json.loads(serializers.serialize("json", [company]))[0]
