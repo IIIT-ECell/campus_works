@@ -14,7 +14,7 @@ class StudentProfile extends Component {
         this.handleFile = this.handleFile.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.studentId = parseInt(this.props.match.params.student_id);
+        this.studentId = Math.sqrt(parseInt(this.props.match.params.student_id) -340629);
     }
 
     componentDidMount() {

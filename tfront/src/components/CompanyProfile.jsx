@@ -11,7 +11,7 @@ class CompanyProfile extends React.Component {
         this.state = {isEditable: false, formSubmitted: false, isEditing: false, company: {}, user: {}}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.companyId = parseInt(this.props.match.params.company_id);
+        this.companyId = Math.sqrt(parseInt(this.props.match.params.student_id) - 458069);
     }
 
     componentDidMount() {

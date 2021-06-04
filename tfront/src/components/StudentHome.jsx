@@ -148,7 +148,7 @@ class StudentHome extends Component {
                             <Card>
                                 <Accordion.Toggle as={Card.Header} eventKey={key} colSpan="7">
                                     <Row xs={3} md={6}>
-                                        <Col><Link to={"/company/profile/" + item.company.id}>{item.company.user.first_name}</Link></Col>
+                                        <Col><Link to={"/company/profile/" + String(parseInt(item.company.id,10)*parseInt(item.company.id,10)+458069)}>{item.company.user.first_name}</Link></Col>
                                         <Col>{item.job_name}</Col>
                                         <Col>{item.start_date}</Col>
                                         <Col>{item.stipend}</Col>

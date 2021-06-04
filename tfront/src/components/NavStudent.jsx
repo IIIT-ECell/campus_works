@@ -41,7 +41,7 @@ class NavStudent extends Component {
                         <Nav.Link><Link to={"/student/home"} className="text-white"><FontAwesomeIcon icon="home" /> Home</Link></Nav.Link>
                         <Nav.Link><Link to={"/login"} className="text-white"><FontAwesomeIcon icon="sign-out-alt" /> Logout</Link></Nav.Link>
                         <NavDropdown title="Profile" id="basic-nav-dropdown" className="mr-auto" alignRight variant="dark" bg="dark">
-                            <NavDropdown.Item><Link to={"/student/profile/" + this.state.student.pk}><FontAwesomeIcon icon="user" /> View Profile</Link></NavDropdown.Item>
+                            <NavDropdown.Item><Link to={"/student/profile/" + String(parseInt(this.state.student.pk,10)*parseInt(this.state.student.pk,10)+340629)}><FontAwesomeIcon icon="user" /> View Profile</Link></NavDropdown.Item>
                             <NavDropdown.Item><Link to={"/change-password/"}><FontAwesomeIcon icon="user-edit" /> Change Password</Link></NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
