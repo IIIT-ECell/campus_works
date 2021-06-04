@@ -157,7 +157,7 @@ class StudentProfile extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                 </Row>
-                                <a href={"https://campusworks.pythonanywhere.com/resume?id=" + String(parseInt(this.props.match.params.student_id,10)* parseInt(this.props.match.params.student_id,10) + 148017)} target="_blank">Resume Link</a>
+                                <a href={"https://campusworks.pythonanywhere.com/resume?id=" + String(parseInt(this.studentId,10)* parseInt(this.studentId,10) + 148017)} target="_blank">Resume Link</a>
                                 {this.state.isEditing && (
                                     <Form.Group className="col-md-4">
                                         <Form.Label>Upload new resume</Form.Label>
