@@ -17,7 +17,7 @@ class CompanyProfile extends React.Component {
     componentDidMount() {
         axios.get("https://campusworks.pythonanywhere.com/profile/company", {
             params: {
-                "company_id": this.companyId,
+                "company_id": String(parseInt(this.companyId,10)*parseInt(this.companyId,10)+458069),
             },
             headers: {
                 'Content-Type': 'application/json',

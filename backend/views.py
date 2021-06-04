@@ -96,7 +96,6 @@ class StudentViews(APIView):
         try:
             email = data["email"]
             password = data["password"]
-            print(email)
             new_user = CustomUser.objects.create_user(
                 email=email,
                 username=email,
@@ -104,9 +103,7 @@ class StudentViews(APIView):
                 first_name=data["name"],
                 user_type=1,
             )
-            print("New user not created")
             new_user.save()
-            print("New user created")
             data["user"] = new_user.id
         except Exception as e:
             return Response({"message": [str(e)], "success": False})
@@ -117,7 +114,6 @@ class StudentViews(APIView):
                 {"message": "Student created successfully", "success": True}
             )
         else:
-            print("error", student_serializer.errors)
             user = CustomUser.objects.get(username=data["email"])
             user.delete()
             return Response({"message": student_serializer.errors, "success": False})
@@ -143,7 +139,6 @@ class CompanyViews(APIView):
 
     def post(self, request):
         data = json.loads(request.body)
-        print(data)
         try:
             email = data["email"]
             password = data["password"]
@@ -210,7 +205,6 @@ class ApplicationViews(APIView):
                 }
             )
         except Exception as e:
-            print(str(e))
             # return Response({"message":str(e),"success":False})
 
             application = Application(
@@ -232,7 +226,6 @@ class ApplicationViews(APIView):
 
     def put(self, request):
         data = json.loads(request.body)
-        print(data)
         try:
             token = request.auth
         except KeyError as e:
@@ -245,7 +238,6 @@ class ApplicationViews(APIView):
 
         company_id = get_company_id(token)
         application = Application.objects.get(pk=data["application_id"])
-        print(application.job.company_id)
         if application.job.company_id == company_id:
             application.select_status = data["select_status"]
             application.save()
@@ -277,7 +269,6 @@ class PostJob(APIView):
             return Response({"success": False, "message": str(e)})
 
         job_json = serializers.serialize("json", [job,])
-        print(json.loads(job_json)[0])
         return Response({"success": True, "data": json.loads(job_json)[0]})
 
     def post(self, request):
@@ -300,7 +291,6 @@ class PostJob(APIView):
             company_id = get_company_id(token)
             new_job = Job(company_id=company_id)
             keys = data.keys()
-            print(data.keys())
             if "job_name" in keys:
                 new_job.job_name = data["job_name"]
             if "description" in keys:
@@ -308,7 +298,6 @@ class PostJob(APIView):
             if "skill" in keys:
                 new_job.skill = data["skill"]
             if "start_date" in keys:
-                print(data["start_date"])
                 new_job.start_date = data["start_date"]
             if "duration" in keys:
                 new_job.duration = data["duration"]
@@ -336,7 +325,6 @@ class PostJob(APIView):
             if not get_company_id(token) == new_job.company_id:
                 return Response({"message": "You are not allowed to edit this job"})
             keys = data.keys()
-            print(data.keys())
             if "job_name" in keys:
                 new_job.job_name = data["job_name"]
             if "description" in keys:
@@ -344,7 +332,6 @@ class PostJob(APIView):
             if "skill" in keys:
                 new_job.skill = data["skill"]
             if "start_date" in keys:
-                print(data["start_date"])
                 new_job.start_date = data["start_date"]
             if "duration" in keys:
                 new_job.duration = data["duration"]
@@ -367,13 +354,11 @@ class PostJob(APIView):
 class ViewJobs(APIView):
     def get(self, request):
         # data = json.loads(request.body)
-        # print(data)
         # key = data["token"]
         # if not company_required(key):
         #     return Response({"message":"You cannot see jobs"})
         jobs = Job.objects.prefetch_related("company").all()
         job_serializer = JobSerializer(jobs, many=True)
-        print(job_serializer.data)
         return Response(job_serializer.data)
 
     def post(self, request):
@@ -389,14 +374,12 @@ class ViewJobs(APIView):
 class StudentApplications(APIView):
     def get(self, request):
         data = request.GET
-        print(request.auth)
         token = request.auth
         if not student_required(token):
             return Response({"message": "You cannot apply for jobs", "success": False})
         try:
             id = get_student_id(token)
             student = Student.objects.get(id=id)
-            print(student.resume.path)
             applications = Application.objects.filter(student_id=id)
             serializer = ApplicationStudentSerializer(applications, many=True)
             return Response(serializer.data)
@@ -411,7 +394,6 @@ class Resume(APIView):
         val = int((id-148017)**0.5)
         student = Student.objects.get(id=val)
         filepath = student.resume.path
-        print(filepath)
         return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
 
 
@@ -419,7 +401,9 @@ class StudentProfile(APIView):
     def get(self, request):
         data = request.GET
         try:
-            student = Student.objects.get(id=data["student_id"])
+            stud_id = int(data["student_id"])
+            val = int((stud_id-340629)**0.5)
+            student = Student.objects.get(id=val)
             user = student.user
             student_json = json.loads(serializers.serialize("json", [student]))[0]
             user_json = json.loads(serializers.serialize("json", [user]))[0]
@@ -435,12 +419,9 @@ class StudentProfile(APIView):
 
     def put(self, request):
         data = copy.deepcopy(request.data)
-        print(data)
-
         token = request.auth
 
         if token is None:
-            print("token not found")
             return Response({"success": False, "message": "Auth token not found"})
 
         if not student_required(token):
@@ -490,9 +471,10 @@ class StudentProfile(APIView):
 class CompanyProfile(APIView):
     def get(self, request):
         data = request.GET
-        print(data["company_id"])
         try:
-            company = Company.objects.get(id=data["company_id"])
+            comp_id = int(data["student_id"])
+            val = int((stud_id-458069)**0.5)
+            company = Company.objects.get(id=val)
             user = company.user
             company_json = json.loads(serializers.serialize("json", [company]))[0]
             user_json = json.loads(serializers.serialize("json", [user]))[0]
@@ -506,12 +488,9 @@ class CompanyProfile(APIView):
 
     def put(self, request):
         data = json.loads(request.body)
-        print(data)
-
         token = request.auth
 
         if token is None:
-            print("token not found")
             return Response({"success": False, "message": "Auth token not found"})
 
         if not company_required(token):

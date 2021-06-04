@@ -20,7 +20,7 @@ class StudentProfile extends Component {
     componentDidMount() {
         axios.get("https://campusworks.pythonanywhere.com/profile/student", {
             params: {
-                "student_id": this.studentId,
+                "student_id": String(parseInt(this.studentId,10)*parseInt(this.studentId,10)+340629),
             },
             headers: {
                 'Content-Type': 'application/json',
