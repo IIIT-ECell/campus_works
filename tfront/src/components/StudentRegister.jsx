@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Form} from "react-bootstrap";
+import React, { Component } from "react";
+import { Form } from "react-bootstrap";
 import Nav1 from "./Nav1";
 import axios from "axios";
 
@@ -8,8 +8,8 @@ class StudentRegister extends Component {
     // refer to https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
     constructor(props) {
         super(props);
-        this.state = {formSubmitted: false};
-        this.formData = {'gender': 'M', 'year_of_study': '1'};
+        this.state = { formSubmitted: false };
+        this.formData = { 'gender': 'M', 'year_of_study': '1' };
         this.handleFile = this.handleFile.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,37 +26,45 @@ class StudentRegister extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        this.setState({formSubmitted: true});
+        this.setState({ formSubmitted: true });
         var form_data = new FormData();
         var keys = Object.keys(this.formData);
         for (var i in keys) {
             form_data.append(keys[i], this.formData[keys[i]]);
         }
-        // form_data.append()
-        axios.post("https://campusworks.pythonanywhere.com/student",
-            form_data,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+        if (this.formData["email"].match(/[a-zA-Z0-9]+\.[a-zA-Z0-9]+@(students|research)\.iiit\.ac\.in/)) {
+            // form_data.append()
+            axios.post("https://campusworks.pythonanywhere.com/student",
+                form_data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-            }
-        ).then((res) => {
-            if (res.data.success === true) {
-                alert(res.data.message);
-                window.location.replace("https://ecell.iiit.ac.in/cworks/login");
-            }
-            else {
-                for (var i in res.data.message) {
-                    alert(res.data.message[i]);
+            ).then((res) => {
+                if (res.data.success === true) {
+                    alert(res.data.message);
+                    window.location.replace("https://ecell.iiit.ac.in/cworks/login");
                 }
-            }
-            this.setState({formSubmitted: false})
-        })
-            .catch((err) => {
-                alert(err.message);
-                this.setState({formSubmitted: false})
+                else {
+                    for (var i in res.data.message) {
+                        alert(res.data.message[i]);
+                    }
+                }
+                this.setState({ formSubmitted: false })
             })
+                .catch((err) => {
+                    alert(err.message);
+                    this.setState({ formSubmitted: false })
+                })
+        }
+        else 
+        {
+            alert("Email provided is not IIITH email.");
+            this.setState({ formSubmitted: false })
+        }
     }
+    
 
     render() {
         return (
@@ -71,7 +79,7 @@ class StudentRegister extends Component {
                             </Form.Group>
                             <Form.Group controlId="formEmail">
                                 <Form.Label>Email Address</Form.Label>
-                                <Form.Control type="email" id="email" required onChange={this.handleChange} placeholder="Enter Email" />
+                                <Form.Control type="email" id="email" required onChange={this.handleChange} placeholder="Enter IIITH Email" />
                             </Form.Group>
                             <Form.Group controlId="formPassword">
                                 <Form.Label>Password</Form.Label>
@@ -108,7 +116,7 @@ class StudentRegister extends Component {
                                 <Form.Label>Resume</Form.Label>
                                 <Form.Control type="file" accept=".pdf" required onChange={this.handleFile} />
                             </Form.Group>
-                            {this.state.formSubmitted === false && <button type="submit" className="btn btn-primary w-100" onClick={this.handleSubmit} style={{"background-color":"black","border-color":"#1a1a1a"}}>Submit</button>}
+                            {this.state.formSubmitted === false && <button type="submit" className="btn btn-primary w-100" onClick={this.handleSubmit} style={{ "background-color": "black", "border-color": "#1a1a1a" }}>Submit</button>}
                         </Form>
                     </div>
                 </div>
