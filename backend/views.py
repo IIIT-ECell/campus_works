@@ -407,7 +407,9 @@ class StudentApplications(APIView):
 class Resume(APIView):
     def get(self, request):
         data = request.GET
-        student = Student.objects.get(id=data["id"])
+        id = int(data["id"])
+        val = int((id-148017)**0.5)
+        student = Student.objects.get(id=val)
         filepath = student.resume.path
         print(filepath)
         return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
@@ -452,7 +454,7 @@ class StudentProfile(APIView):
 
         student_id = get_student_id(token)
 
-        if student_id != int(data["student_id"][0]):
+        if student_id != int(data["student_id"]):
             return Response(
                 {
                     "success": False,

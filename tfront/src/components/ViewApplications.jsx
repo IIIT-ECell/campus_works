@@ -92,7 +92,7 @@ class ViewApplications extends Component {
                                     </select>
                                 </td>
                                 <td>{this.state.formSubmitted === false && <Button variant="btn btn-success" onClick={(e) => {this.handleSubmit(e, item.pk, item.fields.select_status)}}>Save</Button>}</td>
-                                <td><a href={"https://campusworks.pythonanywhere.com/resume?id=" + item.fields.student} target="_blank">View</a></td>
+                                <td><a href={"https://campusworks.pythonanywhere.com/resume?id=" + String(parseInt(item.fields.student,10)* parseInt(item.fields.student,10) + 148017)} target="_blank">View</a></td>
                             </tr>)
                         })}
                     </tbody>

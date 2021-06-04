@@ -36,7 +36,7 @@ class CompanyProfile extends React.Component {
                 "Authorization": "Token " + localStorage.getItem("token"),
             }
         }).then(res => {
-            this.setState({isEditable: res.data.data.pk === this.companyId});
+            this.setState({isEditable: res.data.pk === this.companyId});
         })
     }
 

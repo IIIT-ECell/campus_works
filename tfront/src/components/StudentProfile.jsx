@@ -65,6 +65,7 @@ class StudentProfile extends Component {
         delete formData["formSubmitted"];
         delete formData["isEditing"];
 
+        console.log(formData)
         var form_data = new FormData();
 
         var keys = Object.keys(formData['student']);
@@ -83,7 +84,6 @@ class StudentProfile extends Component {
         } else {
             form_data.delete('resume');
         }
-
         axios.put("https://campusworks.pythonanywhere.com/profile/student",
             form_data,
             {
@@ -95,7 +95,8 @@ class StudentProfile extends Component {
         ).then((res) => {
             if(res.data.success)
             {
-                alert(res.data);
+                alert(res.data.message);
+                this.setState({formSubmitted: false});
             }
             else
             {
@@ -156,7 +157,7 @@ class StudentProfile extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                 </Row>
-                                <a href={"https://campusworks.pythonanywhere.com/resume?id=" + this.props.match.params.student_id} target="_blank">Resume Link</a>
+                                <a href={"https://campusworks.pythonanywhere.com/resume?id=" + String(parseInt(this.props.match.params.student_id,10)* parseInt(this.props.match.params.student_id,10) + 148017)} target="_blank">Resume Link</a>
                                 {this.state.isEditing && (
                                     <Form.Group className="col-md-4">
                                         <Form.Label>Upload new resume</Form.Label>
