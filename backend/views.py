@@ -472,7 +472,7 @@ class CompanyProfile(APIView):
     def get(self, request):
         data = request.GET
         try:
-            comp_id = int(data["student_id"])
+            comp_id = int(data["company_id"])
             val = int((comp_id-458069)**0.5)
             company = Company.objects.get(id=val)
             user = company.user
