@@ -22,6 +22,8 @@ export default class CompanyRegister extends React.Component {
     }
 
     handleSubmit(event) {
+        alert("Registrations for Campus Works have Ended.");
+        return;
         event.preventDefault();
         this.setState({formSubmitted: true});
         if (!this.state.isvalid) {
@@ -68,7 +70,7 @@ export default class CompanyRegister extends React.Component {
                 <div className="container my-5 text-center">
                     <div className="row">
                         <div className="col">
-                            This is the official registration portal for the Campus Works initiative by E-Cell, IIIT Hyderabad. The portal is currently under construction. We look forward to helping you recruit the best IIIT has to offer.
+                            This is the official registration portal for the Campus Works initiative by E-Cell, IIIT Hyderabad. We look forward to helping you recruit the best IIIT has to offer.
                         </div>
                     </div>
                 </div>
@@ -76,6 +78,7 @@ export default class CompanyRegister extends React.Component {
 
                 <div className="container my-5">
                     <form onSubmit={this.handleSubmit}>
+                        <p class="w-100 p-1" style={{"color":"red", "text-align":"center"}}>Note: Registrations have Ended.</p>    
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2 col-form-label font-weight-bold">Name</label>
                             <div className="col-sm-10">

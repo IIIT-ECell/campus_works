@@ -23,9 +23,10 @@ class Landing extends Component {
                                 <h2 className="display-4 font-weight-bold">Campus Works</h2>
                                 <h5>Connecting Students with Startups. Internships have never been easier</h5>
                                 <div className="row">
-                                    <Link to={"/register/company"} className="w-100 p-1"><Button variant="btn" style={{"background-color":"black", "color":"#fafafa"}} size="lg">Register as Company <FontAwesomeIcon icon="user-cog"/></Button></Link>
+                                    <Link to={"#"} className="w-100 p-1"><Button variant="btn" style={{"background-color":"black", "color":"#fafafa"}} size="lg">Register as Company <FontAwesomeIcon icon="user-cog"/></Button></Link>
                                     <br/>
-                                    <Link to={"/register/student"} className="w-100 p-1"><Button variant="btn" style={{"background-color":"black", "color":"#fafafa"}} size="lg">Register as Student <FontAwesomeIcon icon="user-graduate"/></Button></Link>
+                                    <Link to={"#"} className="w-100 p-1"><Button variant="btn" style={{"background-color":"black", "color":"#fafafa"}} size="lg">Register as Student <FontAwesomeIcon icon="user-graduate"/></Button></Link>
+                                    <p class="w-100 p-1" style={{"color":"red", "text-align":"center"}}>Registrations have Ended.</p>
                                 </div>
                                 <br className="my-4"/>
                             </div>

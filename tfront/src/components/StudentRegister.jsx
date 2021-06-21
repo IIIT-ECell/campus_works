@@ -25,6 +25,8 @@ class StudentRegister extends Component {
         this.formData[event.target.id] = event.target.value;
     }
     handleSubmit(event) {
+        alert("Registrations for Campus Works have Ended.");
+        return;
         event.preventDefault();
         this.setState({ formSubmitted: true });
         var form_data = new FormData();
@@ -73,6 +75,7 @@ class StudentRegister extends Component {
                 <div className="d-flex justify-content-center align-items-center">
                     <div className="my-auto">
                         <Form onSubmit={this.handleSubmit} className="p-5">
+                            <p class="w-100 p-1" style={{"color":"red", "text-align":"center"}}>Note: Registrations have Ended.</p>    
                             <Form.Group controlId="formName">
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control type="text" id="name" required onChange={this.handleChange} placeholder="Enter Name" />
