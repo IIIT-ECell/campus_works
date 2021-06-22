@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import NavCompany from './NavCompany';
 import NavStudent from './NavStudent';
 import {Form} from "react-bootstrap";
@@ -8,29 +8,36 @@ import axios from "axios";
 class CompanyProfile extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {formSubmitted: false, isEditing: false, company: {}, user: {}}
+        this.state = {isEditable: false, formSubmitted: false, isEditing: false, company: {}, user: {}}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.companyId = this.props.match.params.company_id;
+        this.companyId = Math.sqrt(parseInt(this.props.match.params.company_id) - 458069);
     }
 
     componentDidMount() {
-        console.log(this.state);
         axios.get("https://campusworks.pythonanywhere.com/profile/company", {
             params: {
-                "company_id": this.companyId,
+                "company_id": String(parseInt(this.companyId,10)*parseInt(this.companyId,10)+458069),
             },
             headers: {
-                "Authorization": "Token "+localStorage.getItem("token"),
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Token " + localStorage.getItem("token"),
             }
         }).then((res) => {
-            if (res.data.success == true) {
+            if (res.data.success === true) {
                 this.setState({company: res.data.company.fields});
                 this.setState({user: res.data.user.fields});
-                console.log(this.state);
             }
         });
+
+        axios.get("https://campusworks.pythonanywhere.com/company", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Token " + localStorage.getItem("token"),
+            }
+        }).then(res => {
+            this.setState({isEditable: res.data.pk === this.companyId});
+        })
     }
 
     handleChange(event) {
@@ -48,13 +55,13 @@ class CompanyProfile extends React.Component {
         let formData = {...this.state, company_id: this.companyId};
         delete formData["formSubmitted"];
         delete formData["isEditing"];
-        formData["token"] = localStorage.getItem("token");
 
         axios.put("https://campusworks.pythonanywhere.com/profile/company",
             formData,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': "application/json",
+                    "Authorization": "Token " + localStorage.getItem("token"),
                 }
             }
         ).then((res) => {
@@ -72,8 +79,8 @@ class CompanyProfile extends React.Component {
         if (this.state.company) {
             return (
                 <div>
-                    {localStorage.getItem('type') == 1 && <NavStudent></NavStudent>}
-                    {localStorage.getItem('type') == 2 && <NavCompany></NavCompany>}
+                    {localStorage.getItem('type') === "1" && <NavStudent></NavStudent>}
+                    {localStorage.getItem('type') === "2" && <NavCompany></NavCompany>}
                     <div className="container my-5">
                         <Form onSubmit={this.handleSubmit} className="container p-5">
                             <div className="row">
@@ -95,7 +102,7 @@ class CompanyProfile extends React.Component {
                                 </Form.Group>
                             </div>
 
-                            {!this.state.isEditing && <button className="btn btn-dark w-100" onClick={() => this.setState({isEditing: true})}>Edit</button>}
+                            {this.state.isEditable && !this.state.isEditing && <button className="btn btn-dark w-100" onClick={() => this.setState({isEditing: true})}>Edit</button>}
 
                             {!this.state.formSubmitted && this.state.isEditing && <button type="submit" className="btn btn-dark w-100" onClick={this.handleSubmit}>Submit</button>}
                         </Form>

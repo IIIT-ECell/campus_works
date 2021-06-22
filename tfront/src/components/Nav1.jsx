@@ -2,11 +2,12 @@ import React,{Component} from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './Nav1.css'
 
 class Nav1 extends Component{
     render(){
         return(
-            <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" sticky="top">
+            <Navbar collapseOnSelect expand="md" variant="dark" sticky="top">
                 <Navbar.Brand className="nav-logo">
                 <Link to={"/"}>
                 <img

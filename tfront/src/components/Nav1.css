@@ -1,0 +1,16 @@
+.navbar{
+    background-color:#000000;
+}
+
+@media screen and (max-width:768px){
+    .navbar-collapse.show{
+        height: 100vh;
+        font-size: xx-large;
+        display: inline-flex;
+    }
+    .ml-auto{
+        margin-bottom: auto !important;
+        margin-right: auto !important;
+        margin-top: auto !important;
+    }
+}
